@@ -20987,6 +20987,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-responsive-masonry@npm:^2.1.4":
+  version: 2.1.4
+  resolution: "react-responsive-masonry@npm:2.1.4"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0
+    react-dom: ^16.8.0 || ^17.0.0
+  checksum: 0c2640cee88b1659346b37bb5830049342764ec6273ee127515643984a5c29485e4651202b813b02369b6236c1ee1539388c6fb83ddf564827fa0235aaf17ae6
+  languageName: node
+  linkType: hard
+
 "react-sizeme@npm:^3.0.1":
   version: 3.0.2
   resolution: "react-sizeme@npm:3.0.2"
@@ -21743,8 +21753,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
+    "@ant-design/icons": ^4.7.0
     "@redwoodjs/core": 2.0.0
     antd: ^4.21.5
+    react-responsive-masonry: ^2.1.4
   languageName: unknown
   linkType: soft
 
