@@ -15,7 +15,8 @@ import PublicLayout from './layouts/PublicLayout/PublicLayout'
 const Routes = () => {
   return (
     <Router>
-      <Private unauthenticated="home">
+      <Route path="/login" page={LoginPage} name="login" />
+      <Private unauthenticated="login">
         <Set wrap={AuthLayout}>
           <Route path="/profile" page={ProfilePage} name="profile" />
         </Set>
