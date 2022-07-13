@@ -2,7 +2,10 @@ import React from 'react'
 
 import { Badge, Card, Rate } from 'antd'
 
+import { navigate, routes } from '@redwoodjs/router'
+
 import './styles.less'
+import { IUser } from 'src/hooks/profiles'
 
 const { Meta } = Card
 
@@ -16,6 +19,9 @@ const UserCard = ({ user }: IProps): JSX.Element => (
       hoverable
       cover={<img alt={user.username} src={user.avatar_url} />}
       className="avatar-card"
+      onClick={() =>
+        navigate(routes.publicProfile({ username: user.username }))
+      }
     >
       <Meta
         title={`${user.first_name} ${user.last_name}`}

@@ -8,7 +8,7 @@ import { MetaTags } from '@redwoodjs/web'
 // eslint-disable-next-line import/order
 import UserCard from 'src/components/UserCard/UserCard'
 import './styles.less'
-import { useProfiles } from 'src/hooks/useProfiles'
+import { useProfiles } from 'src/hooks/profiles'
 
 const HomePage = () => {
   const { data, isLoading } = useProfiles()

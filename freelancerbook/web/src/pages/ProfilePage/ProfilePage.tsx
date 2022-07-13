@@ -1,7 +1,8 @@
 import { Link, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 
-const ProfilePage = () => {
+const ProfilePage = ({ username }) => {
+  console.log({ username })
   return (
     <>
       <MetaTags title="Profile" description="Profile page" />

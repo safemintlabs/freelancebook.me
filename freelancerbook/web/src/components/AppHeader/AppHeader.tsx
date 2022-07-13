@@ -7,11 +7,19 @@ import { useAuth } from '@redwoodjs/auth'
 import { navigate, routes } from '@redwoodjs/router'
 
 import './styles.less'
+import { useProfile } from 'src/hooks/profiles'
 
 const { Header } = Layout
 
-const AppHeader = ({ isProfile }: { isProfile?: boolean }) => {
-  const { isAuthenticated, logOut, currentUser, reauthenticate } = useAuth()
+const AppHeader = ({
+  isProfile,
+  username,
+}: {
+  isProfile?: boolean
+  username?: string
+}) => {
+  const { data: profile } = useProfile(username)
+  const { isAuthenticated, logOut, reauthenticate, currentUser } = useAuth()
   const signout = async () => {
     const { error } = await logOut()
     console.log({ error })
@@ -40,7 +48,11 @@ const AppHeader = ({ isProfile }: { isProfile?: boolean }) => {
       label: 'Testimonials',
     },
   ]
-  const menus = isProfile ? profileMenu : homeMenu
+  console.log({ currentUser, profile })
+  const menus =
+    isProfile || (profile && profile.id !== currentUser?.id)
+      ? profileMenu
+      : homeMenu
   const notifications = isAuthenticated
     ? ([
         {
@@ -121,7 +133,7 @@ const AppHeader = ({ isProfile }: { isProfile?: boolean }) => {
         style={{ flex: '1 1 0%', height: '100%' }}
       />
       <Menu
-        style={{ width: '108px' }}
+        style={{ width: isAuthenticated ? '108px' : '54px' }}
         className="app-top-menu"
         theme="light"
         mode="horizontal"
