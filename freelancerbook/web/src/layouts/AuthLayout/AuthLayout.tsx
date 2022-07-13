@@ -1,32 +1,19 @@
 import React from 'react'
 
-import type { MenuProps } from 'antd'
-import { Breadcrumb, Layout, Menu } from 'antd'
+import { Breadcrumb, Layout } from 'antd'
 
+import AppHeader from 'src/components/AppHeader/AppHeader'
 import AppMenu from 'src/components/AppMenu/AppMenu'
 
-const { Header, Content, Sider } = Layout
-
-const items1: MenuProps['items'] = ['1', '2', '3'].map((key) => ({
-  key,
-  label: `nav ${key}`,
-}))
+const { Content, Sider } = Layout
 
 const AuthLayout: React.FC = ({ children }) => (
   <Layout style={{ height: '100vh' }}>
-    <Header className="header">
-      <div className="logo" />
-      <Menu
-        theme="dark"
-        mode="horizontal"
-        defaultSelectedKeys={['2']}
-        items={items1}
-      />
-    </Header>
+    <AppHeader isProfile={true} />
     <Layout>
-      <Sider width={200} className="site-layout-background">
+      {<Sider width={200} className="site-layout-background">
         <AppMenu />
-      </Sider>
+      </Sider>}
       <Layout style={{ padding: '0 24px 24px' }}>
         <Breadcrumb style={{ margin: '16px 0' }}>
           <Breadcrumb.Item>Home</Breadcrumb.Item>

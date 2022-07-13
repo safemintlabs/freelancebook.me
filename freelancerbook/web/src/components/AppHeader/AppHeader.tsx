@@ -1,26 +1,55 @@
 import React, { useEffect } from 'react'
 
-import { BellTwoTone, UserOutlined } from '@ant-design/icons'
-import { Image, Layout, Menu, MenuProps } from 'antd'
+import { BellFilled, UserOutlined } from '@ant-design/icons'
+import { Image, Layout, Menu, MenuProps, Badge } from 'antd'
 
 import { useAuth } from '@redwoodjs/auth'
 import { navigate, routes } from '@redwoodjs/router'
 
-import './styles.css'
+import './styles.less'
 
 const { Header } = Layout
 
-const AppHeader: React.FC = () => {
+const AppHeader = ({ isProfile }: { isProfile?: boolean }) => {
   const { isAuthenticated, logOut, currentUser, reauthenticate } = useAuth()
-  async function signout() {
+  const signout = async () => {
     const { error } = await logOut()
     console.log({ error })
   }
+  const homeMenu = [
+    {
+      key: 'home',
+      label: 'Members',
+    },
+  ]
+  const profileMenu = [
+    {
+      key: 'home',
+      label: 'Profile',
+    },
+    {
+      key: 'scheduule',
+      label: 'Schedule',
+    },
+    {
+      key: 'projects',
+      label: 'Projects',
+    },
+    {
+      key: 'testimonials',
+      label: 'Testimonials',
+    },
+  ]
+  const menus = isProfile ? profileMenu : homeMenu
   const notifications = isAuthenticated
     ? ([
         {
           key: 'notification',
-          icon: <BellTwoTone width={24} height={24} />,
+          icon: (
+            <Badge count={5} size="small">
+              <BellFilled width={24} height={24} style={{ fill: '#FFF' }} />
+            </Badge>
+          ),
           style: {
             alignItems: 'center',
             justifyContent: 'center',
@@ -30,20 +59,13 @@ const AppHeader: React.FC = () => {
         },
       ] as MenuProps['items'])
     : []
-  const items: MenuProps['items'] = [
-    {
-      key: 'home',
-      label: 'Members',
-    },
-    {
-      key: 'divider',
-      style: { flex: '1 1 0%', border: 'none' },
-      type: 'divider',
-    },
+  const items: MenuProps['items'] = [...menus]
+  const rightMenu: MenuProps['items'] = [
     ...notifications,
     {
-      key: 'profile',
-      icon: <UserOutlined />,
+      key: 'menu',
+      icon: <UserOutlined width={24} height={24} />,
+      className: 'profile-menu',
       style: {
         alignItems: 'center',
         justifyContent: 'center',
@@ -54,21 +76,21 @@ const AppHeader: React.FC = () => {
         ? [
             {
               label: 'My Account',
-              key: 'profile:profile',
+              key: 'menu:profile',
               onClick: () => {
                 navigate(routes.profile())
               },
             },
             {
               label: 'Logout',
-              key: 'profile:signout',
+              key: 'menu:signout',
               onClick: signout,
             },
           ]
         : [
             {
               label: 'Signin',
-              key: 'profile:signin',
+              key: 'menu:signin',
               onClick: () => {
                 navigate(routes.login())
               },
@@ -85,20 +107,27 @@ const AppHeader: React.FC = () => {
 
   console.log({ isAuthenticated, currentUser })
   return (
-    <Header
-      className="header"
-      style={{ display: 'flex', flexDirection: 'row' }}
-    >
+    <Header className="header">
       <div className="logo">
         <Image width={200} src="/images/freelancer.svg" preview={false} />
       </div>
       <Menu
-        theme="dark"
+        className="app-top-menu"
+        theme="light"
         mode="horizontal"
         defaultSelectedKeys={['home']}
         items={items}
         selectable
-        style={{ width: '100%', height: '100%' }}
+        style={{ flex: '1 1 0%', height: '100%' }}
+      />
+      <Menu
+        style={{ width: '108px' }}
+        className="app-top-menu"
+        theme="light"
+        mode="horizontal"
+        defaultSelectedKeys={['home']}
+        items={rightMenu}
+        selectable
       />
     </Header>
   )

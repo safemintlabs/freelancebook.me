@@ -14,7 +14,7 @@ const PublicLayout = ({ children }: PublicLayoutProps) => {
     <>
       <Layout style={{ boxSizing: 'border-box' }}>
         <AppHeader />
-        <Layout>
+        <Layout style={{ minHeight: 'calc(100vh - (64px + 62px))' }}>
           <Layout style={{ padding: '0 24px 24px' }}>
             <Content
               className="site-layout-background"

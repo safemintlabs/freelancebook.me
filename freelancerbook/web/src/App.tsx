@@ -1,7 +1,8 @@
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 
 import { createClient } from '@supabase/supabase-js'
 import { ConfigProvider } from 'antd'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
 import { AuthProvider } from '@redwoodjs/auth'
 import { FatalErrorBoundary, RedwoodProvider } from '@redwoodjs/web'
@@ -11,6 +12,8 @@ import FatalErrorPage from 'src/pages/FatalErrorPage'
 import Routes from 'src/Routes'
 
 import './theme.less'
+
+const queryClient = new QueryClient()
 
 const supabaseClient = createClient(
   process.env.SUPABASE_URL,
@@ -26,17 +29,19 @@ const App = () => {
     })
   }, [])
   return (
-    <ConfigProvider>
-      <FatalErrorBoundary page={FatalErrorPage}>
-        <RedwoodProvider titleTemplate="%PageTitle | %AppTitle">
-          <AuthProvider client={supabaseClient} type="supabase">
-            <RedwoodApolloProvider>
-              <Routes />
-            </RedwoodApolloProvider>
-          </AuthProvider>
-        </RedwoodProvider>
-      </FatalErrorBoundary>
-    </ConfigProvider>
+    <QueryClientProvider client={queryClient}>
+      <ConfigProvider>
+        <FatalErrorBoundary page={FatalErrorPage}>
+          <RedwoodProvider titleTemplate="%PageTitle | %AppTitle">
+            <AuthProvider client={supabaseClient} type="supabase">
+              <RedwoodApolloProvider>
+                <Routes />
+              </RedwoodApolloProvider>
+            </AuthProvider>
+          </RedwoodProvider>
+        </FatalErrorBoundary>
+      </ConfigProvider>
+    </QueryClientProvider>
   )
 }
 
