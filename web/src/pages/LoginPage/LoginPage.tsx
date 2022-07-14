@@ -46,6 +46,7 @@ const LoginPage: React.FC = () => {
   const signInWithGoogle = async () => {
     const { user, session, error } = await logIn({
       provider: 'google',
+      redirectTo: 'profile',
     })
 
     console.log({ user, session, error })

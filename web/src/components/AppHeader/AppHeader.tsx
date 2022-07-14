@@ -4,7 +4,7 @@ import { BellFilled, UserOutlined } from '@ant-design/icons'
 import { Image, Layout, Menu, MenuProps, Badge } from 'antd'
 
 import { useAuth } from '@redwoodjs/auth'
-import { navigate, routes } from '@redwoodjs/router'
+import { Link, navigate, routes } from '@redwoodjs/router'
 
 import './styles.less'
 import { useProfile } from 'src/hooks/profiles'
@@ -48,7 +48,6 @@ const AppHeader = ({
       label: 'Testimonials',
     },
   ]
-  console.log({ currentUser, profile })
   const menus =
     isProfile || (profile && profile.id !== currentUser?.id)
       ? profileMenu
@@ -120,9 +119,9 @@ const AppHeader = ({
   console.log({ isAuthenticated, currentUser })
   return (
     <Header className="header">
-      <div className="logo">
+      <Link className="logo" to={routes.home()}>
         <Image width={200} src="/images/freelancer.svg" preview={false} />
-      </div>
+      </Link>
       <Menu
         className="app-top-menu"
         theme="light"
