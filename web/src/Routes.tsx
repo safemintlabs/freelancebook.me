@@ -23,9 +23,9 @@ const Routes = () => {
       </Private>
       <Set wrap={PublicLayout}>
         <Route path="/{username}" page={ProfilePage} name="publicProfile" />
-        <Route path="/" page={LandingPage} name="landing" />
         <Route path="/home" page={HomePage} name="home" />
       </Set>
+      <Route path="/" page={LandingPage} name="landing"/>
       <Route notfound page={NotFoundPage} />
     </Router>
   )
