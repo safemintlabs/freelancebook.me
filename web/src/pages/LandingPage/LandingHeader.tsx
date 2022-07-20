@@ -5,28 +5,6 @@ import { Link, navigate, routes } from '@redwoodjs/router'
 
 const { Header } = Layout
 
-// const LandingHeader = () => {
-//   // onClick: () => {
-//   //   navigate(routes.login())
-//   // }
-
-//   return (
-//     <>
-//       <Header className='landingHeader'>
-//         <div className="abra" id ="open">
-
-//         </div>
-
-
-//       <a href="index"> <img class="indexLogo" src="img/nav/joshann-logo.png"> </a>
-
-//             <h1> JR and JL Crash Landing on U</h1>
-//       </Header>
-//     </>
-//   )
-// }
-
-
 const items: MenuProps['items'] = [
   {
     label: 'Sign Up',
@@ -50,7 +28,7 @@ const LandingHeader = () => {
     <>
       <Header className='landingHeader'>
         <Link className="logo" to={routes.landing()}>
-          <Image height={100} src="/images/logos/inlinestyle/01-freelancebook-inlinestyle-tagline.svg" preview={false} />
+          <Image height={100} src="/images/logos/inlinestyle/00-freelancebook-inlinestyle.svg" preview={false} />
         </Link>
         <Menu className='landingTopMenu'
           mode="horizontal"

@@ -10,12 +10,14 @@ import { MetaTags } from '@redwoodjs/web'
 import './styles.less'
 
 import LandingHeader from './LandingHeader'
+import StartNow from './components/StartNow/StartNow'
 
 const LandingPage = () => {
   return (
       <>
         <Layout>
           <LandingHeader />
+          <StartNow />
         </Layout>
       </>
   )

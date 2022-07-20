@@ -1,0 +1,67 @@
+@import '~antd/dist/antd.css';
+
+.startNow {
+  /* design */
+  background-color: whitesmoke;
+
+  /* layout */
+  width: 100vw;
+  height:  calc(100vh - 100px);
+  padding: 50px;
+  display: inline-flex;
+  position: relative;
+}
+
+/* #thin-divider {
+  background-color: #0A0F0D;
+  height: 20px;
+  width: 100vw;
+} */
+
+.startNow #startNow-left {
+  /* design */
+  background-color: transparent;
+
+  /* layout */
+  width: 50%;
+  height:  100%;
+  position: relative;
+  padding: 30px;
+}
+
+.startNow #startNow-right {
+  /* design */
+  background-color: transparent;
+
+
+  /* layout */
+  width: 50%;
+  height:  100%;
+  position: relative;
+}
+
+.startNow h1 {
+  font-size: 50px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: #0A0F0D;
+  width: 100%;
+}
+
+.startNow p {
+  font-size: 15px;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  color: #0A0F0D;
+}
+
+.startNow #claim {
+  background-color: #449DD1;
+}
+
+.startNow #startNow-right #animated-logo {
+  background-image: url("web/public/images/logos/animated/00-freelancebook-displaystyle-tagline.gif");
+  background-repeat: no-repeat;
+  width: 500px;
+  height: 500px;
+  float: right;
+}
