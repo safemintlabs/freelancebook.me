@@ -55,7 +55,7 @@
   font-size: 32px;
   font-family: 'Inter', sans-serif;
   color: #0A0F0D;
-  width: 50%;
+  width: 100%;
   display: block;
 }
 
@@ -113,7 +113,7 @@
   font-family: 'Roboto', Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 22px;
+  font-size: 18px;
   line-height: 31px;
   /* or 141% */
 
@@ -153,6 +153,78 @@
   padding: 0px;
 }
 
+@media only screen and (max-width: 1920px) {
+
+  .howItWorks {
+    padding: 50px;
+  }
+
+  .how-it-works-text {
+    font-size: 28px;
+  }
+
+  .h3-1 {
+    font-size: 26px;
+  }
+
+  .slider-scrollable {
+    margin-top: 10px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+
+  .howItWorks {
+    padding: 50px;
+  }
+
+  .how-it-works-text {
+    font-size: 24px;
+  }
+
+  .h3-1 {
+    font-size: 22px;
+  }
+
+  .slider-scrollable {
+    margin-top: 10px;
+  }
+}
+
+@media only screen and (max-width: 912px) {
+
+  .howItWorks {
+    padding: 50px;
+  }
+
+  .how-it-works-text {
+    font-size: 20px;
+  }
+
+  .h3-1 {
+    font-size: 18px;
+  }
+
+  .slider-scrollable {
+    margin-top: 10px;
+  }
+}
+
+@media only screen and (max-width: 743px) {
+  .body-1 {
+    width: auto;
+  }
+
+  .ellipse {
+    font-size: 22px;
+    width: 44px;
+    height: 44px;
+    margin-left: 10px;
+    margin-top: 10px;
+    line-height: 33px;
+  }
+}
+
 @media only screen and (max-width: 600px) {
 
   .howItWorks {
@@ -160,22 +232,17 @@
   }
 
   .how-it-works-text {
-    font-size: 22px;
+    font-size: 16px;
   }
 
-  .ellipse {
-    font-size: 22px;
-    width: 33px;
-    height: 33px;
-    line-height: 33px;
-  }
+
 
   .h3-1 {
-    font-size: 27px;
+    font-size: 14px;
   }
 
   .body-1 {
-    width: 285px;
+    width: auto;
     font-size: 15px;
   }
 

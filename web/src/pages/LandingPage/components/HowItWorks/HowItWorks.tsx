@@ -72,8 +72,8 @@ const HowItWorks = () => {
     <>
       <div className="howItWorks">
 
-        <div className="how-it-works-text">
-          <h2>How it works</h2>
+        <div >
+          <h2 className="how-it-works-text">How it works</h2>
         </div>
         <Slider_Box/>
 
