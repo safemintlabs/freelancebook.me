@@ -25,8 +25,8 @@ const AppHeader = ({
   username?: string
 }) => {
   const { pathname } = useLocation()
-  const { data: profile, isLoading } = useProfile(username)
-  const { isAuthenticated, logOut, reauthenticate, currentUser } = useAuth()
+  const { data: profile, isLoading, isMe } = useProfile(username)
+  const { isAuthenticated, logOut, reauthenticate } = useAuth()
   const signout = async () => {
     const { error } = await logOut()
     console.log({ error })
@@ -61,16 +61,20 @@ const AppHeader = ({
       label: 'Setup Profile',
     },
   ]
-  const notMe = isProfile || (profile && profile.id !== currentUser?.id)
+
   const notProfileCompleted = !profile && isAuthenticated
-  const menus = notProfileCompleted ? setupMenu : notMe ? profileMenu : homeMenu
+  const menus = notProfileCompleted
+    ? setupMenu
+    : (isProfile && isMe) || username
+    ? profileMenu
+    : homeMenu
   const notifications = isAuthenticated
     ? ([
         {
           key: 'notification',
           icon: (
             <Badge count={5} size="small">
-              <BellFilled width={24} height={24} style={{ fill: '#FFF' }} />
+              <BellFilled width={24} height={24} />
             </Badge>
           ),
           style: {

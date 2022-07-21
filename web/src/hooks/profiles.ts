@@ -88,7 +88,6 @@ export const updateProfile = async (profile: Partial<IUser>) => {
 
 export const useProfile = (username?: string) => {
   const { id } = supabase.auth.user() || {}
-  console.log({ id, username })
   const { data, isLoading, refetch } = useQuery(
     ['profiles', username],
     () =>
@@ -128,7 +127,7 @@ export const useProfile = (username?: string) => {
       100
     ).toFixed(0)
   )
-  console.log({ data, percentage })
+  const isMe = data?.id === id
 
-  return { data, isLoading, isSaving, save, percentage }
+  return { data, isLoading, isSaving, save, percentage, isMe }
 }

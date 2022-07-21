@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Button, Input, Col, Form, Row, Spin, Alert, Progress } from 'antd'
 
-// import { Link, routes } from '@redwoodjs/router'
+import { navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 
 import Avatar from 'src/components/Avatar'
@@ -12,7 +12,6 @@ import './styles.less'
 const { TextArea } = Input
 
 const SetupPage = () => {
-  const timeout = useRef(null)
   const { data, save, isSaving, percentage = 0 } = useProfile()
   const [profile, setProfile] = useState(data)
   const {
@@ -26,22 +25,12 @@ const SetupPage = () => {
     website,
     isActive,
   } = profile || {}
-  const handleSave = (name, value) => {
-    if (timeout.current) clearTimeout(timeout.current)
-    timeout.current = setTimeout(() => {
-      save({ ...profile, [name]: value })
-    }, 400)
-  }
-  const handleActivate = () => {
-    if (timeout.current) clearTimeout(timeout.current)
-    timeout.current = setTimeout(() => {
-      save({ ...profile, isActive: true })
-    }, 400)
+  const handleSave = () => {
+    save({ ...profile, isActive: percentage === 100 })
   }
   const handleChange = (e) => {
     const { name, value } = e.target
     setProfile((prev) => ({ ...prev, [name]: value }))
-    handleSave(name, value)
   }
   useEffect(() => setProfile(data), [data])
   return (
@@ -54,7 +43,9 @@ const SetupPage = () => {
               <Col flex="1 1 0%">
                 <Alert
                   style={{ margin: '15px 0', width: '100%' }}
-                  message="Complete your profile"
+                  message={
+                    isActive ? 'Update Your Profile' : 'Complete your profile'
+                  }
                   description={
                     <div>
                       {isSaving ? (
@@ -65,10 +56,12 @@ const SetupPage = () => {
                       ) : (
                         <></>
                       )}
-                      <Progress
-                        percent={percentage as number}
-                        status="active"
-                      />
+                      {!isActive && (
+                        <Progress
+                          percent={percentage as number}
+                          status="active"
+                        />
+                      )}
                     </div>
                   }
                   type="success"
@@ -177,8 +170,16 @@ const SetupPage = () => {
                   display: 'flex',
                 }}
               >
-                <Button disabled={percentage !== 100} onClick={handleActivate}>
-                  {isActive ? 'Save' : 'Activate'}
+                {isActive && (
+                  <Button
+                    onClick={() => navigate(routes.profile())}
+                    style={{ marginRight: 15 }}
+                  >
+                    Cancel
+                  </Button>
+                )}
+                <Button disabled={isSaving} onClick={handleSave}>
+                  Save
                 </Button>
               </Col>
             </Row>

@@ -3,22 +3,25 @@ import React from 'react'
 import { Breadcrumb, Layout } from 'antd'
 
 import AppHeader from 'src/components/AppHeader/AppHeader'
-import AppMenu from 'src/components/AppMenu/AppMenu'
-import { useProfile } from 'src/hooks/profiles'
+// import AppMenu from 'src/components/AppMenu/AppMenu'
+// import { useProfile } from 'src/hooks/profiles'
 
-const { Content, Sider } = Layout
+const {
+  Content,
+  // , Sider
+} = Layout
 
 const AuthLayout: React.FC = ({ children }) => {
-  const { data: profile } = useProfile()
+  // const { data: profile } = useProfile()
   return (
     <Layout style={{ height: '100vh' }}>
       <AppHeader isProfile={true} />
       <Layout>
-        {profile?.isActive && (
+        {/* {profile?.isActive && (
           <Sider width={200} className="site-layout-background">
             <AppMenu />
           </Sider>
-        )}
+        )} */}
         <Layout style={{ padding: '0 24px 24px' }}>
           {false && (
             <Breadcrumb style={{ margin: '16px 0' }}>

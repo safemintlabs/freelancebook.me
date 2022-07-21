@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 
-import { Skeleton, Spin, Col, Descriptions, Row } from 'antd'
+import { Button, Skeleton, Spin, Col, Descriptions, Row } from 'antd'
 
-// import { Link, routes } from '@redwoodjs/router'
+import { navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 
 import Avatar from 'src/components/Avatar'
@@ -11,7 +11,7 @@ import { useProfile } from 'src/hooks/profiles'
 import './styles.less'
 
 const ProfilePage = ({ username: u }: { username?: string }) => {
-  const { data, isLoading } = useProfile(u)
+  const { data, isLoading, isMe } = useProfile(u)
   const [profile, setProfile] = useState(data)
   const {
     email,
@@ -53,6 +53,22 @@ const ProfilePage = ({ username: u }: { username?: string }) => {
           </Col>
         )}
       </Row>
+      {isMe && (
+        <Row>
+          <Col
+            flex="1 1 0%"
+            style={{
+              display: 'flex',
+              alignItems: 'flex-end',
+              justifyContent: 'flex-end',
+            }}
+          >
+            <Button onClick={() => navigate(routes.setup())}>
+              Edit Profile
+            </Button>
+          </Col>
+        </Row>
+      )}
     </Spin>
   )
 }
