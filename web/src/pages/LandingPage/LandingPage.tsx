@@ -14,6 +14,7 @@ import StartNow from './components/StartNow/StartNow'
 import Stats from './components/Stats/Stats'
 import FAQ from './components/FAQ/FAQ'
 import LandingFooter from './LandingFooter'
+import FeaturedProfiles from './components/FeaturedProfiles/FeaturedProfiles'
 
 const LandingPage = () => {
   return (
@@ -22,8 +23,8 @@ const LandingPage = () => {
           <LandingHeader />
           <StartNow />
           <Stats />
-          {/* <HowItWorks />*/}
-          {/* <FeaturedProfiles /> */}
+          {/* <HowItWorks /> */}
+          <FeaturedProfiles />
           <FAQ />
           <LandingFooter />
         </Layout>
