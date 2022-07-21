@@ -18,6 +18,7 @@ const Routes = () => {
       <Route path="/login" page={LoginPage} name="login" />
       <Private unauthenticated="login">
         <Set wrap={AuthLayout}>
+          <Route path="/setup" page={SetupPage} name="setup" />
           <Route path="/profile" page={ProfilePage} name="profile" />
         </Set>
       </Private>

@@ -1,8 +1,21 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+
+import { Button, Skeleton } from 'antd'
 
 import { useAuth } from '@redwoodjs/auth'
 
-const Avatar = ({ url, size, onUpload }) => {
+import './styles.less'
+
+const Avatar = ({
+  url,
+  size,
+  onUpload,
+}: {
+  url: string
+  size: string | number
+  onUpload?: (url: string) => void
+}) => {
+  const uploadRef = useRef<any>(null)
   const { client: supabase } = useAuth()
 
   const [avatarUrl, setAvatarUrl] = useState(null)
@@ -58,7 +71,7 @@ const Avatar = ({ url, size, onUpload }) => {
   }
 
   return (
-    <div>
+    <div className="avatar">
       {avatarUrl ? (
         <img
           src={avatarUrl}
@@ -67,27 +80,33 @@ const Avatar = ({ url, size, onUpload }) => {
           style={{ height: size, width: size }}
         />
       ) : (
-        <div
-          className="avatar no-image"
-          style={{ height: size, width: size }}
-        />
+        <Skeleton.Image />
       )}
-      <div style={{ width: size }}>
-        <label className="button primary block" htmlFor="single">
-          {uploading ? 'Uploading ...' : 'Upload'}
-        </label>
-        <input
-          style={{
-            visibility: 'hidden',
-            position: 'absolute',
-          }}
-          type="file"
-          id="single"
-          accept="image/*"
-          onChange={uploadAvatar}
-          disabled={uploading}
-        />
-      </div>
+      {onUpload && (
+        <div style={{ width: size }} className="upload-toolbar">
+          <Button
+            className="button primary block"
+            onClick={() => {
+              uploadRef.current.click()
+            }}
+            size="small"
+          >
+            {uploading ? 'Uploading ...' : 'Upload'}
+          </Button>
+          <input
+            ref={uploadRef}
+            style={{
+              visibility: 'hidden',
+              position: 'absolute',
+              display: 'none',
+            }}
+            type="file"
+            accept="image/*"
+            onChange={uploadAvatar}
+            disabled={uploading}
+          />
+        </div>
+      )}
     </div>
   )
 }
