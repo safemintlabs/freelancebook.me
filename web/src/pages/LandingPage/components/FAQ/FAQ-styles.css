@@ -1,0 +1,32 @@
+@import '~antd/dist/antd.css';
+
+
+
+.FAQ {
+  /* design */
+  background-color: whitesmoke;
+
+  /* layout */
+  padding: 25px 50px 25px 50px;
+}
+
+.FAQ h2 {
+  font-size: 25px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: #0A0F0D;
+  width: 100%;
+}
+
+.ant-collapse-header {
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.ant-collapse p {
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  margin-left: 25px;
+}
