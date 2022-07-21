@@ -145,10 +145,10 @@
   }
   #featuredProfiles .ant-carousel {
     padding: 10px 50px 10px 50px;
-    height: 80px;
+    height: 90px;
   }
   #featuredProfiles .ant-carousel .profileCard .profilePhoto{
-    height: 80px;
+    height: 70px;
   }
 }
 
