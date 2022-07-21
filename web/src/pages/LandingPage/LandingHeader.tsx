@@ -12,7 +12,7 @@ const LandingHeader = () => {
       <Header className='landingHeader'>
         <div className="top-logo">
           <Link to={routes.landing()}>
-            <Image height={100} src="/images/logos/inlinestyle/00-freelancebook-inlinestyle.svg" preview={false} />
+            <Image id="logo-image" height={100} src="/images/logos/inlinestyle/00-freelancebook-inlinestyle.svg" preview={false} />
           </Link>
         </div>
         <div className='landingTopMenu'>

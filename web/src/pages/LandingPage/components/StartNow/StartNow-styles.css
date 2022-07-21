@@ -77,15 +77,34 @@
 }
 
 
+@media only screen and (min-width: 1366px) {
+  .startNow h1 {
+    font-size: 48px;
+  }
+
+  .startNow p {
+    font-size: 28px;
+  }
+
+  .startNow #claim {
+    font-size: 28px;
+  }
+}
 
 @media only screen and (max-width: 1024px) {
   .startNow {
-    height: 400px;
+    height: calc(100vh - 250px)
   }
 
+  .startNow h1 {
+    font-size: 32px;
+  }
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 912px) {
+  .startNow h1 {
+    font-size: 26px;
+  }
   .startNow {
     display: block;
     height: auto;

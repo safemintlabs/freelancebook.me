@@ -42,7 +42,24 @@
   font-weight: 400;
 }
 
+@media only screen and (min-width: 1366px) {
+  .stats div h2 {
+    font-size: 56px;
+    line-height: normal;
+  }
+
+  .stats div p {
+    font-size: 28px;
+  }
+}
+
 @media only screen and (max-width: 1024px) {
+  .stats {
+    height: 150px;
+  }
+}
+
+@media only screen and (max-width: 912px) {
   .stats {
     height: auto;
   }

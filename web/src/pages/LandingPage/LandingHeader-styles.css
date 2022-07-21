@@ -89,3 +89,9 @@
     padding-top: 0%;
   }
 }
+
+@media only screen and (max-width: 320px) {
+  .landingHeader {
+    height: 175px;
+  }
+}
