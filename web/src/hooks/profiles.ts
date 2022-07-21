@@ -1,3 +1,4 @@
+import { notification } from 'antd'
 import { useMutation, useQuery } from 'react-query'
 
 import { supabase } from 'src/supabaseClient'
@@ -15,6 +16,10 @@ export interface IUser {
   about: string
   service: string
   isActive: boolean
+}
+
+enum ErrorCodes {
+  'err42501' = 'User already exists',
 }
 
 const getProfiles = async (): Promise<IUser[]> => {
@@ -52,7 +57,10 @@ const getProfileByUsername = async (username): Promise<IUser> => {
 export const useProfiles = () => {
   const { data, isLoading } = useQuery('profiles', getProfiles, {
     onError: (err: any) => {
-      console.log({ err })
+      notification.error({
+        message: 'Something went wrong',
+        description: ErrorCodes['err' + err.code],
+      })
     },
   })
   return { data, isLoading }
@@ -65,7 +73,6 @@ export const updateProfile = async (profile: Partial<IUser>) => {
     ...profile,
     id: user.id,
     updated_at: new Date(),
-    isActive: true,
   }
 
   const { error } = await supabase.from('profiles').upsert(updates, {
@@ -88,7 +95,10 @@ export const useProfile = (username?: string) => {
       username ? getProfileByUsername(username) : id && getProfileById(id),
     {
       onError: (err: any) => {
-        console.log({ err })
+        notification.error({
+          message: 'Something went wrong',
+          description: ErrorCodes['err' + err.code],
+        })
       },
       onSuccess: (info) => console.log(info),
     }
@@ -97,6 +107,10 @@ export const useProfile = (username?: string) => {
     onSuccess: () => refetch(),
     onError: (err: any) => {
       console.log({ err })
+      notification.error({
+        message: 'Something went wrong',
+        description: ErrorCodes['err' + err.code],
+      })
     },
   })
   const keys =

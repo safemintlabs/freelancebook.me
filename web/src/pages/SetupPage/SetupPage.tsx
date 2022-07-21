@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { Button, Input, Col, Form, Row, Spin, Alert, Progress } from 'antd'
-import { debounce } from 'lodash'
 
 // import { Link, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
@@ -13,6 +12,7 @@ import './styles.less'
 const { TextArea } = Input
 
 const SetupPage = () => {
+  const timeout = useRef(null)
   const { data, save, isSaving, percentage = 0 } = useProfile()
   const [profile, setProfile] = useState(data)
   const {
@@ -26,9 +26,18 @@ const SetupPage = () => {
     website,
     isActive,
   } = profile || {}
-  const handleSave = debounce((name, value) => {
-    save({ [name]: value })
-  }, 500)
+  const handleSave = (name, value) => {
+    if (timeout.current) clearTimeout(timeout.current)
+    timeout.current = setTimeout(() => {
+      save({ ...profile, [name]: value })
+    }, 400)
+  }
+  const handleActivate = () => {
+    if (timeout.current) clearTimeout(timeout.current)
+    timeout.current = setTimeout(() => {
+      save({ ...profile, isActive: true })
+    }, 400)
+  }
   const handleChange = (e) => {
     const { name, value } = e.target
     setProfile((prev) => ({ ...prev, [name]: value }))
@@ -72,7 +81,7 @@ const SetupPage = () => {
                   url={avatar_url}
                   size={100}
                   onUpload={(url) => {
-                    save({ avatar_url: url })
+                    save({ ...profile, avatar_url: url })
                   }}
                 />
               </Col>
@@ -168,7 +177,7 @@ const SetupPage = () => {
                   display: 'flex',
                 }}
               >
-                <Button disabled={percentage !== 100}>
+                <Button disabled={percentage !== 100} onClick={handleActivate}>
                   {isActive ? 'Save' : 'Activate'}
                 </Button>
               </Col>
