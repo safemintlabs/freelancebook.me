@@ -5,7 +5,7 @@
   background-color: whitesmoke;
 
   /* layout */
-  width: 100vw;
+  width: 100%;
   height: 200px;
   padding: 25px 50px 25px 50px;
   display: inline-flex;
@@ -40,4 +40,33 @@
 .stats div p span {
   font-size: 15px;
   font-weight: 400;
+}
+
+@media only screen and (max-width: 1024px) {
+  .stats {
+    height: auto;
+  }
+}
+@media only screen and (max-width: 600px) {
+
+  .stats div h2 {
+    font-size: 30px;
+  }
+
+  .stats div p {
+    font-size: 15px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .stats {
+    display: block;
+    height: auto;
+  }
+
+  .stats div {
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
 }

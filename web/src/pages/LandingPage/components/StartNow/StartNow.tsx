@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Button} from 'antd'
 import './StartNow-styles.css'
 import { Link, navigate, routes } from '@redwoodjs/router'
+import { DownCircleOutlined } from '@ant-design/icons'
 
 const StartNow = () => {
   return (

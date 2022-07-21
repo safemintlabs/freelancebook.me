@@ -10,9 +10,11 @@ const LandingHeader = () => {
   return (
     <>
       <Header className='landingHeader'>
-        <Link className="logo" to={routes.landing()}>
-          <Image height={100} src="/images/logos/inlinestyle/00-freelancebook-inlinestyle.svg" preview={false} />
-        </Link>
+        <div className="top-logo">
+          <Link to={routes.landing()}>
+            <Image height={100} src="/images/logos/inlinestyle/00-freelancebook-inlinestyle.svg" preview={false} />
+          </Link>
+        </div>
         <div className='landingTopMenu'>
           <Button id='log-in' onClick={ () => {navigate(routes.login()) } }> Log in </Button>
           <Button id='create' onClick={ () => {navigate(routes.login()) } }> Create Your Site </Button>
