@@ -6,17 +6,11 @@
 
   /* layout */
   width: 100vw;
-  height:  calc(100vh - 100px);
-  padding: 50px;
+  height:  calc(100vh - 300px);
+  padding: 25px 50px 25px 50px;
   display: inline-flex;
   position: relative;
 }
-
-/* #thin-divider {
-  background-color: #0A0F0D;
-  height: 20px;
-  width: 100vw;
-} */
 
 .startNow #startNow-left {
   /* design */
@@ -26,7 +20,7 @@
   width: 50%;
   height:  100%;
   position: relative;
-  padding: 30px;
+  padding: 0px;
 }
 
 .startNow #startNow-right {
@@ -41,7 +35,7 @@
 }
 
 .startNow h1 {
-  font-size: 50px;
+  font-size: 40px;
   font-family: 'Inter', sans-serif;
   font-weight: 600;
   color: #0A0F0D;
@@ -55,13 +49,28 @@
 }
 
 .startNow #claim {
-  background-color: #449DD1;
+  background-color: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  color: #004AAD;
+  padding: 0%;
+}
+
+.startNow #claim:hover {
+  color: #449DD1;
+}
+
+.startNow #claim:active {
+  color: #5bc3ff;
+  border: none;
+  animation:none 0 ease 0 1 normal;
 }
 
 .startNow #startNow-right #animated-logo {
   background-image: url("web/public/images/logos/animated/00-freelancebook-displaystyle-tagline.gif");
   background-repeat: no-repeat;
-  width: 500px;
-  height: 500px;
+  background-size: contain;
+  width: 80%;
+  height: 100%;
   float: right;
 }

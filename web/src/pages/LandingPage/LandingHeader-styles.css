@@ -15,24 +15,46 @@
 
   /* design */
   font-size: 18px;
-  color: navy;
+  color: #004AAD;
   background-color: transparent;
+  font-family: "Roboto", sans-serif;
 
   /* layout */
-  width: 200px;
+  width: 250px;
   float: right;
   margin-left: auto;
   position: 'relative';
   display: 'flex';
-}
-
-/* Remove hover effects on Menu */
-.ant-menu-horizontal, .ant-menu-item::after, .ant-menu-submenu::after {
-  border: none !important;
-}
-
-/* Vertically align menu items */
-.ant-menu-item {
   vertical-align: middle;
   line-height: 100px;
+}
+
+.landingTopMenu #log-in {
+  border-color: transparent;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.landingTopMenu #create {
+  /* design */
+  border-color: #004AAD;
+  border-width: 2px;
+  color: #004AAD;
+  background-color: transparent;
+  border-radius: 4px;
+
+  /* layout */
+  width: auto;
+  height: auto;
+}
+
+.landingTopMenu #create:hover {
+  color: #449DD1;
+  border-color: #449DD1;
+  background-color: rgb(226, 226, 226);
+}
+
+.landingTopMenu #create:active {
+  color: whitesmoke;
+  background-color: #449DD1;
 }

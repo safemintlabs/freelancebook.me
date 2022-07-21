@@ -6,7 +6,6 @@ import { Link, navigate, routes } from '@redwoodjs/router'
 const StartNow = () => {
   return (
     <>
-      {/* <div id='thin-divider'> </div> */}
       <div className='startNow'>
           <div id='startNow-left'>
             <h1>
@@ -16,7 +15,7 @@ const StartNow = () => {
               Make a site with your portfolio and an appointment booking system. Clients can learn more about you and book a schedule to avail your professional services.
             </p>
             <Button id='claim' type="primary" size={'large'}>
-              Create your FREE website now
+              Create your FREE website now ⟶
             </Button>
           </div>
           <div id='startNow-right'>

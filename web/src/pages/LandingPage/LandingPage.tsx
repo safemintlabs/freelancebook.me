@@ -11,6 +11,7 @@ import './styles.less'
 
 import LandingHeader from './LandingHeader'
 import StartNow from './components/StartNow/StartNow'
+import Stats from './components/Stats/Stats'
 
 const LandingPage = () => {
   return (
@@ -18,6 +19,7 @@ const LandingPage = () => {
         <Layout>
           <LandingHeader />
           <StartNow />
+          <Stats />
         </Layout>
       </>
   )

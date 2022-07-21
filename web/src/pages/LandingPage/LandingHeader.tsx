@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Image, Layout, Menu, MenuProps, Badge } from 'antd'
+import { Image, Layout, Menu, MenuProps, Badge, Button } from 'antd'
 import './LandingHeader-styles.css'
 import { Link, navigate, routes } from '@redwoodjs/router'
 
@@ -7,18 +7,18 @@ const { Header } = Layout
 
 const items: MenuProps['items'] = [
   {
-    label: 'Sign Up',
-    key: 'sign-up',
-    onClick: () => {
-      navigate(routes.login())
-    }
-  },
-  {
     label: 'Log In',
     key: 'log-in',
     onClick: () => {
       navigate(routes.login())
     }
+  },
+  {
+    label: 'Create Your Site',
+    key: 'create',
+    onClick: () => {
+      navigate(routes.login())
+    },
   },
 ];
 
@@ -30,10 +30,10 @@ const LandingHeader = () => {
         <Link className="logo" to={routes.landing()}>
           <Image height={100} src="/images/logos/inlinestyle/00-freelancebook-inlinestyle.svg" preview={false} />
         </Link>
-        <Menu className='landingTopMenu'
-          mode="horizontal"
-          items={items}
-        />
+        <div className='landingTopMenu'>
+          <Button id='log-in' onClick={ () => {navigate(routes.login()) } }> Log in </Button>
+          <Button id='create' onClick={ () => {navigate(routes.login()) } }> Create Your Site </Button>
+        </div>
       </Header>
     </>
   )
