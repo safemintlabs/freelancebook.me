@@ -15,6 +15,7 @@ import Stats from './components/Stats/Stats'
 import FAQ from './components/FAQ/FAQ'
 import LandingFooter from './LandingFooter'
 import FeaturedProfiles from './components/FeaturedProfiles/FeaturedProfiles'
+import HowItWorks from './components/HowItWorks/HowItWorks'
 
 const LandingPage = () => {
   return (
@@ -25,6 +26,7 @@ const LandingPage = () => {
           <Stats />
           {/* <HowItWorks /> */}
           <FeaturedProfiles />
+          <HowItWorks />
           <FAQ />
           <LandingFooter />
         </Layout>
