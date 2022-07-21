@@ -5,23 +5,6 @@ import { Link, navigate, routes } from '@redwoodjs/router'
 
 const { Header } = Layout
 
-const items: MenuProps['items'] = [
-  {
-    label: 'Log In',
-    key: 'log-in',
-    onClick: () => {
-      navigate(routes.login())
-    }
-  },
-  {
-    label: 'Create Your Site',
-    key: 'create',
-    onClick: () => {
-      navigate(routes.login())
-    },
-  },
-];
-
 const LandingHeader = () => {
 
   return (
