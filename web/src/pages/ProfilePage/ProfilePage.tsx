@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { Col, Descriptions, Row } from 'antd'
+import { Skeleton, Spin, Col, Descriptions, Row } from 'antd'
 
 // import { Link, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
@@ -25,30 +25,35 @@ const ProfilePage = ({ username: u }: { username?: string }) => {
   } = profile || {}
   useEffect(() => setProfile(data), [data])
   return (
-    <>
+    <Spin tip="Fetching user..." spinning={isLoading}>
       <MetaTags title="Profile" description="Profile page" />
       <Row gutter={[16, 16]}>
         <Col span={6}>
           <Avatar url={avatar_url} size={200} />
         </Col>
-        <Col flex="1 1 0%">
-          <Descriptions title="User Info" layout="vertical" column={2}>
-            <Descriptions.Item label="Email">{email}</Descriptions.Item>
-            <Descriptions.Item label="UserName">{username}</Descriptions.Item>
-            <Descriptions.Item label="Name">
-              {first_name} {last_name}
-            </Descriptions.Item>
-            <Descriptions.Item label="Website">{website}</Descriptions.Item>
-          </Descriptions>
-          <Descriptions title="Service">
-            <Descriptions.Item>{service}</Descriptions.Item>
-          </Descriptions>
-          <Descriptions title="About">
-            <Descriptions.Item>{about}</Descriptions.Item>
-          </Descriptions>
-        </Col>
+
+        {isLoading ? (
+          <Skeleton />
+        ) : (
+          <Col flex="1 1 0%">
+            <Descriptions title="User Info" layout="vertical" column={2}>
+              <Descriptions.Item label="Email">{email}</Descriptions.Item>
+              <Descriptions.Item label="UserName">{username}</Descriptions.Item>
+              <Descriptions.Item label="Name">
+                {first_name} {last_name}
+              </Descriptions.Item>
+              <Descriptions.Item label="Website">{website}</Descriptions.Item>
+            </Descriptions>
+            <Descriptions title="Service">
+              <Descriptions.Item>{service}</Descriptions.Item>
+            </Descriptions>
+            <Descriptions title="About">
+              <Descriptions.Item>{about}</Descriptions.Item>
+            </Descriptions>
+          </Col>
+        )}
       </Row>
-    </>
+    </Spin>
   )
 }
 
