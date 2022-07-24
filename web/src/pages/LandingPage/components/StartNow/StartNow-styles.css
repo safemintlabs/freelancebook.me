@@ -1,5 +1,3 @@
-@import '~antd/dist/antd.css';
-
 .startNow {
   /* design */
   background-color: whitesmoke;
@@ -36,7 +34,7 @@
 
 .startNow h1 {
   font-size: 40px;
-  font-family: 'Inter', sans-serif;
+
   font-weight: 600;
   color: #0A0F0D;
   width: 100%;
@@ -44,7 +42,7 @@
 
 .startNow p {
   font-size: 15px;
-  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+
   color: #0A0F0D;
 }
 
@@ -137,4 +135,8 @@
   .startNow #startNow-right {
     height: 200px;
   }
+}
+
+.playfair {
+  font-family: 'Playfair Display', serif;
 }

@@ -10,7 +10,7 @@
 #featuredProfiles h2 {
   padding-left: 50px;
   font-size: 32px;
-  font-family: 'Inter', sans-serif;
+
   font-weight: 600;
   color: #0A0F0D;
   width: 100%;
@@ -50,9 +50,6 @@
   height: 100%;
   width: height;
   float: left;
-
-  /* typography */
-  font-family: 'Inter', san-serif;
 }
 
 #featuredProfiles .ant-carousel .profileCard .profileInfo {

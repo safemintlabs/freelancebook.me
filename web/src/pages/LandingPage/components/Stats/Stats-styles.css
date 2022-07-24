@@ -19,7 +19,6 @@
 }
 
 .stats div h2 {
-  font-family: 'Inter';
   font-size: 40px;
   font-weight: 700;
   line-height: 40px;
@@ -29,7 +28,7 @@
 }
 
 .stats div p {
-  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+
   font-size: 20px;
   font-weight: 500;
   line-height: 20px;
