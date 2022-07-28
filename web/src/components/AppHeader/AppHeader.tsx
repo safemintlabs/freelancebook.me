@@ -41,18 +41,22 @@ const AppHeader = ({
     {
       key: 'home',
       label: 'Profile',
+      onClick: () => navigate(routes.profile()),
     },
     {
-      key: 'scheduule',
+      key: 'schedule',
       label: 'Schedule',
+      onClick: () => navigate(routes.schedule()),
     },
     {
       key: 'projects',
       label: 'Projects',
+      onClick: () => navigate(routes.projects()),
     },
     {
       key: 'testimonials',
       label: 'Testimonials',
+      onClick: () => navigate(routes.testimonials()),
     },
   ]
   const setupMenu = [
@@ -134,6 +138,8 @@ const AppHeader = ({
 
   if (notProfileCompleted && pathname !== '/setup' && !isLoading)
     return <Redirect to={routes.setup()} />
+
+  console.log({ items, pathname })
   return (
     <Header className="header">
       <Link className="logo" to={routes.home()}>
@@ -147,7 +153,10 @@ const AppHeader = ({
             className="app-top-menu"
             theme="light"
             mode="horizontal"
-            selectedKeys={[items[0].key as string]}
+            selectedKeys={[
+              items.find((o) => pathname.includes(o.key as string))
+                ?.key as string,
+            ]}
             items={items}
             selectable
             style={{ flex: '1 1 0%', height: '100%' }}

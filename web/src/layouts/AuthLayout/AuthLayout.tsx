@@ -2,6 +2,7 @@ import React from 'react'
 
 import { Breadcrumb, Layout } from 'antd'
 
+import AppFooter from 'src/components/AppFooter/AppFooter'
 import AppHeader from 'src/components/AppHeader/AppHeader'
 // import AppMenu from 'src/components/AppMenu/AppMenu'
 // import { useProfile } from 'src/hooks/profiles'
@@ -14,7 +15,7 @@ const {
 const AuthLayout: React.FC = ({ children }) => {
   // const { data: profile } = useProfile()
   return (
-    <Layout style={{ height: '100vh' }}>
+    <Layout style={{ height: '100vh', overflow: 'auto' }}>
       <AppHeader isProfile={true} />
       <Layout>
         {/* {profile?.isActive && (
@@ -42,6 +43,7 @@ const AuthLayout: React.FC = ({ children }) => {
           </Content>
         </Layout>
       </Layout>
+      <AppFooter />
     </Layout>
   )
 }

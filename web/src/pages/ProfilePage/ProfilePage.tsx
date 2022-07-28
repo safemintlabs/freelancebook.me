@@ -29,7 +29,7 @@ const ProfilePage = ({ username: u }: { username?: string }) => {
       <MetaTags title="Profile" description="Profile page" />
       <Row gutter={[16, 16]}>
         <Col span={6}>
-          <Avatar url={avatar_url} size={200} />
+          <Avatar url={avatar_url} size="100%" />
         </Col>
 
         {isLoading ? (
