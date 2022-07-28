@@ -41,22 +41,22 @@ const AppHeader = ({
     {
       key: 'home',
       label: 'Profile',
-      onClick: () => navigate(routes.profile()),
+      onClick: () => navigate(routes.publicProfile({ username })),
     },
     {
       key: 'schedule',
       label: 'Schedule',
-      onClick: () => navigate(routes.schedule()),
+      onClick: () => navigate(routes.publicSchedule({ username })),
     },
     {
       key: 'projects',
       label: 'Projects',
-      onClick: () => navigate(routes.projects()),
+      onClick: () => navigate(routes.publicProjects({ username })),
     },
     {
       key: 'testimonials',
       label: 'Testimonials',
-      onClick: () => navigate(routes.testimonials()),
+      onClick: () => navigate(routes.publicTestimonials({ username })),
     },
   ]
   const setupMenu = [
@@ -69,8 +69,10 @@ const AppHeader = ({
   const notProfileCompleted = !profile && isAuthenticated
   const menus = notProfileCompleted
     ? setupMenu
-    : (isProfile && isMe) || username
+    : username
     ? profileMenu
+    : isMe && isProfile
+    ? []
     : homeMenu
   const notifications = isAuthenticated
     ? ([
@@ -139,9 +141,13 @@ const AppHeader = ({
   if (notProfileCompleted && pathname !== '/setup' && !isLoading)
     return <Redirect to={routes.setup()} />
 
-  console.log({ items, pathname })
+  const selectedKey =
+    items.find((o) => pathname.includes(o.key as string))?.key || items[0]?.key
   return (
-    <Header className="header">
+    <Header
+      className="header"
+      style={{ position: isProfile ? 'fixed' : 'relative' }}
+    >
       <Link className="logo" to={routes.home()}>
         <Image width={200} src="/images/freelancer.svg" preview={false} />
       </Link>
@@ -153,10 +159,7 @@ const AppHeader = ({
             className="app-top-menu"
             theme="light"
             mode="horizontal"
-            selectedKeys={[
-              items.find((o) => pathname.includes(o.key as string))
-                ?.key as string,
-            ]}
+            selectedKeys={[selectedKey as string]}
             items={items}
             selectable
             style={{ flex: '1 1 0%', height: '100%' }}
