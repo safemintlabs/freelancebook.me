@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 
 import { BellFilled, UserOutlined } from '@ant-design/icons'
-import { Image, Layout, Menu, MenuProps, Badge, Skeleton } from 'antd'
+import { Image, Layout, Menu, MenuProps, Badge, Skeleton, Affix } from 'antd'
 
 import { useAuth } from '@redwoodjs/auth'
 import {
@@ -144,38 +144,37 @@ const AppHeader = ({
   const selectedKey =
     items.find((o) => pathname.includes(o.key as string))?.key || items[0]?.key
   return (
-    <Header
-      className="header"
-      style={{ position: isProfile ? 'fixed' : 'relative' }}
-    >
-      <Link className="logo" to={routes.home()}>
-        <Image width={200} src="/images/freelancer.svg" preview={false} />
-      </Link>
-      {isLoading ? (
-        <Skeleton />
-      ) : (
-        <>
-          <Menu
-            className="app-top-menu"
-            theme="light"
-            mode="horizontal"
-            selectedKeys={[selectedKey as string]}
-            items={items}
-            selectable
-            style={{ flex: '1 1 0%', height: '100%' }}
-          />
-          <Menu
-            style={{ width: isAuthenticated ? '108px' : '54px' }}
-            className="app-top-menu"
-            theme="light"
-            mode="horizontal"
-            defaultSelectedKeys={['home']}
-            items={rightMenu}
-            selectable
-          />
-        </>
-      )}
-    </Header>
+    <Affix offsetTop={0}>
+      <Header className="header">
+        <Link className="logo" to={routes.home()}>
+          <Image width={200} src="/images/freelancer.svg" preview={false} />
+        </Link>
+        {isLoading ? (
+          <Skeleton />
+        ) : (
+          <>
+            <Menu
+              className="app-top-menu"
+              theme="light"
+              mode="horizontal"
+              selectedKeys={[selectedKey as string]}
+              items={items}
+              selectable
+              style={{ flex: '1 1 0%', height: '100%' }}
+            />
+            <Menu
+              style={{ width: isAuthenticated ? '108px' : '54px' }}
+              className="app-top-menu"
+              theme="light"
+              mode="horizontal"
+              defaultSelectedKeys={['home']}
+              items={rightMenu}
+              selectable
+            />
+          </>
+        )}
+      </Header>
+    </Affix>
   )
 }
 

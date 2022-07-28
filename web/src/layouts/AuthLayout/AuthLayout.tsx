@@ -17,10 +17,7 @@ const AuthLayout: React.FC = ({ children }) => {
     <>
       <Layout style={{ minHeight: '100vh' }}>
         <AppHeader isProfile={true} />
-        <Layout
-          hasSider={profile?.isActive}
-          style={{ flex: '1 1 0%', marginTop: '64px' }}
-        >
+        <Layout hasSider={profile?.isActive} style={{ flex: '1 1 0%' }}>
           {profile?.isActive && (
             <Sider
               width={200}
