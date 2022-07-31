@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 
 import { ConfigProvider } from 'antd'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import { Provider } from 'react-supabase'
 
 import { AuthProvider } from '@redwoodjs/auth'
 import { FatalErrorBoundary, RedwoodProvider } from '@redwoodjs/web'
@@ -29,9 +30,11 @@ const App = () => {
         <FatalErrorBoundary page={FatalErrorPage}>
           <RedwoodProvider titleTemplate="%PageTitle | %AppTitle">
             <AuthProvider client={supabase} type="supabase">
-              <RedwoodApolloProvider>
-                <Routes />
-              </RedwoodApolloProvider>
+              <Provider value={supabase}>
+                <RedwoodApolloProvider>
+                  <Routes />
+                </RedwoodApolloProvider>
+              </Provider>
             </AuthProvider>
           </RedwoodProvider>
         </FatalErrorBoundary>
