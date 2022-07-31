@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { SettingOutlined } from '@ant-design/icons'
+import { PlusOutlined, SettingOutlined } from '@ant-design/icons'
 import { BadgeProps, Button, Col, Divider, Row } from 'antd'
 import { Badge, Calendar } from 'antd'
 import type { Moment } from 'moment'
@@ -9,6 +9,7 @@ import { navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 
 import ScheduleList from 'src/components/ScheduleList/ScheduleList'
+import { useProfile } from 'src/hooks/profiles'
 
 const getListData = (value: Moment) => {
   let listData
@@ -46,7 +47,8 @@ const getMonthData = (value: Moment) => {
     return 1394
   }
 }
-const SchedulePage = () => {
+const SchedulePage = ({ username }) => {
+  const { isMe } = useProfile(username)
   const monthCellRender = (value: Moment) => {
     const num = getMonthData(value)
     return num ? (
@@ -96,7 +98,7 @@ const SchedulePage = () => {
             navigate(routes.scheduleEdit({ action: 'edit' }))
           }}
         >
-          <SettingOutlined />
+          {isMe ? <SettingOutlined /> : <PlusOutlined />}
         </Button>
       </Row>
     </>

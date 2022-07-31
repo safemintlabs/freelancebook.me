@@ -10,10 +10,12 @@ export type Day = 'M' | 'T' | 'W' | 'TH' | 'F' | 'S' | 'SU'
 
 export interface TimeSlot {
   id?: string
-  day: Day[]
+  day: Day
   active: boolean
   time_start: string | Moment
   time_end: string | Moment
+  freelancer_id: string
+  isNew?: boolean
 }
 
 export const saveSchedule = async ({
@@ -32,6 +34,10 @@ export const saveSchedule = async ({
           prev.find((o) => o.id === row.id)
         )
       ) {
+        if (row.isNew) {
+          delete row.isNew
+          delete row.id
+        }
         const { error } = await supabase.from('timeslots').upsert(row, {
           returning: 'minimal', // Don't return the value after inserting
         })
@@ -84,6 +90,7 @@ export const useSchedule = (userId: string) => {
   })
   return {
     schedules: (result.data || []) as TimeSlot[],
+    isLoading: result.fetching,
     reexecute,
     save,
   }
