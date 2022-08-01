@@ -7,6 +7,7 @@ import { useFilter, useRealtime } from 'react-supabase'
 import { supabase } from 'src/supabaseClient'
 
 export type Day = 'M' | 'T' | 'W' | 'TH' | 'F' | 'S' | 'SU'
+export const DAYS: Day[] = ['SU', 'M', 'T', 'W', 'TH', 'F', 'S']
 
 export interface TimeSlot {
   id?: string

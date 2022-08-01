@@ -129,5 +129,5 @@ export const useProfile = (username?: string) => {
   )
   const isMe = data?.id === id
 
-  return { data, isLoading, isSaving, save, percentage, isMe, id }
+  return { data, isLoading, isSaving, save, percentage, isMe, id: data?.id }
 }
