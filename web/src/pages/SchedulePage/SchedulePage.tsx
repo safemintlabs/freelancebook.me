@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { PlusOutlined, SettingOutlined } from '@ant-design/icons'
-import { BadgeProps, Button, Col, Divider, Row } from 'antd'
+import { Button, Col, Divider, Row, Skeleton } from 'antd'
 import { Badge, Calendar } from 'antd'
 import type { Moment } from 'moment'
 import moment from 'moment'
@@ -15,13 +15,23 @@ import { useAppointments } from 'src/hooks/appointments'
 import { useProfile } from 'src/hooks/profiles'
 import { DAYS, useSchedule } from 'src/hooks/schedule'
 
+import { Appointment, AppointmentStatus } from '../../../../types/appointments'
+
 const SchedulePage = ({ username, action }) => {
-  const [date, setDate] = useState(moment())
   const { isMe, id, data: profile } = useProfile(username)
   const { id: userId } = useProfile()
   const { schedules, isLoading } = useSchedule(id)
-  const { appointments: myAppointments } = useAppointments(null, userId, date)
-  const { appointments } = useAppointments(id, userId, date)
+  const {
+    appointments: myAppointments,
+    date,
+    setDate: setMyDate,
+  } = useAppointments(null, userId)
+  const {
+    appointments,
+    setDate: setProfileDate,
+    save,
+    isSaving,
+  } = useAppointments(id, userId)
 
   const monthCellRender = () => {
     return (
@@ -45,15 +55,29 @@ const SchedulePage = ({ username, action }) => {
       </ul>
     )
   }
+  const handleChangeDate = (date: Moment): void => {
+    console.log({ date: date.format() })
+    setMyDate(date.clone())
+    setProfileDate(date.clone())
+  }
+  const handleSubmit = async (data: Appointment) => {
+    const selected = schedules?.find((o) => o.id === data.slot_id)
+    await save({
+      data: {
+        ...data,
+        freelancer_id: id,
+        user_id: userId,
+        status: AppointmentStatus.PENDING,
+        schedule_date_time: moment(
+          `${date.format('YYYY-MM-DD')} ${selected.time_start}`,
+          'YYYY-MM-DD HH:mm'
+        ).toDate(),
+        reserved_date_time: moment().toDate(),
+      },
+    })
+  }
 
-  console.log({
-    schedules,
-    isLoading,
-    myAppointments,
-    appointments,
-    date,
-  })
-
+  console.log({ isLoading, myAppointments, appointments })
   return (
     <>
       <MetaTags title="Schedule" description="Schedule page" />
@@ -61,25 +85,29 @@ const SchedulePage = ({ username, action }) => {
       <Row gutter={[16, 16]}>
         <Col flex="1 1 0%">
           <h1>View your schedule</h1>
-          <Calendar
-            value={date}
-            onSelect={setDate}
-            dateCellRender={dateCellRender}
-            monthCellRender={monthCellRender}
-            disabledDate={(date) =>
-              !schedules?.filter((o) => {
-                return DAYS.indexOf(o.day) === date.day()
-              }).length
-            }
-          />
+          {isLoading ? (
+            <Skeleton />
+          ) : (
+            <Calendar
+              value={date}
+              onSelect={handleChangeDate}
+              // onChange={handleChangeDate}
+              dateCellRender={dateCellRender}
+              monthCellRender={monthCellRender}
+              disabledDate={(date) =>
+                !schedules?.filter((o) => {
+                  return DAYS.indexOf(o.day) === date.day()
+                }).length
+              }
+            />
+          )}
         </Col>
         <Col span={8} style={{ display: 'flex', flexDirection: 'row' }}>
           <Divider type="vertical" style={{ height: '100%' }} />
-          <ScheduleList />
+          {isLoading ? <Skeleton /> : <ScheduleList />}
         </Col>
         <Button
           type="primary"
-          shape="circle"
           className="edit-schedule"
           onClick={() => {
             navigate(
@@ -90,17 +118,27 @@ const SchedulePage = ({ username, action }) => {
           }}
         >
           {isMe ? <SettingOutlined /> : <PlusOutlined />}
+          {isMe
+            ? 'Edit Schedule'
+            : `Book for ${
+                date.isSame(moment(), 'date')
+                  ? 'Today'
+                  : date.clone().format('MMM DD, YYYY')
+              }`}
         </Button>
       </Row>
       {action === 'new' && (
         <AppointmentForm
+          appointments={appointments}
           schedules={schedules}
           name={`${profile?.first_name} ${profile?.last_name}`}
           onBack={() => {
             navigate(routes.publicSchedule({ username }))
           }}
           value={date}
-          onChange={setDate}
+          onChange={handleChangeDate}
+          onSubmit={handleSubmit}
+          isSaving={isSaving}
         />
       )}
     </>

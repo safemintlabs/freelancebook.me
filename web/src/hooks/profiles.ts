@@ -47,7 +47,6 @@ const getProfileByUsername = async (username): Promise<IUser> => {
     .select(`*`)
     .eq('username', username)
     .single()
-  console.log({ status, data })
   if (status === 200) {
     return data
   }
@@ -99,13 +98,11 @@ export const useProfile = (username?: string) => {
           description: ErrorCodes['err' + err.code],
         })
       },
-      onSuccess: (info) => console.log(info),
     }
   )
   const { isLoading: isSaving, mutate: save } = useMutation(updateProfile, {
     onSuccess: () => refetch(),
     onError: (err: any) => {
-      console.log({ err })
       notification.error({
         message: 'Something went wrong',
         description: ErrorCodes['err' + err.code],

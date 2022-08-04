@@ -82,7 +82,7 @@ export const useSchedule = (userId: string) => {
     },
   })
 
-  const { mutateAsync: save } = useMutation(saveSchedule, {
+  const { mutateAsync: save, isLoading: isSaving } = useMutation(saveSchedule, {
     onError: (err: any) => {
       notification.error({
         message: err.message || 'Something went wrong',
@@ -90,9 +90,10 @@ export const useSchedule = (userId: string) => {
     },
   })
   return {
-    schedules: (result.data || []) as TimeSlot[],
+    schedules: result.data as TimeSlot[],
     isLoading: result.fetching,
     reexecute,
     save,
+    isSaving,
   }
 }
