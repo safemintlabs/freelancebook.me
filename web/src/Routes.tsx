@@ -18,14 +18,22 @@ const Routes = () => {
       <Route path="/login" page={LoginPage} name="login" />
       <Private unauthenticated="login">
         <Set wrap={AuthLayout}>
+          <Route path="/setup" page={SetupPage} name="setup" />
           <Route path="/profile" page={ProfilePage} name="profile" />
+          <Route path="/schedule" page={SchedulePage} name="schedule" />
+          <Route path="/schedule/{action}" page={SchedulesetupPage} name="scheduleEdit" />
+          <Route path="/testimonials" page={TestimonialsPage} name="testimonials" />
+          <Route path="/projects" page={ProjectsPage} name="projects" />
         </Set>
       </Private>
       <Set wrap={PublicLayout}>
         <Route path="/{username}" page={ProfilePage} name="publicProfile" />
-        <Route path="/home" page={HomePage} name="home" />
+        <Route path="/{username}/schedule" page={SchedulePage} name="publicSchedule" />
+        <Route path="/{username}/schedule/{action}" page={SchedulePage} name="publicAppointment" />
+        <Route path="/{username}/testimonials" page={TestimonialsPage} name="publicTestimonials" />
+        <Route path="/{username}/projects" page={ProjectsPage} name="publicProjects" />
+        <Route path="/" page={HomePage} name="home" />
       </Set>
-      <Route path="/" page={LandingPage} name="landing"/>
       <Route notfound page={NotFoundPage} />
     </Router>
   )

@@ -5,7 +5,7 @@ const AppFooter = () => {
   return (
     <div className="footer">
       <Typography.Link href="https://freelancerbook.com">
-        Freelancerbook.com <CopyrightCircleFilled/> 2022
+        Freelancerbook.com <CopyrightCircleFilled /> 2022
       </Typography.Link>
     </div>
   )

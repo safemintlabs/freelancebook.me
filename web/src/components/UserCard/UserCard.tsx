@@ -7,6 +7,8 @@ import { navigate, routes } from '@redwoodjs/router'
 import './styles.less'
 import { IUser } from 'src/hooks/profiles'
 
+import Avatar from '../Avatar'
+
 const { Meta } = Card
 
 interface IProps {
@@ -17,7 +19,7 @@ const UserCard = ({ user }: IProps): JSX.Element => (
   <Badge.Ribbon text="Verified" color="green">
     <Card
       hoverable
-      cover={<img alt={user.username} src={user.avatar_url} />}
+      cover={<Avatar url={user.avatar_url} size={150} />}
       className="avatar-card"
       onClick={() =>
         navigate(routes.publicProfile({ username: user.username }))

@@ -1,10 +1,16 @@
 import React, { useEffect } from 'react'
 
 import { BellFilled, UserOutlined } from '@ant-design/icons'
-import { Image, Layout, Menu, MenuProps, Badge } from 'antd'
+import { Image, Layout, Menu, MenuProps, Badge, Skeleton, Affix } from 'antd'
 
 import { useAuth } from '@redwoodjs/auth'
-import { Link, navigate, routes } from '@redwoodjs/router'
+import {
+  Link,
+  navigate,
+  Redirect,
+  routes,
+  useLocation,
+} from '@redwoodjs/router'
 
 import './styles.less'
 import { useProfile } from 'src/hooks/profiles'
@@ -18,8 +24,9 @@ const AppHeader = ({
   isProfile?: boolean
   username?: string
 }) => {
-  const { data: profile } = useProfile(username)
-  const { isAuthenticated, logOut, reauthenticate, currentUser } = useAuth()
+  const { pathname } = useLocation()
+  const { data: profile, isLoading, isMe } = useProfile(username)
+  const { isAuthenticated, logOut, reauthenticate } = useAuth()
   const signout = async () => {
     const { error } = await logOut()
     console.log({ error })
@@ -34,31 +41,46 @@ const AppHeader = ({
     {
       key: 'home',
       label: 'Profile',
+      onClick: () => navigate(routes.publicProfile({ username })),
     },
     {
-      key: 'scheduule',
+      key: 'schedule',
       label: 'Schedule',
+      onClick: () => navigate(routes.publicSchedule({ username })),
     },
     {
       key: 'projects',
       label: 'Projects',
+      onClick: () => navigate(routes.publicProjects({ username })),
     },
     {
       key: 'testimonials',
       label: 'Testimonials',
+      onClick: () => navigate(routes.publicTestimonials({ username })),
     },
   ]
-  const menus =
-    isProfile || (profile && profile.id !== currentUser?.id)
-      ? profileMenu
-      : homeMenu
+  const setupMenu = [
+    {
+      key: 'setup',
+      label: 'Setup Profile',
+    },
+  ]
+
+  const notProfileCompleted = !profile && isAuthenticated
+  const menus = notProfileCompleted
+    ? setupMenu
+    : username
+    ? profileMenu
+    : isMe && isProfile
+    ? []
+    : homeMenu
   const notifications = isAuthenticated
     ? ([
         {
           key: 'notification',
           icon: (
             <Badge count={5} size="small">
-              <BellFilled width={24} height={24} style={{ fill: '#FFF' }} />
+              <BellFilled width={24} height={24} />
             </Badge>
           ),
           style: {
@@ -116,31 +138,43 @@ const AppHeader = ({
     }, 100)
   }, [])
 
-  console.log({ isAuthenticated, currentUser })
+  if (notProfileCompleted && pathname !== '/setup' && !isLoading)
+    return <Redirect to={routes.setup()} />
+
+  const selectedKey =
+    items.find((o) => pathname.includes(o.key as string))?.key || items[0]?.key
   return (
-    <Header className="header">
-      <Link className="logo" to={routes.home()}>
-        <Image width={200} src="/images/freelancer.svg" preview={false} />
-      </Link>
-      <Menu
-        className="app-top-menu"
-        theme="light"
-        mode="horizontal"
-        defaultSelectedKeys={['home']}
-        items={items}
-        selectable
-        style={{ flex: '1 1 0%', height: '100%' }}
-      />
-      <Menu
-        style={{ width: isAuthenticated ? '108px' : '54px' }}
-        className="app-top-menu"
-        theme="light"
-        mode="horizontal"
-        defaultSelectedKeys={['home']}
-        items={rightMenu}
-        selectable
-      />
-    </Header>
+    <Affix offsetTop={0}>
+      <Header className="header">
+        <Link className="logo" to={routes.home()}>
+          <Image width={200} src="/images/freelancer.svg" preview={false} />
+        </Link>
+        {isLoading ? (
+          <Skeleton />
+        ) : (
+          <>
+            <Menu
+              className="app-top-menu"
+              theme="light"
+              mode="horizontal"
+              selectedKeys={[selectedKey as string]}
+              items={items}
+              selectable
+              style={{ flex: '1 1 0%', height: '100%' }}
+            />
+            <Menu
+              style={{ width: isAuthenticated ? '108px' : '54px' }}
+              className="app-top-menu"
+              theme="light"
+              mode="horizontal"
+              defaultSelectedKeys={['home']}
+              items={rightMenu}
+              selectable
+            />
+          </>
+        )}
+      </Header>
+    </Affix>
   )
 }
 
