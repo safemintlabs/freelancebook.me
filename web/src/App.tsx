@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 
+import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
 import { createClient } from '@supabase/supabase-js'
 import { ConfigProvider } from 'antd'
 import { QueryClient, QueryClientProvider } from 'react-query'
@@ -12,6 +13,7 @@ import FatalErrorPage from 'src/pages/FatalErrorPage'
 import Routes from 'src/Routes'
 
 import './theme.less'
+import './fonts.less'
 
 const queryClient = new QueryClient()
 
@@ -34,9 +36,12 @@ const App = () => {
         <FatalErrorBoundary page={FatalErrorPage}>
           <RedwoodProvider titleTemplate="%PageTitle | %AppTitle">
             <AuthProvider client={supabaseClient} type="supabase">
-              <RedwoodApolloProvider>
-                <Routes />
-              </RedwoodApolloProvider>
+              <ColorModeScript />
+              <ChakraProvider>
+                <RedwoodApolloProvider>
+                  <Routes />
+                </RedwoodApolloProvider>
+              </ChakraProvider>
             </AuthProvider>
           </RedwoodProvider>
         </FatalErrorBoundary>
