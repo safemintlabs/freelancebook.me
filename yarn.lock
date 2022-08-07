@@ -22614,6 +22614,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-supabase@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "react-supabase@npm:0.2.0"
+  peerDependencies:
+    "@supabase/supabase-js": ^1.11.6
+    react: ^17.0.0
+  checksum: 086cc1079b2ee6c820b79681210178f71a3d5722ac31a9b290284043dc23b231643739eafcf7211937a39cafe4f34d4dca6b7c08632da23a39d69f0ca5852c0c
+  languageName: node
+  linkType: hard
+
 "react-syntax-highlighter@npm:^15.4.5":
   version: 15.5.0
   resolution: "react-syntax-highlighter@npm:15.5.0"
@@ -23364,6 +23374,7 @@ __metadata:
     antd: ^4.21.7
     less: ^4.1.3
     less-loader: ^11.0.0
+    lodash: ^4.17.21
     react-query: ^3.39.1
     react-responsive-masonry: ^2.1.4
   languageName: unknown
@@ -26535,6 +26546,7 @@ __metadata:
     react: 17.0.2
     react-dom: 17.0.2
     react-icons: ^4.4.0
+    react-supabase: ^0.2.0
   languageName: unknown
   linkType: soft
 
