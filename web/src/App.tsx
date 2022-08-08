@@ -1,3 +1,4 @@
+import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
 import React, { useEffect } from 'react'
 
 import { ConfigProvider } from 'antd'
@@ -31,9 +32,12 @@ const App = () => {
           <RedwoodProvider titleTemplate="%PageTitle | %AppTitle">
             <AuthProvider client={supabase} type="supabase">
               <Provider value={supabase}>
-                <RedwoodApolloProvider>
-                  <Routes />
-                </RedwoodApolloProvider>
+                <ColorModeScript />
+                <ChakraProvider>
+                  <RedwoodApolloProvider>
+                    <Routes />
+                  </RedwoodApolloProvider>
+                </ChakraProvider>
               </Provider>
             </AuthProvider>
           </RedwoodProvider>
