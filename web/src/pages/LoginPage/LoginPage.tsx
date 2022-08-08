@@ -14,7 +14,7 @@ const LoginPage: React.FC = () => {
       flexDirection="column"
       width="100wh"
       height="100vh"
-      backgroundColor="gray.200"
+      backgroundColor="#F7F9FB"
       justifyContent="center"
       alignItems="center"
     >
