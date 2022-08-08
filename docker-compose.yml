@@ -1,0 +1,68 @@
+version: "3.7"
+services:
+  app:
+    build:
+      args:
+        user: dev
+        uid: 1000
+    image: jasonvillalon/freelancebook.me
+    user: "1000:1000"
+    container_name: freelancebook
+    restart: unless-stopped
+    networks:
+      - freelancebook
+    ports:
+      - "8910:8910"
+  db:
+    image: supabase/pgadmin-schema-diff
+    container_name: db
+    restart: unless-stopped
+    environment:
+      DEV_SUPABASE_HOST: ${DEV_SUPABASE_HOST}
+      PROD_SUPABASE_HOST: ${PROD_SUPABASE_HOST}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_DB: ${DB_NAME}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./postgresql:/var/lib/postgresql
+    networks:
+      - freelancebook
+    ports:
+      - "5432:5432"
+  certbot:
+    image: certbot/dns-cloudflare
+    volumes:
+      - ./docker/cloudflare.ini:/root/cloudflare.ini
+      - ./docker/certbot/conf:/etc/letsencrypt
+    command: >-
+      certonly --dns-cloudflare
+      --dns-cloudflare-credentials /root/cloudflare.ini
+      --dns-cloudflare-propagation-seconds 15
+      --email jasonvillalon@gmail.com
+      --agree-tos --no-eff-email
+      --force-renewal
+      -d freelancebook.me
+      -d *.freelancebook.me
+  nginx:
+    depends_on:
+      - app
+      - certbot
+    image: nginx:alpine
+    container_name: nginx
+    restart: always
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./docker/certbot/conf:/etc/letsencrypt
+      - ./docker/ssl-dhparams.pem:/etc/letsencrypt/ssl-dhparams.pem
+        #- ./docker/certbot/www:/var/www/certbot
+    networks:
+      - freelancebook
+networks:
+  freelancebook:
+    driver: bridge
