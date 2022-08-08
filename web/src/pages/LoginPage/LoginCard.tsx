@@ -42,7 +42,6 @@ const LoginCard = () => {
       if (error) throw error
       toast({
         title: 'Login Successful',
-        description: 'Check your email for the login link!',
         status: 'success',
         duration: 9000,
         position: 'top',
