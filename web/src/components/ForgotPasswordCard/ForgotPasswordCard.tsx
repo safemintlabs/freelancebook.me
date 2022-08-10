@@ -24,7 +24,7 @@ const ForgotPasswordCard = () => {
               an email link to reset your password
             </b>
           </Text>
-          <FormLabel htmlFor="password">Email</FormLabel>
+          <FormLabel htmlFor="email">Email</FormLabel>
           <Input
             id="email"
             placeholder="juandelacruz@gmail.com"
