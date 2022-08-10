@@ -29,15 +29,28 @@ export const useAppointments = (freelancerId: string, userId?: string) => {
   const filter = useFilter(
     (query) => {
       if (freelancerId) query.eq('freelancer_id', freelancerId)
-      else if (userId) query.eq('user_id', userId)
+      else if (userId) query.eq('freelancer_id', userId)
       query.gte('schedule_date_time', startDate)
       query.lte('schedule_date_time', endDate)
       return query
     },
     [freelancerId, userId, startDate, endDate]
   )
+  const [resultPublic, reexecutePublic] = useRealtime(
+    'appointments_public',
+    {
+      select: {
+        columns: '*',
+        filter,
+      },
+    },
+    (data, payload) => {
+      console.log({ data, payload })
+      return true
+    }
+  )
   const [result, reexecute] = useRealtime(
-    freelancerId ? 'appointments_public' : 'appointments',
+    'appointments',
     {
       select: {
         columns: '*',
@@ -60,11 +73,11 @@ export const useAppointments = (freelancerId: string, userId?: string) => {
       },
     }
   )
-
+  const finalResult = freelancerId ? resultPublic : result
   return {
-    appointments: (result.data || []) as Appointment[],
-    isLoading: result.fetching,
-    reexecute,
+    appointments: (finalResult.data || []) as Appointment[],
+    isLoading: finalResult.fetching,
+    reexecute: freelancerId ? reexecutePublic : reexecute,
     save,
     setDate,
     date: date || moment(),

@@ -32,13 +32,18 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: jasonvillalon/freelancebook
       - name: Build production image
         uses: docker/build-push-action@v2
         with:
           context: .
           file: Dockerfile
           push: true
-          tags: jasonvillalon/freelancebook.me:latest
+          tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
   deploy:
@@ -66,5 +71,8 @@ jobs:
             echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
             echo "DEV_SUPABASE_HOST=${{ secrets.DEV_SUPABASE_HOST }}" >> .env
             echo "PROD_SUPABASE_HOST=${{ secrets.PROD_SUPABASE_HOST }}" >> .env
+            docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_TOKEN }}
+            cat ~/.docker/config.json
             docker-compose convert
-            docker-compose up -d
+            docker-compose pull app
+            docker-compose up -d app

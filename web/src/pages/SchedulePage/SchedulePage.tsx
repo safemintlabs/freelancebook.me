@@ -96,7 +96,7 @@ const SchedulePage = ({ username, action }) => {
               monthCellRender={monthCellRender}
               disabledDate={(date) =>
                 !schedules?.filter((o) => {
-                  return DAYS.indexOf(o.day) === date.day()
+                  return DAYS.indexOf(o.day) === date?.day()
                 }).length
               }
             />
@@ -121,9 +121,9 @@ const SchedulePage = ({ username, action }) => {
           {isMe
             ? 'Edit Schedule'
             : `Book for ${
-                date.isSame(moment(), 'date')
+                date?.isSame(moment(), 'date')
                   ? 'Today'
-                  : date.clone().format('MMM DD, YYYY')
+                  : date?.clone().format('MMM DD, YYYY')
               }`}
         </Button>
       </Row>

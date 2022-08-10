@@ -1,10 +1,6 @@
 version: "3.7"
 services:
   app:
-    build:
-      args:
-        user: dev
-        uid: 1000
     image: jasonvillalon/freelancebook.me
     user: "1000:1000"
     container_name: freelancebook
