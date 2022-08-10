@@ -17,7 +17,7 @@ import {
 } from '@chakra-ui/react'
 import { FaGoogle, FaEnvelope, FaLock } from 'react-icons/fa'
 
-import './styles.css'
+import './styles.less'
 import { useAuth } from '@redwoodjs/auth'
 
 const LoginPage: React.FC = () => {
