@@ -1,6 +1,6 @@
-import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
 import React, { useEffect } from 'react'
 
+import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
 import { ConfigProvider } from 'antd'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { Provider } from 'react-supabase'
@@ -13,6 +13,7 @@ import FatalErrorPage from 'src/pages/FatalErrorPage'
 import Routes from 'src/Routes'
 
 import './theme.less'
+import './fonts.less'
 import { supabase } from './supabaseClient'
 
 const queryClient = new QueryClient()
@@ -31,14 +32,14 @@ const App = () => {
         <FatalErrorBoundary page={FatalErrorPage}>
           <RedwoodProvider titleTemplate="%PageTitle | %AppTitle">
             <AuthProvider client={supabase} type="supabase">
-              <Provider value={supabase}>
-                <ColorModeScript />
-                <ChakraProvider>
+              <ColorModeScript />
+              <ChakraProvider>
+                <Provider value={supabase}>
                   <RedwoodApolloProvider>
                     <Routes />
                   </RedwoodApolloProvider>
-                </ChakraProvider>
-              </Provider>
+                </Provider>
+              </ChakraProvider>
             </AuthProvider>
           </RedwoodProvider>
         </FatalErrorBoundary>
