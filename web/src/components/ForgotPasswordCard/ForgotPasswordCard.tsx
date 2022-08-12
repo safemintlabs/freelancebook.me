@@ -9,6 +9,8 @@ import {
   Link,
 } from '@chakra-ui/react'
 
+import { routes } from '@redwoodjs/router'
+
 const ForgotPasswordCard = () => {
   return (
     <>
@@ -49,7 +51,11 @@ const ForgotPasswordCard = () => {
             Reset Password
           </Button>
           <Container centerContent mt={5} mb={5}>
-            <Link color="blue.300" justifyContent={'center'}>
+            <Link
+              href={routes.login()}
+              color="blue.300"
+              justifyContent={'center'}
+            >
               Back
             </Link>
           </Container>
