@@ -1,0 +1,142 @@
+.startNow {
+  /* design */
+  background-color: whitesmoke;
+
+  /* layout */
+  width: 100%;
+  height:  calc(100vh - 300px);
+  padding: 25px 50px 25px 50px;
+  display: inline-flex;
+  position: relative;
+}
+
+.startNow #startNow-left {
+  /* design */
+  background-color: transparent;
+
+  /* layout */
+  width: 50%;
+  height:  100%;
+  position: relative;
+  padding: 0px;
+}
+
+.startNow #startNow-right {
+  /* design */
+  background-color: transparent;
+
+
+  /* layout */
+  width: 50%;
+  height:  100%;
+  position: relative;
+}
+
+.startNow h1 {
+  font-size: 40px;
+
+  font-weight: 600;
+  color: #0A0F0D;
+  width: 100%;
+}
+
+.startNow p {
+  font-size: 15px;
+
+  color: #0A0F0D;
+}
+
+.startNow #claim {
+  background-color: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  color: #004AAD;
+  padding: 0%;
+}
+
+.startNow #claim:hover {
+  color: #449DD1;
+}
+
+.startNow #claim:active {
+  color: #5bc3ff;
+  border: none;
+  animation:none 0 ease 0 1 normal;
+}
+
+.startNow #startNow-right #animated-logo {
+  background-image: url("web/public/images/logos/animated/00-freelancebook-displaystyle-tagline.gif");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  vertical-align: middle;
+  width: 100%;
+  height: 100%;
+}
+
+
+@media only screen and (min-width: 1920px) {
+  .startNow h1 {
+    font-size: 48px;
+  }
+
+  .startNow p {
+    font-size: 28px;
+  }
+
+  .startNow #claim {
+    font-size: 28px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .startNow {
+    height: calc(100vh - 250px)
+  }
+
+  .startNow h1 {
+    font-size: 32px;
+  }
+}
+
+@media only screen and (max-width: 912px) {
+  .startNow h1 {
+    font-size: 28px;
+  }
+  .startNow {
+    display: block;
+    height: auto;
+  }
+
+  .startNow #startNow-left {
+    width: 100%;
+  }
+
+  .startNow #startNow-right {
+    width: 100%;
+    height: 300px;
+  }
+
+  .startNow #startNow-right, #animated-logo {
+    width: 100%;
+    height: 300px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+
+  .startNow {
+    padding: 25px;
+  }
+  .startNow h1 {
+    font-size: 22px;
+  }
+
+  .startNow #startNow-right {
+    height: 200px;
+  }
+}
+
+.playfair {
+  font-family: 'Playfair Display', serif;
+}

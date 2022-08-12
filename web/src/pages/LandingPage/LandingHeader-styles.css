@@ -1,0 +1,96 @@
+@import '~antd/dist/antd.css';
+
+.landingHeader {
+
+  /* design */
+  background-color: whitesmoke;
+
+  /* layout */
+  width: 100%;
+  height: 100px;
+  display: inline-flex;
+}
+
+.landingTopMenu {
+
+  /* design */
+  font-size: 18px;
+  color: #004AAD;
+  background-color: transparent;
+
+  /* layout */
+  width: 250px;
+  float: right;
+  margin-left: auto;
+  position: 'relative';
+  display: 'flex';
+  vertical-align: middle;
+  line-height: 100px;
+}
+
+.landingTopMenu #log-in {
+  border-color: transparent;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.landingTopMenu #create {
+  /* design */
+  border-color: #004AAD;
+  border-width: 2px;
+  color: #004AAD;
+  background-color: transparent;
+  border-radius: 4px;
+
+  /* layout */
+  width: auto;
+  height: auto;
+}
+
+.landingTopMenu #create:hover {
+  color: #449DD1;
+  border-color: #449DD1;
+  background-color: rgb(226, 226, 226);
+}
+
+.landingTopMenu #create:active {
+  color: whitesmoke;
+  background-color: #449DD1;
+}
+
+@media only screen and (max-width: 768px) {
+  .landingHeader {
+    height: 150px;
+  }
+
+  .landingTopMenu {
+    flex-direction: column;
+    line-height: normal;
+    width: 150px;
+    padding-top: 30px;
+    text-align: end;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .landingHeader {
+    display: block;
+  }
+
+  .landingHeader .top-logo {
+    width: 100%;
+    text-align: center;
+  }
+
+  .landingTopMenu {
+    width: 100%;
+    text-align: center;
+    padding-top: 0%;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .landingHeader {
+    height: 175px;
+  }
+}

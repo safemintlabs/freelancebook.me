@@ -1,46 +1,42 @@
-/* eslint-disable jsx-a11y/alt-text */
+import '@fontsource/inter'
 import React, { useState } from 'react'
 
-import {
-  Button,
-  Card,
-  Image,
-  Form,
-  Input,
-  Typography,
-  Spin,
-  notification,
-} from 'antd'
+import { useToast, Image, Flex, Box } from '@chakra-ui/react'
 
-import './styles.css'
 import { useAuth } from '@redwoodjs/auth'
+
+import LoginCard from 'src/components/LoginCard'
+
+import './styles.less'
 
 const LoginPage: React.FC = () => {
   const { logIn } = useAuth()
-  const [loading, setLoading] = useState(false)
+  const toast = useToast()
+  const [loading, setLoading] = useState<boolean>(false)
 
-  const onFinish = async (values: any) => {
-    console.log('Success:', values)
+  const onFinish = async (email: string, password: string) => {
     try {
       setLoading(true)
-      const { error } = await logIn({ email: values.email })
+      const { error } = await logIn({ email, password })
       if (error) throw error
-      notification.open({
-        message: 'Login successful',
+      toast({
+        title: 'Login Successful',
         description: 'Check your email for the login link!',
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
       })
     } catch (error) {
-      notification.open({
-        message: 'Login Failed',
+      toast({
+        title: 'Login Failed',
         description: error.error_description || error.message,
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
       })
     } finally {
       setLoading(false)
     }
-  }
-
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo)
   }
 
   const signInWithGoogle = async () => {
@@ -53,53 +49,28 @@ const LoginPage: React.FC = () => {
   }
 
   return (
-    <Spin tip="Loading..." spinning={loading}>
-      <div className="login-form">
-        <Card>
-          <Form
-            name="basic"
-            labelCol={{ span: 6 }}
-            wrapperCol={{ span: 16 }}
-            initialValues={{ remember: true }}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-            autoComplete="off"
-          >
-            <div className="logo">
-              <Image width={80} src="/images/logo.svg" preview={false} />
-            </div>
-            <Typography style={{ margin: '10px' }}>
-              Register/Login using your email
-            </Typography>
-            <Form.Item
-              label="Email"
-              name="email"
-              rules={[{ required: true, message: 'Please input your email!' }]}
-            >
-              <Input />
-            </Form.Item>
-
-            <Button type="primary" htmlType="submit">
-              Send Me Link
-            </Button>
-            <Typography style={{ margin: '20px' }}>OR</Typography>
-            <button
-              type="button"
-              className="social-button"
-              onClick={signInWithGoogle}
-            >
-              <img
-                src="/images/btn_google_light_normal_ios.svg"
-                title="google"
-              />
-              <Typography className="social-text">
-                Signin using Google
-              </Typography>
-            </button>
-          </Form>
-        </Card>
-      </div>
-    </Spin>
+    <Flex
+      flexDirection="column"
+      width="100wh"
+      height="100vh"
+      backgroundColor="gray.200"
+      justifyContent="center"
+      alignItems="center"
+    >
+      <Box marginBottom={5}>
+        <Image
+          borderRadius="full"
+          boxSize="60px"
+          src="/images/logo.svg"
+          alt="Dan Abramov"
+        />
+      </Box>
+      <LoginCard
+        loading={loading}
+        signInWithGoogle={signInWithGoogle}
+        onFinish={onFinish}
+      />
+    </Flex>
   )
 }
 

@@ -7,22 +7,21 @@ import {
   Text,
   Container,
   Link,
+  Stack,
+  Center,
 } from '@chakra-ui/react'
 
 const ForgotPasswordCard = () => {
   return (
-    <>
-      <Heading textAlign="center" p={5}>
-        Forgot your password?
-      </Heading>
-
-      <Container p={10} shadow="lg" borderWidth="1px" borderRadius="3xl">
+    <Stack spacing={4} p="5" backgroundColor="white">
+      <Center>
+        <Heading fontSize="3xl">Forgot your password?</Heading>
+      </Center>
+      <Container p={8} shadow="lg" borderWidth="1px" borderRadius="md">
         <FormControl isRequired alignContent={'center'}>
-          <Text fontSize="xs" mt={5} mb={5}>
-            <b>
-              Enter your email address that you used to register. We'll send you
-              an email link to reset your password
-            </b>
+          <Text mt={5} mb={5}>
+            Enter your email address that you used to register. We'll send you
+            an email link to reset your password
           </Text>
           <FormLabel htmlFor="email">Email</FormLabel>
           <Input
@@ -33,29 +32,26 @@ const ForgotPasswordCard = () => {
             required
           />
 
-          <Text fontSize="xs" mt={5} mb={5} color="gray.500">
-            Can't remember your email?
-            <Link fontSize="xs" m={4} color="blue.300">
-              Email support@freelancebook.com
-            </Link>
+          <Text mt={5} mb={5} color="gray.500">
+            Can't remember? Email us at support@freelancebook.com
           </Text>
 
           <Button
             id="resetPasswordBtn"
-            colorScheme="twitter"
+            colorScheme="green"
             width={'100%'}
             marginTop={'10px'}
           >
             Reset Password
           </Button>
           <Container centerContent mt={5} mb={5}>
-            <Link color="blue.300" justifyContent={'center'}>
+            <Link color="green.300" justifyContent={'center'}>
               Back
             </Link>
           </Container>
         </FormControl>
       </Container>
-    </>
+    </Stack>
   )
 }
 

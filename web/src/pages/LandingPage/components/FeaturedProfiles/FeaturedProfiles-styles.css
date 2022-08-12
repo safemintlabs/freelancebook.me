@@ -1,0 +1,151 @@
+@import '~antd/dist/antd.css';
+
+
+#featuredProfiles {
+  height: auto;
+  background-color: whitesmoke;
+  padding-top: 50px;
+}
+
+#featuredProfiles h2 {
+  padding-left: 50px;
+  font-size: 32px;
+
+  font-weight: 600;
+  color: #0A0F0D;
+  width: 100%;
+}
+
+#featuredProfiles .ant-carousel {
+  padding: 10px 100px 10px 100px;
+}
+
+.ant-carousel .slick-prev,
+.ant-carousel .slick-next {
+  color: black;
+  font-size: 20px;
+}
+
+.ant-carousel .slick-prev:hover,
+.ant-carousel .slick-next:hover {
+  color: #449DD1;
+}
+
+.ant-carousel .slick-prev:focus,
+.ant-carousel .slick-next:focus {
+  color: black;
+}
+
+#featuredProfiles .ant-carousel .profileCard {
+  background-color: transparent;
+  height: 110px;
+}
+
+#featuredProfiles .ant-carousel .profileCard .profilePhoto{
+  /* design */
+  border-radius: 50%;
+  border: 3px solid #587291;
+
+  /* layout */
+  height: 100%;
+  width: height;
+  float: left;
+}
+
+#featuredProfiles .ant-carousel .profileCard .profileInfo {
+  background-color: transparent;
+
+  /* layout */
+  width: auto;
+  height: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+
+  /* typography */
+  line-height: 10px;
+}
+
+#featuredProfiles .ant-carousel .profileCard .profileInfo {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  flex-wrap: wrap;
+}
+
+#featuredProfiles .ant-carousel .profileCard .profileInfo h3 {
+  font-size: 20px;
+  width: 100%;
+  vertical-align: middle;
+}
+
+#featuredProfiles .ant-carousel .profileCard .profileInfo p {
+  font-size: 16px;
+  width: 100%;
+  vertical-align: middle;
+}
+
+@media only screen and (min-width: 1920px) {
+  #featuredProfiles h2 {
+    font-size: 38px;
+  }
+  #featuredProfiles .ant-carousel .profileCard .profileInfo h3 {
+    font-size: 30px;
+  }
+
+  #featuredProfiles .ant-carousel .profileCard .profileInfo p {
+    font-size: 24px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  #featuredProfiles h2 {
+    font-size: 28px;
+  }
+  #featuredProfiles .ant-carousel .profileCard .profileInfo h3 {
+    font-size: 24px;
+  }
+
+  #featuredProfiles .ant-carousel .profileCard .profileInfo p {
+    font-size: 16px;
+  }
+}
+
+@media only screen and (max-width: 912px) {
+  #featuredProfiles h2 {
+    font-size: 24px;
+  }
+
+  #featuredProfiles .ant-carousel .profileCard .profileInfo h3 {
+    font-size: 18px;
+  }
+
+  #featuredProfiles .ant-carousel .profileCard .profileInfo p {
+    font-size: 14px;
+  }
+}
+
+/* ProfileName ONLY */
+@media only screen and (max-width: 768px) {
+  #featuredProfiles .ant-carousel .profileCard .profileInfo h3 {
+    font-size: 16px;
+  }
+
+  #featuredProfiles .ant-carousel .profileCard .profileInfo p {
+    font-size: 12px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  #featuredProfiles h2 {
+    padding: 25px;
+    font-size: 20px;
+  }
+  #featuredProfiles .ant-carousel {
+    padding: 10px 50px 10px 50px;
+    height: 90px;
+  }
+  #featuredProfiles .ant-carousel .profileCard .profilePhoto{
+    height: 70px;
+  }
+}
+
