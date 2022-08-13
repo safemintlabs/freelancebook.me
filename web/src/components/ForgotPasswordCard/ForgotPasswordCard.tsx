@@ -9,7 +9,10 @@ import {
   Link,
   Stack,
   Center,
+  Box,
 } from '@chakra-ui/react'
+
+import { routes } from '@redwoodjs/router'
 
 const ForgotPasswordCard = ({ handleResetPassword }) => {
   return (
@@ -17,7 +20,7 @@ const ForgotPasswordCard = ({ handleResetPassword }) => {
       <Center>
         <Heading fontSize="3xl">Forgot your password?</Heading>
       </Center>
-      <Container p={8} shadow="lg" borderWidth="1px" borderRadius="md">
+      <Box p={8} shadow="lg" borderWidth="1px" borderRadius="md">
         <FormControl isRequired alignContent={'center'}>
           <Text mt={5} mb={5}>
             Enter your email address that you used to register. We'll send you
@@ -33,7 +36,7 @@ const ForgotPasswordCard = ({ handleResetPassword }) => {
           />
 
           <Text mt={5} mb={5} color="gray.500">
-            Can't remember? Email us at support@freelancebook.com
+            Can't remember? Email us at support@freelancebook.me
           </Text>
 
           <Button
@@ -45,13 +48,17 @@ const ForgotPasswordCard = ({ handleResetPassword }) => {
           >
             Reset Password
           </Button>
-          <Container centerContent mt={5} mb={5}>
-            <Link color="green.300" justifyContent={'center'}>
+          <Center>
+            <Link
+              href={routes.login()}
+              color="blue.300"
+              justifyContent={'center'}
+            >
               Back
             </Link>
-          </Container>
+          </Center>
         </FormControl>
-      </Container>
+      </Box>
     </Stack>
   )
 }
