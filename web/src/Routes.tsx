@@ -11,10 +11,13 @@ import { Private, Router, Route, Set } from '@redwoodjs/router'
 
 import AuthLayout from './layouts/AuthLayout/AuthLayout'
 import PublicLayout from './layouts/PublicLayout/PublicLayout'
+import ForgotPasswordCreationPage from './pages/ForgotPasswordCreationPage/ForgotPasswordCreationPage'
+import ForgotPasswordPage from './pages/ForgotPasswordPage/ForgotPasswordPage'
 
 const Routes = () => {
   return (
     <Router>
+      <Route path="/forgot-password-creation" page={ForgotPasswordCreationPage} name="forgotPasswordCreation" />
       <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
       <Route path="/login" page={LoginPage} name="login" />
 
