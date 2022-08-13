@@ -7,24 +7,24 @@ import {
   Text,
   Container,
   Link,
+  Stack,
+  Center,
+  Box,
 } from '@chakra-ui/react'
 
 import { routes } from '@redwoodjs/router'
 
-const ForgotPasswordCard = () => {
+const ForgotPasswordCard = ({ handleResetPassword }) => {
   return (
-    <>
-      <Heading textAlign="center" p={5}>
-        Forgot your password?
-      </Heading>
-
-      <Container p={10} shadow="lg" borderWidth="1px" borderRadius="3xl">
+    <Stack spacing={4} p="5" backgroundColor="white">
+      <Center>
+        <Heading fontSize="3xl">Forgot your password?</Heading>
+      </Center>
+      <Box p={8} shadow="lg" borderWidth="1px" borderRadius="md">
         <FormControl isRequired alignContent={'center'}>
-          <Text fontSize="xs" mt={5} mb={5}>
-            <b>
-              Enter your email address that you used to register. We'll send you
-              an email link to reset your password
-            </b>
+          <Text mt={5} mb={5}>
+            Enter your email address that you used to register. We'll send you
+            an email link to reset your password
           </Text>
           <FormLabel htmlFor="email">Email</FormLabel>
           <Input
@@ -35,22 +35,20 @@ const ForgotPasswordCard = () => {
             required
           />
 
-          <Text fontSize="xs" mt={5} mb={5} color="gray.500">
-            Can't remember your email?
-            <Link fontSize="xs" m={4} color="blue.300">
-              Email support@freelancebook.com
-            </Link>
+          <Text mt={5} mb={5} color="gray.500">
+            Can't remember? Email us at support@freelancebook.me
           </Text>
 
           <Button
             id="resetPasswordBtn"
-            colorScheme="twitter"
+            colorScheme="green"
             width={'100%'}
             marginTop={'10px'}
+            onClick={handleResetPassword}
           >
             Reset Password
           </Button>
-          <Container centerContent mt={5} mb={5}>
+          <Center>
             <Link
               href={routes.login()}
               color="blue.300"
@@ -58,10 +56,10 @@ const ForgotPasswordCard = () => {
             >
               Back
             </Link>
-          </Container>
+          </Center>
         </FormControl>
-      </Container>
-    </>
+      </Box>
+    </Stack>
   )
 }
 

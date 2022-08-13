@@ -1,14 +1,14 @@
 import { render } from '@redwoodjs/testing/web'
 
-import ForgotPasswordCreationCard from './ForgotPasswordCreationCard'
+import ResetPasswordCard from './ResetPasswordCard'
 
 //   Improve this test with help from the Redwood Testing Doc:
 //    https://redwoodjs.com/docs/testing#testing-components
 
-describe('ForgotPasswordCreationCard', () => {
+describe('ResetPasswordCard', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<ForgotPasswordCreationCard />)
+      render(<ResetPasswordCard />)
     }).not.toThrow()
   })
 })

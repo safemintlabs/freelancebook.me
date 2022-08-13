@@ -1,14 +1,14 @@
 import { render } from '@redwoodjs/testing/web'
 
-import ForgotPasswordCreationPage from './ForgotPasswordCreationPage'
+import ResetPasswordPage from './ResetPasswordPage'
 
 //   Improve this test with help from the Redwood Testing Doc:
 //   https://redwoodjs.com/docs/testing#testing-pages-layouts
 
-describe('ForgotPasswordCreationPage', () => {
+describe('ResetPasswordPage', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<ForgotPasswordCreationPage />)
+      render(<ResetPasswordPage />)
     }).not.toThrow()
   })
 })
