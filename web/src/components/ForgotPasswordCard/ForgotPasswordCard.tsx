@@ -11,19 +11,7 @@ import {
   Center,
 } from '@chakra-ui/react'
 
-import { supabase } from 'src/supabaseClient'
-
-const ForgotPasswordCard = () => {
-  const handleResetPassword = async () => {
-    console.log('----> handleResetPassword')
-    const { data, error } = await supabase.auth.api.resetPasswordForEmail(
-      'lowhpgoblin@xx.me'
-    )
-
-    console.log('data: ', data)
-    console.log('error: ', error)
-  }
-
+const ForgotPasswordCard = ({ handleResetPassword }) => {
   return (
     <Stack spacing={4} p="5" backgroundColor="white">
       <Center>
