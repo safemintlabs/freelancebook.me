@@ -61,7 +61,7 @@ const LoginCard = ({ signInWithGoogle, onFinish, loading }) => {
         <NavLink
           className="link"
           activeClassName="activeLink"
-          to={routes.home()} // TODO: this should be change to forgot password route.
+          to={routes.forgotPassword()}
         >
           Forgot Password
         </NavLink>
