@@ -9,8 +9,8 @@
 
 import { Private, Router, Route, Set } from '@redwoodjs/router'
 
-import AuthLayout from './layouts/AuthLayout/AuthLayout'
-import PublicLayout from './layouts/PublicLayout/PublicLayout'
+import AuthLayout from 'src/layouts/AuthLayout/AuthLayout'
+import PublicLayout from 'src/layouts/PublicLayout/PublicLayout'
 
 const Routes = () => {
   return (
