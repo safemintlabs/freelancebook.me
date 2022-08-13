@@ -18,7 +18,7 @@ const LandingHeader = () => {
           <Button
             id="log-in"
             onClick={() => {
-              navigate(routes.login())
+              navigate(routes.auth())
             }}
           >
             Log in
@@ -26,7 +26,7 @@ const LandingHeader = () => {
           <Button
             id="create"
             onClick={() => {
-              navigate(routes.login())
+              navigate(routes.auth())
             }}
           >
             Create Your Site

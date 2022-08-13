@@ -17,15 +17,20 @@ import { FaGoogle, FaEnvelope, FaLock } from 'react-icons/fa'
 
 import { navigate, routes } from '@redwoodjs/router'
 
-const LoginCard = ({ signInWithGoogle, onFinish, loading }) => {
+const AuthCard = ({ signInWithGoogle, onFinish, loading }) => {
   const [email, setEmail] = useState<string>()
   const [password, setPassword] = useState<string>()
+  const [isLogin, setIsLogin] = useState<boolean>(false)
 
   const handleEmail = (event) => setEmail(event.target.value)
   const handlePassword = (event) => setPassword(event.target.value)
 
   const handleForgotPassword = () => {
     navigate(routes.forgotPassword())
+  }
+
+  const handleChangeText = () => {
+    setIsLogin(!isLogin)
   }
 
   return (
@@ -39,7 +44,9 @@ const LoginCard = ({ signInWithGoogle, onFinish, loading }) => {
       width={'500px'}
     >
       <Center>
-        <Heading fontSize="3xl">Get started absolutely free</Heading>
+        <Heading fontSize="3xl">
+          {isLogin ? 'Login your account' : 'Create an account free'}
+        </Heading>
       </Center>
 
       <FormControl>
@@ -66,10 +73,14 @@ const LoginCard = ({ signInWithGoogle, onFinish, loading }) => {
         </InputGroup>
       </FormControl>
       <Flex justifyContent="space-between">
-        <Button variant="link">I already have an account</Button>
-        <Button variant="link" onClick={handleForgotPassword}>
-          I forgot my password
+        <Button variant="link" onClick={handleChangeText}>
+          {isLogin ? 'Create new account?' : 'Already have an account?'}
         </Button>
+        {isLogin && (
+          <Button variant="link" onClick={handleForgotPassword}>
+            I forgot my password
+          </Button>
+        )}
       </Flex>
 
       <Center>
@@ -81,7 +92,7 @@ const LoginCard = ({ signInWithGoogle, onFinish, loading }) => {
           }}
           disabled={loading}
         >
-          Login your account
+          {isLogin ? 'Login your account' : 'Create your account'}
         </Button>
       </Center>
       <Center>
@@ -93,12 +104,13 @@ const LoginCard = ({ signInWithGoogle, onFinish, loading }) => {
           onClick={signInWithGoogle}
           colorScheme="green"
           leftIcon={<FaGoogle />}
+          width={'100%'}
         >
-          Signin using Google
+          {isLogin ? 'Login using Google' : 'Register using Google'}
         </Button>
       </Center>
     </Stack>
   )
 }
 
-export default LoginCard
+export default AuthCard

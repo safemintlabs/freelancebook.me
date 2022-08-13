@@ -125,7 +125,7 @@ const AppHeader = ({
               label: 'Signin',
               key: 'menu:signin',
               onClick: () => {
-                navigate(routes.login())
+                navigate(routes.auth())
               },
             },
           ],

@@ -5,14 +5,12 @@ import {
   Heading,
   Button,
   Text,
-  Container,
-  Link,
   Stack,
   Center,
   Box,
 } from '@chakra-ui/react'
 
-import { routes } from '@redwoodjs/router'
+import { navigate, routes } from '@redwoodjs/router'
 
 const ForgotPasswordCard = ({ handleResetPassword }) => {
   return (
@@ -29,7 +27,7 @@ const ForgotPasswordCard = ({ handleResetPassword }) => {
           <FormLabel htmlFor="email">Email</FormLabel>
           <Input
             id="email"
-            placeholder="juandelacruz@gmail.com"
+            placeholder="name@domain.com"
             type="email"
             width="100%"
             required
@@ -48,15 +46,15 @@ const ForgotPasswordCard = ({ handleResetPassword }) => {
           >
             Reset Password
           </Button>
-          <Center>
-            <Link
-              href={routes.login()}
-              color="blue.300"
-              justifyContent={'center'}
-            >
-              Back
-            </Link>
-          </Center>
+          <Button
+            variant="link"
+            onClick={() => {
+              navigate(routes.auth())
+            }}
+            width={'100%'}
+          >
+            Back
+          </Button>
         </FormControl>
       </Box>
     </Stack>
