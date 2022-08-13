@@ -21,7 +21,7 @@ const ResetPasswordCard = ({ handleChangePassword, setNewPassword }) => {
           <Text mt={5} mb={5}>
             Your new password must be different from previous used passwords.
           </Text>
-          <FormLabel htmlFor="email">New Password</FormLabel>
+          <FormLabel htmlFor="email">Enter Your New Password</FormLabel>
           <Input
             placeholder=""
             type="password"
