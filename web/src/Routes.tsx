@@ -16,7 +16,7 @@ const Routes = () => {
   return (
     <Router>
       <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
-      <Route path="/login" page={LoginPage} name="login" />
+      <Route path="/auth" page={AuthPage} name="auth" />
       <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
 
       <Private unauthenticated="login">

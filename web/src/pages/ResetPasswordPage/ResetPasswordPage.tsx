@@ -39,7 +39,7 @@ const ForgotPasswordPage = () => {
     }
 
     setTimeout(() => {
-      navigate(routes.login())
+      navigate(routes.auth())
     }, 6000)
   }
 

@@ -5,11 +5,10 @@ import { useToast, Image, Flex, Box } from '@chakra-ui/react'
 
 import { useAuth } from '@redwoodjs/auth'
 
-import LoginCard from 'src/components/LoginCard'
-
+import AuthCard from 'src/components/AuthCard/AuthCard'
 import './styles.less'
 
-const LoginPage: React.FC = () => {
+const AuthPage: React.FC = () => {
   const { logIn } = useAuth()
   const toast = useToast()
   const [loading, setLoading] = useState<boolean>(false)
@@ -65,7 +64,7 @@ const LoginPage: React.FC = () => {
           alt="Dan Abramov"
         />
       </Box>
-      <LoginCard
+      <AuthCard
         loading={loading}
         signInWithGoogle={signInWithGoogle}
         onFinish={onFinish}
@@ -74,4 +73,4 @@ const LoginPage: React.FC = () => {
   )
 }
 
-export default LoginPage
+export default AuthPage
