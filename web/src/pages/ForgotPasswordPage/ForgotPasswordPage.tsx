@@ -1,6 +1,4 @@
-import { Container, Flex, useToast } from '@chakra-ui/react'
-
-import { MetaTags } from '@redwoodjs/web'
+import { Box, Flex, useToast, Image } from '@chakra-ui/react'
 
 import ForgotPasswordCard from 'src/components/ForgotPasswordCard/ForgotPasswordCard'
 import { supabase } from 'src/supabaseClient'
@@ -34,18 +32,24 @@ const ForgotPasswordPage = () => {
   }
 
   return (
-    <Container>
-      <MetaTags title="ForgotPassword" description="ForgotPassword page" />
-      <Flex
-        flexDirection="column"
-        width="100wh"
-        height="100vh"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <ForgotPasswordCard handleResetPassword={handleResetPassword} />
-      </Flex>
-    </Container>
+    <Flex
+      flexDirection="column"
+      width="100wh"
+      height="100vh"
+      justifyContent="center"
+      alignItems="center"
+      backgroundColor="gray.200"
+    >
+      <Box marginBottom={5}>
+        <Image
+          borderRadius="full"
+          boxSize="60px"
+          src="/images/logo.svg"
+          alt="Freelancebook"
+        />
+      </Box>
+      <ForgotPasswordCard handleResetPassword={handleResetPassword} />
+    </Flex>
   )
 }
 

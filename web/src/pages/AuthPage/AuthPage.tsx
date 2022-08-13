@@ -61,7 +61,7 @@ const AuthPage: React.FC = () => {
           borderRadius="full"
           boxSize="60px"
           src="/images/logo.svg"
-          alt="Dan Abramov"
+          alt="Freelancebook"
         />
       </Box>
       <AuthCard

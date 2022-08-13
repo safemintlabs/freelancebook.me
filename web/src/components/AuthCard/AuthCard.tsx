@@ -50,7 +50,7 @@ const AuthCard = ({ signInWithGoogle, onFinish, loading }) => {
       </Center>
 
       <FormControl>
-        <FormLabel>Email address</FormLabel>
+        <FormLabel>Email Address</FormLabel>
         <InputGroup>
           <InputLeftElement color="gray.500" pointerEvents="none">
             <FaEnvelope color="gray.500" />
@@ -69,7 +69,11 @@ const AuthCard = ({ signInWithGoogle, onFinish, loading }) => {
           <InputLeftElement color="gray.500" pointerEvents="none">
             <FaLock color="gray.500" />
           </InputLeftElement>
-          <Input type="password" onChange={handlePassword} />
+          <Input
+            type="password"
+            placeholder="●●●●●"
+            onChange={handlePassword}
+          />
         </InputGroup>
       </FormControl>
       <Flex justifyContent="space-between">
