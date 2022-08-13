@@ -1,4 +1,4 @@
-import { Container } from '@chakra-ui/react'
+import { Container, Flex } from '@chakra-ui/react'
 
 import { MetaTags } from '@redwoodjs/web'
 
@@ -9,7 +9,15 @@ const ForgotPasswordPage = () => {
   return (
     <Container>
       <MetaTags title="ForgotPassword" description="ForgotPassword page" />
-      <ForgotPasswordCard />
+      <Flex
+        flexDirection="column"
+        width="100wh"
+        height="100vh"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <ForgotPasswordCard />
+      </Flex>
     </Container>
   )
 }
