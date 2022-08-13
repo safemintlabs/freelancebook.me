@@ -1,25 +1,31 @@
+import React, { useState } from 'react'
+
 import { Container, Flex, useToast } from '@chakra-ui/react'
 
+import { useParams, navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 
-import ForgotPasswordCard from 'src/components/ForgotPasswordCard/ForgotPasswordCard'
+import ResetPasswordCard from 'src/components/ResetPasswordCard/ResetPasswordCard'
 import { supabase } from 'src/supabaseClient'
+
 import '@fontsource/inter'
 
 const ForgotPasswordPage = () => {
   const toast = useToast()
+  const { access_token } = useParams()
+  const [newPassword, setNewPassword] = useState()
 
-  const handleResetPassword = async () => {
-    const { data, error } = await supabase.auth.api.resetPasswordForEmail(
-      'lowhpgoblin@proton.me'
-    )
+  const handleChangePassword = async () => {
+    const { error, data } = await supabase.auth.api.updateUser(access_token, {
+      password: newPassword,
+    })
 
     if (error === null) {
       toast({
         title: 'Reset Password Successful',
         description: 'Check your email for the reset password link!',
         status: 'success',
-        duration: 9000,
+        duration: 5000,
         isClosable: true,
       })
     } else {
@@ -27,10 +33,14 @@ const ForgotPasswordPage = () => {
         title: 'Reset Password Failed',
         description: 'Kindly check the email you give to us if correct',
         status: 'error',
-        duration: 9000,
+        duration: 5000,
         isClosable: true,
       })
     }
+
+    setTimeout(() => {
+      navigate(routes.login())
+    }, 6000)
   }
 
   return (
@@ -43,7 +53,10 @@ const ForgotPasswordPage = () => {
         justifyContent="center"
         alignItems="center"
       >
-        <ForgotPasswordCard handleResetPassword={handleResetPassword} />
+        <ResetPasswordCard
+          handleChangePassword={handleChangePassword}
+          setNewPassword={setNewPassword}
+        />
       </Flex>
     </Container>
   )
