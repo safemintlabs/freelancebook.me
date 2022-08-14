@@ -4,27 +4,36 @@ import React, { useState } from 'react'
 import { useToast, Image, Flex, Box } from '@chakra-ui/react'
 
 import { useAuth } from '@redwoodjs/auth'
+import { navigate, routes } from '@redwoodjs/router'
 
 import AuthCard from 'src/components/AuthCard/AuthCard'
+
 import './styles.less'
 
 const AuthPage: React.FC = () => {
-  const { logIn } = useAuth()
+  const { logIn, signUp } = useAuth()
   const toast = useToast()
   const [loading, setLoading] = useState<boolean>(false)
 
-  const onFinish = async (email: string, password: string) => {
+  const onFinish = async (
+    email: string,
+    password: string,
+    isLogin: boolean
+  ) => {
     try {
       setLoading(true)
-      const { error } = await logIn({ email, password })
+      const { error } = isLogin
+        ? await logIn({ email, password })
+        : await signUp({ email, password })
       if (error) throw error
       toast({
-        title: 'Login Successful',
-        description: 'Check your email for the login link!',
+        title: isLogin ? 'Login Successful' : 'Signup Successful',
+        description: isLogin ? '' : 'Check your email for the login link!',
         status: 'success',
         duration: 9000,
         isClosable: true,
       })
+      if (isLogin) navigate(routes.home())
     } catch (error) {
       toast({
         title: 'Login Failed',
