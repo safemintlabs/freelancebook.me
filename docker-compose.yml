@@ -17,7 +17,7 @@ services:
     networks:
       - freelancebook
     ports:
-      - "89101:8910"
+      - "8913:8910"
   db:
     image: supabase/pgadmin-schema-diff
     container_name: db
