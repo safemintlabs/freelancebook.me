@@ -92,7 +92,7 @@ const AuthCard = ({ signInWithGoogle, onFinish, loading }) => {
           colorScheme="green"
           width={'100%'}
           onClick={() => {
-            onFinish(email, password)
+            onFinish(email, password, isLogin)
           }}
           disabled={loading}
         >
