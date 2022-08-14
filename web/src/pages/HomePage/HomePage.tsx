@@ -8,6 +8,7 @@ import { MetaTags } from '@redwoodjs/web'
 // eslint-disable-next-line import/order
 
 import './styles.less'
+
 import FAQ from 'src/components/FAQ/Faq'
 import Footer from 'src/components/Footer/Footer'
 import Hero from 'src/components/Hero/Hero'
@@ -16,12 +17,12 @@ import Statistics from 'src/components/Statistics/Statistics'
 import UserCard from 'src/components/UserCard/UserCard'
 import { useProfiles } from 'src/hooks/profiles'
 const HomePage = () => {
-  const { data, isLoading } = useProfiles()
+  const { data } = useProfiles()
   return (
     <>
       <MetaTags title="Home" description="Home page" />
       <Hero />
-      <Statistics />
+      <HowDoesItWork />
 
       <chakra.h1
         textAlign={'center'}
@@ -42,8 +43,8 @@ const HomePage = () => {
           </Masonry>
         </ResponsiveMasonry>
       )}
-      <HowDoesItWork />
       <FAQ />
+      <Statistics />
       <Footer />
     </>
   )

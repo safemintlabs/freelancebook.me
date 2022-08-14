@@ -60,7 +60,7 @@ export default function Statistics() {
         py={10}
         fontWeight={'bold'}
       >
-        We are just starting so heres our stats
+        Our Statistics
       </chakra.h1>
       <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
         <StatsCard
