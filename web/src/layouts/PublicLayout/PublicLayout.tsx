@@ -1,10 +1,4 @@
 import { Layout } from 'antd'
-
-import { useParams } from '@redwoodjs/router'
-
-import AppFooter from '../../components/AppFooter/AppFooter'
-import AppHeader from '../../components/AppHeader/AppHeader'
-
 const { Content } = Layout
 
 type PublicLayoutProps = {
@@ -13,13 +7,11 @@ type PublicLayoutProps = {
 }
 
 const PublicLayout = ({ children }: PublicLayoutProps) => {
-  const params = useParams()
   return (
     <>
       <Layout style={{ boxSizing: 'border-box' }}>
-        <AppHeader username={params.username} />
         <Layout style={{ minHeight: 'calc(100vh - (64px + 62px))' }}>
-          <Layout style={{ padding: '24px' }}>
+          <Layout>
             <Content
               className="site-layout-background"
               style={{
@@ -34,7 +26,6 @@ const PublicLayout = ({ children }: PublicLayoutProps) => {
           </Layout>
         </Layout>
       </Layout>
-      <AppFooter />
     </>
   )
 }
