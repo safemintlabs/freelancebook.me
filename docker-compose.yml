@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   app:
-    image: jasonvillalon/freelancebook.me
+    image: jasonvillalon/freelancebook.me:master
     user: "1000:1000"
     container_name: freelancebook
     restart: unless-stopped
@@ -10,9 +10,9 @@ services:
     ports:
       - "8910:8910"
   app2:
-    image: jasonvillalon/freelancebook.me
+    image: jasonvillalon/freelancebook.me:master
     user: "1000:1000"
-    container_name: freelancebook
+    container_name: freelancebook-backup
     restart: unless-stopped
     networks:
       - freelancebook
