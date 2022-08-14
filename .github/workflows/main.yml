@@ -75,4 +75,4 @@ jobs:
             cat ~/.docker/config.json
             docker-compose convert
             docker-compose pull app
-            docker-compose up -d app
+            docker-compose up -d --force-recreate app
