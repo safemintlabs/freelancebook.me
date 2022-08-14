@@ -9,6 +9,15 @@ services:
       - freelancebook
     ports:
       - "8910:8910"
+  app2:
+    image: jasonvillalon/freelancebook.me
+    user: "1000:1000"
+    container_name: freelancebook
+    restart: unless-stopped
+    networks:
+      - freelancebook
+    ports:
+      - "89101:8910"
   db:
     image: supabase/pgadmin-schema-diff
     container_name: db
@@ -43,6 +52,7 @@ services:
       -d *.freelancebook.me
   nginx:
     depends_on:
+      - app2
       - app
       - certbot
     image: nginx:alpine

@@ -76,3 +76,36 @@ jobs:
             docker-compose convert
             docker-compose pull app
             docker-compose up -d --force-recreate app
+  backup:
+     # The type of runner that the job will run on
+    needs: build
+    runs-on: self-hosted
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Sleep for 60 seconds
+        run: sleep 120s
+        shell: bash
+      - uses: actions/checkout@v2
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.USERNAME }}
+          passsword: ${{ secrets.PASSWORD }}
+          key: ${{ secrets.SSH_KEY }}
+          envs: IMAGE_NAME,REGISTRY,GITHUB_SHA,COMMAND
+          script: |
+            sudo su - dev
+            cp -R /home/dev/app/freelancebook.me/freelancebook.me /home/dev/
+            cd /home/dev/freelancebook.me
+            echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
+            echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+            echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
+            echo "DEV_SUPABASE_HOST=${{ secrets.DEV_SUPABASE_HOST }}" >> .env
+            echo "PROD_SUPABASE_HOST=${{ secrets.PROD_SUPABASE_HOST }}" >> .env
+            docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_TOKEN }}
+            cat ~/.docker/config.json
+            docker-compose convert
+            docker-compose pull app2
+            docker-compose up -d --force-recreate app2
