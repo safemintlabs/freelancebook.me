@@ -2293,6 +2293,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@chakra-ui/icon@npm:3.0.8":
+  version: 3.0.8
+  resolution: "@chakra-ui/icon@npm:3.0.8"
+  dependencies:
+    "@chakra-ui/utils": 2.0.8
+  peerDependencies:
+    "@chakra-ui/system": ">=2.0.0"
+    react: ">=18"
+  checksum: 8f86bec365493a7761a87cd0ef7522da5c19c861d8d0b848751aa2479aff93b0157205c7634f05ce0573617da075ed9a0bcaed6fa0b4b5922f8ebf777db893af
+  languageName: node
+  linkType: hard
+
+"@chakra-ui/icons@npm:^2.0.8":
+  version: 2.0.8
+  resolution: "@chakra-ui/icons@npm:2.0.8"
+  dependencies:
+    "@chakra-ui/icon": 3.0.8
+  peerDependencies:
+    "@chakra-ui/system": ">=2.0.0"
+    react: ">=18"
+  checksum: 250c16ee4e87986504b98f78fcedcdc406b3650aedf459ef98242bc1061cdbd46198a71a2d0a0016896542dc44ac9982874062fe0c06506e2ac9aeb20efa7dbb
+  languageName: node
+  linkType: hard
+
 "@chakra-ui/image@npm:1.1.10":
   version: 1.1.10
   resolution: "@chakra-ui/image@npm:1.1.10"
@@ -2857,6 +2881,18 @@ __metadata:
     framesync: 5.3.0
     lodash.mergewith: 4.6.2
   checksum: 16d830bac30dceee2845cdd264eb86d4a4348da2d88a309187c8856409c7ba9f691d0fad00f7fe8b8b49553ac77611cce6786a4c127c5949afc2e1b04b1629ed
+  languageName: node
+  linkType: hard
+
+"@chakra-ui/utils@npm:2.0.8":
+  version: 2.0.8
+  resolution: "@chakra-ui/utils@npm:2.0.8"
+  dependencies:
+    "@types/lodash.mergewith": 4.6.6
+    css-box-model: 1.2.1
+    framesync: 5.3.0
+    lodash.mergewith: 4.6.2
+  checksum: 5b4dabf11c20e3cdb93f373a55d45d259d1b0717de67956c9f2da381ce2f78d1ecc11f23ab238b56bbfd2886c667abfa6c88acbfb9c391f78ef2bf7276d43853
   languageName: node
   linkType: hard
 
@@ -23364,6 +23400,7 @@ __metadata:
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
     "@ant-design/icons": ^4.7.0
+    "@chakra-ui/icons": ^2.0.8
     "@chakra-ui/react": 1.8.8
     "@fontsource/inter": ^4.5.12
     "@redwoodjs/core": 2.0.0

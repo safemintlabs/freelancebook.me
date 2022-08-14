@@ -24,6 +24,7 @@
   "packageManager": "yarn@3.2.1",
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
+    "@chakra-ui/icons": "^2.0.8",
     "@chakra-ui/react": "1.8.8",
     "@fontsource/inter": "^4.5.12",
     "antd": "^4.21.7",
