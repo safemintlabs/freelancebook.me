@@ -9,13 +9,16 @@
 
 import { Private, Router, Route, Set } from '@redwoodjs/router'
 
-import AuthLayout from './layouts/AuthLayout/AuthLayout'
-import PublicLayout from './layouts/PublicLayout/PublicLayout'
+import AuthLayout from 'src/layouts/AuthLayout/AuthLayout'
+import PublicLayout from 'src/layouts/PublicLayout/PublicLayout'
 
 const Routes = () => {
   return (
     <Router>
-      <Route path="/login" page={LoginPage} name="login" />
+      <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
+      <Route path="/auth" page={AuthPage} name="auth" />
+      <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
+
       <Private unauthenticated="login">
         <Set wrap={AuthLayout}>
           <Route path="/setup" page={SetupPage} name="setup" />
