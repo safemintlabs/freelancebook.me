@@ -1,4 +1,4 @@
-import Faq from './Faq'
+import Faq from './FAQ'
 
 export const generated = () => {
   return <Faq />

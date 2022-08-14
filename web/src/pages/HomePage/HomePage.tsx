@@ -5,7 +5,7 @@ import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry'
 
 import { MetaTags } from '@redwoodjs/web'
 
-import FAQ from 'src/components/FAQ/Faq'
+import FAQ from 'src/components/FAQ/FAQ'
 import Footer from 'src/components/Footer/Footer'
 import Hero from 'src/components/Hero/Hero'
 import HowDoesItWork from 'src/components/HowDoesItWork/HowDoesItWork'

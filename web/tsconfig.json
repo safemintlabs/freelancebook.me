@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "allowJs": true,
     "esModuleInterop": true,
