@@ -9,6 +9,8 @@ import {
   Image,
 } from '@chakra-ui/react'
 
+import { navigate, routes } from '@redwoodjs/router'
+
 export default function Hero() {
   return (
     <Container maxW={'7xl'}>
@@ -54,18 +56,17 @@ export default function Hero() {
             direction={{ base: 'column', sm: 'row' }}
           >
             <Button
-              rounded={'full'}
               size={'lg'}
               fontWeight={'normal'}
               px={6}
               colorScheme={'green'}
               bg={'green.400'}
               _hover={{ bg: 'green.500' }}
+              onClick={() => {
+                navigate(routes.auth())
+              }}
             >
               Create your account
-            </Button>
-            <Button rounded={'full'} size={'lg'} fontWeight={'normal'} px={6}>
-              How It Works
             </Button>
           </Stack>
         </Stack>

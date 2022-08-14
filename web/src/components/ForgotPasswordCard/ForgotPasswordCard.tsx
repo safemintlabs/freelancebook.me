@@ -26,8 +26,8 @@ const ForgotPasswordCard = ({ handleResetPassword }) => {
       <Heading fontSize="3xl">Forgot your password?</Heading>
       <FormControl isRequired alignContent={'center'}>
         <Text mt={5} mb={5}>
-          Enter your email address that you used to register. We'll send you an
-          email link to reset your password
+          No problemo! Just enter the email address that you signed up with to
+          reset it.
         </Text>
         <FormLabel htmlFor="email">Email</FormLabel>
         <Input
@@ -49,7 +49,7 @@ const ForgotPasswordCard = ({ handleResetPassword }) => {
           marginTop={'10px'}
           onClick={handleResetPassword}
         >
-          Reset Password
+          Send reset instructions
         </Button>
         <Button
           variant="link"

@@ -15,7 +15,8 @@ const ForgotPasswordPage = () => {
     if (error === null) {
       toast({
         title: 'Reset Password Successful',
-        description: 'Check your email for the reset password link!',
+        description:
+          'An email containing a recovery link has been sent to the email address you provided.',
         status: 'success',
         duration: 9000,
         isClosable: true,

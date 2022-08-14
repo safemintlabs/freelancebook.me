@@ -1,9 +1,4 @@
 import { Layout } from 'antd'
-
-import Navbar from 'src/components/Navbar/Navbar'
-
-import AppFooter from '../../components/AppFooter/AppFooter'
-
 const { Content } = Layout
 
 type PublicLayoutProps = {
@@ -15,7 +10,6 @@ const PublicLayout = ({ children }: PublicLayoutProps) => {
   return (
     <>
       <Layout style={{ boxSizing: 'border-box' }}>
-        <Navbar />
         <Layout style={{ minHeight: 'calc(100vh - (64px + 62px))' }}>
           <Layout>
             <Content

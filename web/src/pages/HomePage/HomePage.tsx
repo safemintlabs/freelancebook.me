@@ -5,22 +5,22 @@ import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry'
 
 import { MetaTags } from '@redwoodjs/web'
 
-// eslint-disable-next-line import/order
-
-import './styles.less'
-
 import FAQ from 'src/components/FAQ/Faq'
 import Footer from 'src/components/Footer/Footer'
 import Hero from 'src/components/Hero/Hero'
 import HowDoesItWork from 'src/components/HowDoesItWork/HowDoesItWork'
+import Navbar from 'src/components/Navbar/Navbar'
 import Statistics from 'src/components/Statistics/Statistics'
 import UserCard from 'src/components/UserCard/UserCard'
 import { useProfiles } from 'src/hooks/profiles'
+
+import './styles.less'
 const HomePage = () => {
   const { data } = useProfiles()
   return (
     <>
       <MetaTags title="Home" description="Home page" />
+      <Navbar />
       <Hero />
       <HowDoesItWork />
 
