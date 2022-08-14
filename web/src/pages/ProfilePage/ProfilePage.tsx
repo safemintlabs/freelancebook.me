@@ -1,6 +1,21 @@
 import { useEffect, useState } from 'react'
 
-import { Button, Skeleton, Spin, Col, Descriptions, Row } from 'antd'
+import {
+  Skeleton,
+  Container,
+  Flex,
+  Box,
+  Stack,
+  Text,
+  Heading,
+  Button,
+  UnorderedList,
+  ListItem,
+  Wrap,
+  WrapItem,
+  Center,
+} from '@chakra-ui/react'
+import { Spin, Col, Descriptions, Row } from 'antd'
 
 import { navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
@@ -13,63 +28,126 @@ import './styles.less'
 const ProfilePage = ({ username: u }: { username?: string }) => {
   const { data, isLoading, isMe } = useProfile(u)
   const [profile, setProfile] = useState(data)
-  const {
-    email,
-    username,
-    avatar_url,
-    first_name,
-    last_name,
-    about,
-    service,
-    website,
-  } = profile || {}
-  useEffect(() => setProfile(data), [data])
-  return (
-    <Spin tip="Fetching user..." spinning={isLoading}>
-      <MetaTags title="Profile" description="Profile page" />
-      <Row gutter={[16, 16]}>
-        <Col span={6}>
-          <Avatar url={avatar_url} size="100%" />
-        </Col>
+  const { avatar_url, first_name, last_name, about, service, username } =
+    profile || {}
 
-        {isLoading ? (
-          <Skeleton />
-        ) : (
-          <Col flex="1 1 0%">
-            <Descriptions title="User Info" layout="vertical" column={2}>
-              <Descriptions.Item label="Email">{email}</Descriptions.Item>
-              <Descriptions.Item label="UserName">{username}</Descriptions.Item>
-              <Descriptions.Item label="Name">
-                {first_name} {last_name}
-              </Descriptions.Item>
-              <Descriptions.Item label="Website">{website}</Descriptions.Item>
-            </Descriptions>
-            <Descriptions title="Service">
-              <Descriptions.Item>{service}</Descriptions.Item>
-            </Descriptions>
-            <Descriptions title="About">
-              <Descriptions.Item>{about}</Descriptions.Item>
-            </Descriptions>
-          </Col>
-        )}
-      </Row>
-      {isMe && (
-        <Row>
-          <Col
-            flex="1 1 0%"
-            style={{
-              display: 'flex',
-              alignItems: 'flex-end',
-              justifyContent: 'flex-end',
+  useEffect(() => setProfile(data), [data])
+
+  return (
+    <Container>
+      <MetaTags
+        title={`User Profile | ${first_name} ${last_name}`}
+        description={`User Profile of ${first_name} ${last_name} in Freelancebook.me`}
+      />
+      <Flex>
+        <Box borderRadius={'full'}>
+          <Avatar url={avatar_url} size="50%" />
+        </Box>
+        <Stack>
+          <Heading>{`${first_name} ${last_name}`}</Heading>
+          <Text>{service}</Text>
+          <Button
+            onClick={() => {
+              navigate(routes.publicSchedule({ username }))
             }}
+            colorScheme={'green'}
           >
-            <Button onClick={() => navigate(routes.setup())}>
-              Edit Profile
-            </Button>
-          </Col>
-        </Row>
-      )}
-    </Spin>
+            Book my calendar
+          </Button>
+        </Stack>
+      </Flex>
+      <Flex>
+        <Stack>
+          <Heading>What is my business all about?</Heading>
+          <Text>{about}</Text>
+        </Stack>
+      </Flex>
+      <Flex>
+        <Stack>
+          <Heading>My Services</Heading>
+          <UnorderedList>
+            <ListItem>Lorem ipsum dolor sit amet</ListItem>
+            <ListItem>Consectetur adipiscing elit</ListItem>
+            <ListItem>Integer molestie lorem at massa</ListItem>
+            <ListItem>Facilisis in pretium nisl aliquet</ListItem>
+          </UnorderedList>
+        </Stack>
+      </Flex>
+      <Flex>
+        <Stack>
+          <Heading>My Projects</Heading>
+          <Wrap>
+            <WrapItem>
+              <Center w="180px" h="80px" bg="green.200">
+                Project 1
+              </Center>
+            </WrapItem>
+            <WrapItem>
+              <Center w="180px" h="80px" bg="green.200">
+                Project 1
+              </Center>
+            </WrapItem>
+            <WrapItem>
+              <Center w="180px" h="80px" bg="green.200">
+                Project 1
+              </Center>
+            </WrapItem>
+            <WrapItem>
+              <Center w="180px" h="80px" bg="green.200">
+                Project 1
+              </Center>
+            </WrapItem>
+            <WrapItem>
+              <Center w="180px" h="80px" bg="green.200">
+                Project 1
+              </Center>
+            </WrapItem>
+            <WrapItem>
+              <Center w="180px" h="80px" bg="green.200">
+                Project 1
+              </Center>
+            </WrapItem>
+          </Wrap>
+        </Stack>
+      </Flex>
+      <Flex>
+        <Stack>
+          <Heading>Testimonials</Heading>
+          <Wrap>
+            <WrapItem>
+              <Center w="180px" h="80px" bg="green.200">
+                Project 1
+              </Center>
+            </WrapItem>
+            <WrapItem>
+              <Center w="180px" h="80px" bg="green.200">
+                Project 1
+              </Center>
+            </WrapItem>
+            <WrapItem>
+              <Center w="180px" h="80px" bg="green.200">
+                Project 1
+              </Center>
+            </WrapItem>
+            <WrapItem>
+              <Center w="180px" h="80px" bg="green.200">
+                Project 1
+              </Center>
+            </WrapItem>
+            <WrapItem>
+              <Center w="180px" h="80px" bg="green.200">
+                Project 1
+              </Center>
+            </WrapItem>
+            <WrapItem>
+              <Center w="180px" h="80px" bg="green.200">
+                Project 1
+              </Center>
+            </WrapItem>
+          </Wrap>
+        </Stack>
+      </Flex>
+    </Container>
   )
 }
 

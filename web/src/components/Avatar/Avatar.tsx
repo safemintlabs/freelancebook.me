@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
+import { Avatar as ChakraAvatar } from '@chakra-ui/react'
 import { Button, Skeleton } from 'antd'
 
 import { useAuth } from '@redwoodjs/auth'
@@ -73,12 +74,7 @@ const Avatar = ({
   return (
     <div className="avatar">
       {avatarUrl ? (
-        <img
-          src={avatarUrl}
-          alt="Avatar"
-          className="avatar image"
-          style={{ height: size, width: size }}
-        />
+        <ChakraAvatar size="xl" name="Segun Adebayo" src={avatarUrl} />
       ) : (
         <Skeleton.Image />
       )}
