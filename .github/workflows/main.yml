@@ -36,7 +36,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: jasonvillalon/freelancebook
+          images: jasonvillalon/freelancebook.me
       - name: Build production image
         uses: docker/build-push-action@v2
         with:
@@ -66,6 +66,9 @@ jobs:
             sudo su - dev
             cp -R /home/dev/app/freelancebook.me/freelancebook.me /home/dev/
             cd /home/dev/freelancebook.me
+            echo "SUPABASE_URL=https://pedifzbohlvbioyksufg.supabase.co" > .env
+            echo "SUPABASE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBlZGlmemJvaGx2YmlveWtzdWZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTcyNjQxMTQsImV4cCI6MTk3Mjg0MDExNH0.0qYItzuAZ3G7dIo6O8dFAEA39lxfsF3v7Me97IfIJKI" > .env
+            echo "SUPABASE_JWT_SECRET=c9H07iFYRycVm0gq6XtHyj+xVIXYqQugsZwu0d1LGovJ7gOI9mJf6l60fhm+vN8yCbULyAqLnqzl8ebGtIeekQ==" >> .env
             echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
             echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
             echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
@@ -99,6 +102,9 @@ jobs:
             sudo su - dev
             cp -R /home/dev/app/freelancebook.me/freelancebook.me /home/dev/
             cd /home/dev/freelancebook.me
+            echo "SUPABASE_URL=https://pedifzbohlvbioyksufg.supabase.co" > .env
+            echo "SUPABASE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBlZGlmemJvaGx2YmlveWtzdWZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTcyNjQxMTQsImV4cCI6MTk3Mjg0MDExNH0.0qYItzuAZ3G7dIo6O8dFAEA39lxfsF3v7Me97IfIJKI" > .env
+            echo "SUPABASE_JWT_SECRET=c9H07iFYRycVm0gq6XtHyj+xVIXYqQugsZwu0d1LGovJ7gOI9mJf6l60fhm+vN8yCbULyAqLnqzl8ebGtIeekQ==" >> .env
             echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
             echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
             echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
