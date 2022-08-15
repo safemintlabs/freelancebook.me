@@ -15,6 +15,7 @@ import PublicLayout from 'src/layouts/PublicLayout/PublicLayout'
 const Routes = () => {
   return (
     <Router>
+      <Route path="/welcome" page={WelcomePage} name="welcome" />
       <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
       <Route path="/auth" page={AuthPage} name="auth" />
       <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
