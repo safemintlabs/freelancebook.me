@@ -36,7 +36,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: jasonvillalon/freelancebook
+          images: jasonvillalon/freelancebook.me
       - name: Build production image
         uses: docker/build-push-action@v2
         with:
@@ -66,6 +66,9 @@ jobs:
             sudo su - dev
             cp -R /home/dev/app/freelancebook.me/freelancebook.me /home/dev/
             cd /home/dev/freelancebook.me
+            echo "SUPABASE_URL=https://pedifzbohlvbioyksufg.supabase.co" > .env
+            echo "SUPABASE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBlZGlmemJvaGx2YmlveWtzdWZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTcyNjQxMTQsImV4cCI6MTk3Mjg0MDExNH0.0qYItzuAZ3G7dIo6O8dFAEA39lxfsF3v7Me97IfIJKI" > .env
+            echo "SUPABASE_JWT_SECRET=c9H07iFYRycVm0gq6XtHyj+xVIXYqQugsZwu0d1LGovJ7gOI9mJf6l60fhm+vN8yCbULyAqLnqzl8ebGtIeekQ==" >> .env
             echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
             echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
             echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
@@ -75,4 +78,42 @@ jobs:
             cat ~/.docker/config.json
             docker-compose convert
             docker-compose pull app
-            docker-compose up -d app
+            docker-compose up -d --force-recreate app
+  backup:
+     # The type of runner that the job will run on
+    needs:
+      - build
+      - deploy
+    runs-on: self-hosted
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Sleep for 60 seconds
+        run: sleep 120s
+        shell: bash
+      - uses: actions/checkout@v2
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.USERNAME }}
+          passsword: ${{ secrets.PASSWORD }}
+          key: ${{ secrets.SSH_KEY }}
+          envs: IMAGE_NAME,REGISTRY,GITHUB_SHA,COMMAND
+          script: |
+            sudo su - dev
+            cp -R /home/dev/app/freelancebook.me/freelancebook.me /home/dev/
+            cd /home/dev/freelancebook.me
+            echo "SUPABASE_URL=https://pedifzbohlvbioyksufg.supabase.co" > .env
+            echo "SUPABASE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBlZGlmemJvaGx2YmlveWtzdWZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTcyNjQxMTQsImV4cCI6MTk3Mjg0MDExNH0.0qYItzuAZ3G7dIo6O8dFAEA39lxfsF3v7Me97IfIJKI" > .env
+            echo "SUPABASE_JWT_SECRET=c9H07iFYRycVm0gq6XtHyj+xVIXYqQugsZwu0d1LGovJ7gOI9mJf6l60fhm+vN8yCbULyAqLnqzl8ebGtIeekQ==" >> .env
+            echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
+            echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+            echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
+            echo "DEV_SUPABASE_HOST=${{ secrets.DEV_SUPABASE_HOST }}" >> .env
+            echo "PROD_SUPABASE_HOST=${{ secrets.PROD_SUPABASE_HOST }}" >> .env
+            docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_TOKEN }}
+            cat ~/.docker/config.json
+            docker-compose convert
+            docker-compose pull app2
+            docker-compose up -d --force-recreate app2
