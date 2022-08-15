@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import {
+  SkeletonCircle,
   Skeleton,
   Container,
   Flex,
@@ -15,7 +16,6 @@ import {
   WrapItem,
   Center,
 } from '@chakra-ui/react'
-import { Spin, Col, Descriptions, Row } from 'antd'
 
 import { navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
@@ -41,10 +41,18 @@ const ProfilePage = ({ username: u }: { username?: string }) => {
       />
       <Flex>
         <Box borderRadius={'full'}>
-          <Avatar url={avatar_url} size="50%" />
+          {isLoading ? (
+            <SkeletonCircle size="20" />
+          ) : (
+            <Avatar url={avatar_url} size="50%" />
+          )}
         </Box>
         <Stack>
-          <Heading>{`${first_name} ${last_name}`}</Heading>
+          {isLoading ? (
+            <Skeleton height="20px" />
+          ) : (
+            <Heading>{`${first_name} ${last_name}`}</Heading>
+          )}
           <Text>{service}</Text>
           <Button
             onClick={() => {
@@ -52,7 +60,7 @@ const ProfilePage = ({ username: u }: { username?: string }) => {
             }}
             colorScheme={'green'}
           >
-            Book my calendar
+            Book a Discovery Call with me
           </Button>
         </Stack>
       </Flex>
