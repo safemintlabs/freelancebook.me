@@ -128,3 +128,16 @@ export const useProfile = (username?: string) => {
 
   return { data, isLoading, isSaving, save, percentage, isMe, id: data?.id }
 }
+
+// Checks if username already exists. Returns true if it exists. Returns false, otherwise.
+// This function does not throw error on 0 database fetch results
+export const checkIfUsernameExists = async (username: string) => {
+  const { data, error, status } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("username", username);
+  if (data.length != 0) {
+    return true;
+  }
+  return false;
+}

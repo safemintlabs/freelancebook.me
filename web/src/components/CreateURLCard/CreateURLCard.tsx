@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
-// import getProfileByUsername  from "src/hooks/profiles"
+import { checkIfUsernameExists } from "src/hooks/profiles"
 
 import {
   VStack,
@@ -11,56 +11,109 @@ import {
   Button,
 } from '@chakra-ui/react'
 
+import { useProfile } from 'src/hooks/profiles'
+
 import { FaTimesCircle } from 'react-icons/fa'
 
 import "./styles.less"
-
+import { navigate, routes } from '@redwoodjs/router'
 
 const CreateUrlCard = () => {
 
-  const [username, setUsername] = useState<string>()
+  const { data, save, isSaving, percentage = 0 } = useProfile()
+  const [profile, setProfile] = useState(data)
+  const {
+    username: usernameInput
+  } = profile || {}
 
+  useEffect(() => setProfile(data), [data])
+  
+  // ff. states must be all FALSE for URL creation
   const [isTaken, setIsTaken] = useState<boolean>(false)
-  const [isEmpty, setIsEmpty] = useState<boolean>(false)
+  const [isEmpty, setIsEmpty] = useState<boolean>(usernameInput === "")
   const [hasSpecial, setHasSpecial] = useState<boolean>(false)
   const [exceedsCharactersLimit, setExceedsCharactersLimit] = useState<boolean>(false)
 
-  const handleUsername = (event) => {
-    const { value } = event.target
-    setUsername(value)
-  }
+  // Shows warning based on triggering event
+  const [showWarnings, setShowWarnings] = useState<Array<boolean>>
+    ([
+      false, /* For isTaken */
+      false, /* For isEmpty */
+      false, /* For hasSpecial */
+      false, /* For exceedsCharactersLimit */
+    ])
+  
+  const handleUsername = async (event) => {
+    const { name, value } = event.target
+    setProfile((prev) => ({ ...prev, [name]: value.toLowerCase() }))
 
-  console.log("Username: " + username);
-
-  const onContinue = async () => {
-    if (!username) {
+    // Trigger isEmpty state if input is empty
+    if (!value) {
       setIsEmpty(true)
       setExceedsCharactersLimit(false)
       setHasSpecial(false)
-    } else {
+      setIsTaken(false)
+    } 
+    
+    // If input is non-empty, ensure that other reqs are satisfied.
+    else {
       setIsEmpty(false)
-      const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~ ]/;
-      setHasSpecial(specialChars.test(username))
+
+      // Ensure that the input is alphanumeric (i.e. does not contain special characters)
+      const alphanumeric = /^[a-z0-9]+$/i
+      setHasSpecial(!alphanumeric.test(value))
       
-      if (username.length < 3 || username.length > 20) {
+      if (value.length < 3 || value.length > 20) {
         setExceedsCharactersLimit(true)
       } else {
         setExceedsCharactersLimit(false)
       }
 
-      // const user = getProfileByUsername(username)
-      // console.log(user)
-      // if (user != null) {
-      //   setIsTaken(true)
-      // } else {
-      //   setIsTaken(false)
-      // }
+      // Ensure username is not yet taken
+      const exists = await checkIfUsernameExists(value)
+      if (exists) {
+        if (usernameInput === data.username) {
+          setIsTaken(false)
+        } else {
+          setIsTaken(true)
+        }
+      } else {
+        setIsTaken(false)
+      }
     }
   }
-  
+
+  const onContinue = () => {
+      
+    // Show warnings for each triggering conditions satisfied
+    const newShowWarnings = [false, false, false, false]
+    if (isTaken) {
+      newShowWarnings[0] = true
+    }
+    if (isEmpty) {
+      newShowWarnings[1] = true
+    }
+    if (hasSpecial) {
+      newShowWarnings[2] = true
+    }
+    if (exceedsCharactersLimit) {
+      newShowWarnings[3] = true
+    }
+    
+    setShowWarnings(newShowWarnings)
+
+    // Save and Redirect to Profile if ALL username requirements are satisfied
+    if ((!isEmpty) && (!exceedsCharactersLimit) && (!hasSpecial) && (!isTaken)) {
+      console.log("Username Requirements Satisfied!")
+      save({ ...profile, isActive: percentage === 100 })
+      navigate(routes.profile())
+    }
+  }
+
   return (
     <div>
       <VStack
+        className='create-url-card'
         spacing={3}
         p="5"
         backgroundColor="white"
@@ -78,9 +131,27 @@ const CreateUrlCard = () => {
           <p> Enter your desired website url address that you want to be visited by your client. (minimum of 3 characters) </p>
         </Box>
 
-        {isEmpty?
+        {showWarnings[0]?
           <Box
             id='empty_message'
+            className='invalid'
+
+            h='auto'
+            w='100%'
+            bg={'#EDFAF9'}
+            display="flex"
+            lineHeight={'100%'}
+            p="10px"
+            alignItems={'center'}
+            color="#ED1010"
+          >
+            <FaTimesCircle /> <span> Ooops. Username already exists. Please try again. </span>
+          </Box> : ''
+        }
+
+        {showWarnings[1]?
+          <Box
+            id='spacial_message'
             className='invalid'
 
             h='auto'
@@ -96,7 +167,7 @@ const CreateUrlCard = () => {
           </Box> : ''
         }
 
-        {hasSpecial?
+        {showWarnings[2]?
           <Box
             id='spacial_message'
             className='invalid'
@@ -113,8 +184,8 @@ const CreateUrlCard = () => {
             <FaTimesCircle /> <span> Space and special characters are not allowed. </span>
           </Box> : ''
         }
-
-        {exceedsCharactersLimit?
+        
+        {showWarnings[3]?
           <Box
             id='spacial_message'
             className='invalid'
@@ -129,34 +200,22 @@ const CreateUrlCard = () => {
             color="#ED1010"
           >
             <FaTimesCircle /> <span> Your username should be at least 3 characters, with a maximum of 20 characters. </span>
-          </Box> : <></>
-        }
-        
-        {isTaken?
-          <Box
-            id='spacial_message'
-            className='invalid'
-
-            h='auto'
-            w='100%'
-            bg={'#EDFAF9'}
-            display="flex"
-            lineHeight={'100%'}
-            p="10px"
-            alignItems={'center'}
-            color="#ED1010"
-          >
-            <FaTimesCircle /> <span> Ooops. Username already exists. Please try again. </span>
           </Box> : ''
         }
+
         <Box
           h='auto'
           w='100%'
           paddingBottom={'50px'}
         >
-          <InputGroup>
+          <InputGroup className='create-url-field'>
             <InputLeftAddon children='freelancebook.me/'/>
-            <Input onChange={handleUsername}/>
+            <Input 
+              type='text'
+              name="username"
+              value={usernameInput}
+              onChange={handleUsername}
+            />
           </InputGroup>
         </Box>
 

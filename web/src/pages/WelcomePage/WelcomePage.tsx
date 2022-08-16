@@ -7,14 +7,6 @@ import './styles.less'
 
 const WelcomePage = () => {
 
-  const onFinish = (values: any) => {
-    console.log('Success:', values);
-  };
-
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
-  };
-
   return (
     <>
       <div className="welcome-page">
