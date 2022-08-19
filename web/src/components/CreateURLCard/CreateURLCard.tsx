@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
-import { checkIfUsernameExists } from "src/hooks/profiles"
+import { checkIfUsernameExists, isMe } from "src/hooks/profiles"
+import { useProfile } from 'src/hooks/profiles'
 
 import {
   VStack,
@@ -11,10 +12,8 @@ import {
   Button,
 } from '@chakra-ui/react'
 
-import { useProfile } from 'src/hooks/profiles'
-
 import { FaTimesCircle } from 'react-icons/fa'
-
+import { Spin } from 'antd'
 import "./styles.less"
 import { navigate, routes } from '@redwoodjs/router'
 
@@ -23,16 +22,23 @@ const CreateUrlCard = () => {
   const { data, save, isSaving, percentage = 0 } = useProfile()
   const [profile, setProfile] = useState(data)
   const {
-    username: usernameInput
-  } = profile || {}
+    username,
+  } = profile || { username: '' }
 
   useEffect(() => setProfile(data), [data])
   
-  // ff. states must be all FALSE for URL creation
-  const [isTaken, setIsTaken] = useState<boolean>(false)
-  const [isEmpty, setIsEmpty] = useState<boolean>(usernameInput === "")
+
+  // ff. must be all FALSE for URL creation
+  var isTaken = false
+  const [isEmpty, setIsEmpty] = useState<boolean>(true)
   const [hasSpecial, setHasSpecial] = useState<boolean>(false)
   const [exceedsCharactersLimit, setExceedsCharactersLimit] = useState<boolean>(false)
+
+  // Called whenever text input changes
+  const handleUsernameInput = (event) => {
+      const { name, value } = event.target
+      setProfile((prev) => ({ ...prev, [name]: value.toLowerCase() }))
+  }
 
   // Shows warning based on triggering event
   const [showWarnings, setShowWarnings] = useState<Array<boolean>>
@@ -43,16 +49,14 @@ const CreateUrlCard = () => {
       false, /* For exceedsCharactersLimit */
     ])
   
-  const handleUsername = async (event) => {
-    const { name, value } = event.target
-    setProfile((prev) => ({ ...prev, [name]: value.toLowerCase() }))
+  const handleUsername = async (username: string) => {
 
     // Trigger isEmpty state if input is empty
-    if (!value) {
+    if (!username) {
       setIsEmpty(true)
       setExceedsCharactersLimit(false)
       setHasSpecial(false)
-      setIsTaken(false)
+      isTaken = false
     } 
     
     // If input is non-empty, ensure that other reqs are satisfied.
@@ -61,30 +65,39 @@ const CreateUrlCard = () => {
 
       // Ensure that the input is alphanumeric (i.e. does not contain special characters)
       const alphanumeric = /^[a-z0-9]+$/i
-      setHasSpecial(!alphanumeric.test(value))
+      setHasSpecial(!alphanumeric.test(username))
       
-      if (value.length < 3 || value.length > 20) {
+      if (username.length < 3 || username.length > 20) {
         setExceedsCharactersLimit(true)
       } else {
         setExceedsCharactersLimit(false)
       }
-
-      // Ensure username is not yet taken
-      const exists = await checkIfUsernameExists(value)
-      if (exists) {
-        if (usernameInput === data.username) {
-          setIsTaken(false)
-        } else {
-          setIsTaken(true)
-        }
-      } else {
-        setIsTaken(false)
-      }
     }
   }
 
-  const onContinue = () => {
-      
+  useEffect(() => {handleUsername(username)}, [username])
+  
+  const [isVerifying, setIsVerifying] = useState<boolean>(false)
+
+  // Called upon clicking submit button
+  const onContinue = async () => {
+    setIsVerifying(true)
+    console.log("Verifying username...")
+
+    /* Ensure username is 'not yet taken' */
+    /* This treats username as 'not yet taken' if username
+    is not in profiles OR if isMe is TRUE */
+    const user = await checkIfUsernameExists(username)
+    if (user != null) {
+      if (isMe(user) === true) {
+        isTaken = false
+      } else {
+        isTaken = true
+      }
+    } else {
+      isTaken = false
+    }
+
     // Show warnings for each triggering conditions satisfied
     const newShowWarnings = [false, false, false, false]
     if (isTaken) {
@@ -104,12 +117,22 @@ const CreateUrlCard = () => {
 
     // Save and Redirect to Profile if ALL username requirements are satisfied
     if ((!isEmpty) && (!exceedsCharactersLimit) && (!hasSpecial) && (!isTaken)) {
-      console.log("Username Requirements Satisfied!")
+      console.log("Username Requirements SATISFIED!")
       save({ ...profile, isActive: percentage === 100 })
       navigate(routes.profile())
-    }
+    } else {
+      console.log("Username Requirements UNSATISFIED!")
+      setIsVerifying(false)
+    }    
   }
 
+  // Enable submission using ENTER key
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      onContinue()
+    }
+  }
+  
   return (
     <div>
       <VStack
@@ -133,7 +156,7 @@ const CreateUrlCard = () => {
 
         {showWarnings[0]?
           <Box
-            id='empty_message'
+            id='taken_message'
             className='invalid'
 
             h='auto'
@@ -151,7 +174,7 @@ const CreateUrlCard = () => {
 
         {showWarnings[1]?
           <Box
-            id='spacial_message'
+            id='empty_message'
             className='invalid'
 
             h='auto'
@@ -187,7 +210,7 @@ const CreateUrlCard = () => {
         
         {showWarnings[3]?
           <Box
-            id='spacial_message'
+            id='limit_message'
             className='invalid'
 
             h='auto'
@@ -213,8 +236,9 @@ const CreateUrlCard = () => {
             <Input 
               type='text'
               name="username"
-              value={usernameInput}
-              onChange={handleUsername}
+              value={username}
+              onChange={handleUsernameInput}
+              onKeyDown={handleKeyDown}
             />
           </InputGroup>
         </Box>
@@ -229,10 +253,18 @@ const CreateUrlCard = () => {
             borderRadius="10px"
             colorScheme={'green'}
             color={'white'}
-
+            type='submit'
+            disabled={isVerifying}
             onClick={onContinue}
           >
-            <span id='continue'> Continue </span>
+            {(!isVerifying)?
+              <span className='continue'> Continue </span> :
+              <>
+                <span className='continue'> Setting Up... </span>
+                <Spin className='continue' size='small'/>
+              </>
+            }
+            
           </Button>
         </Box>
 
