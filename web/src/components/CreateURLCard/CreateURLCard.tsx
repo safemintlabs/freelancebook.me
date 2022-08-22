@@ -88,15 +88,8 @@ const CreateUrlCard = () => {
     /* This treats username as 'not yet taken' if username
     is not in profiles OR if isMe is TRUE */
     const user = await checkIfUsernameExists(username)
-    if (user != null) {
-      if (isMe(user) === true) {
-        isTaken = false
-      } else {
-        isTaken = true
-      }
-    } else {
-      isTaken = false
-    }
+    
+    user && !isMe(user) ? (isTaken = true) : (isTaken = false)
 
     // Show warnings for each triggering conditions satisfied
     const newShowWarnings = [false, false, false, false]

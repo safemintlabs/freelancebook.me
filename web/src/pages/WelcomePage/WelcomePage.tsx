@@ -11,7 +11,7 @@ const WelcomePage = () => {
     <>
       <div className="welcome-page">
         <div className='welcome-message'>
-          <h2 id='welcome-text'>Welcome to Freelancebook!</h2>
+          <h2 className='welcome-text'>Welcome to Freelancebook!</h2>
         </div>
 
       <CreateUrlCard />
