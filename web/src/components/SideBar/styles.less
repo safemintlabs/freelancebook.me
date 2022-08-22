@@ -1,0 +1,65 @@
+
+.side-bar-component {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.side-bar-component .side-bar-items {
+    width: 100%;
+    height: auto;
+    padding-left: 200px;
+}
+
+.side-bar-component a {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    height: 60px;
+    width: 60px;
+    background-color: #3C5B66;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    font-size: 24px;
+    border-radius: 50px;
+}
+
+.text {
+    font-family: Inter;
+    font-size: 24px;
+    font-weight: 400;
+}
+
+// sm: '320px',
+// md: '768px',
+// lg: '960px',
+// xl: '1200px',
+// '2xl': '1536px',
+
+@media screen and (max-width: 1536px) {
+    .side-bar-component .side-bar-items {
+        padding-left: 100px;
+    }
+
+    .icon {
+        height: 40px;
+        width: 40px;
+        font-size: 18px;
+        border-radius: 50px;
+    }
+    
+    .text {
+        font-family: Inter;
+        font-size: 18px;
+        font-weight: 400;
+    }
+}
+
+
+
+

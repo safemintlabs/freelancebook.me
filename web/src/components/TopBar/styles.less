@@ -1,0 +1,42 @@
+.top-bar-component {
+    width: 100%;
+    height: 125px;
+    padding-left: 40px;
+    padding-right: 40px;
+    display: flex;
+}
+
+.left-aligned {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    align-items: center;
+}
+
+.right-aligned {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+.app-name {
+    font-family: Inter;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 33px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+@media screen and (max-width: 1600px) {
+    .top-bar-component {
+        height: 75px;
+    }
+
+    .app-name {
+        font-size: 24px;
+        font-weight: 600;
+    }
+}

@@ -1,0 +1,40 @@
+
+.projects-page {
+    display: flex;
+    width: 100%;
+    min-height: calc(100vh - 125px);
+    background-color: #f7f9fb;
+    align-items: center;
+}
+
+.side-bar {
+    width: 30%;
+    height: 100%;
+}
+
+.main-card {
+    width: 70%;
+    height: 100%;
+}
+
+@media screen and (max-width: 1600px) {
+    .projects-page {
+        height: calc(100vh - 75px);
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .projects-page {
+        display: block;
+    }
+
+    .side-bar {
+        width: 100%;
+        height: 100px;
+    }
+    
+    .main-card {
+        width: 100%;
+        height: auto;
+    }
+}
