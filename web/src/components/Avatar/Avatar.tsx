@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { Avatar as ChakraAvatar } from '@chakra-ui/react'
 import { Button, Skeleton } from 'antd'
+import { useQuery } from 'react-query'
 
 import { useAuth } from '@redwoodjs/auth'
 
@@ -19,12 +20,7 @@ const Avatar = ({
   const uploadRef = useRef<any>(null)
   const { client: supabase } = useAuth()
 
-  const [avatarUrl, setAvatarUrl] = useState(null)
   const [uploading, setUploading] = useState(false)
-
-  useEffect(() => {
-    if (url) downloadImage(url)
-  }, [url])
 
   async function downloadImage(path) {
     try {
@@ -35,11 +31,15 @@ const Avatar = ({
         throw error
       }
       const url = URL.createObjectURL(data)
-      setAvatarUrl(url)
+      return url
     } catch (error) {
       console.log('Error downloading image: ', error.message)
     }
   }
+
+  const { data: avatarUrl } = useQuery(['avatar', url], () =>
+    downloadImage(url)
+  )
 
   async function uploadAvatar(event) {
     try {
