@@ -134,13 +134,13 @@ export const useProfile = (username?: string) => {
 // This function does not throw error on 0 database fetch results
 export const checkIfUsernameExists = async (username: string) => {
   const { data } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("username", username);
+    .from('profiles')
+    .select('*')
+    .eq('username', username)
   if (data.length != 0) {
-    return data[0];
+    return data[0]
   }
-  return null;
+  return null
 }
 
 // A function checking if the IUser object is the auth user
