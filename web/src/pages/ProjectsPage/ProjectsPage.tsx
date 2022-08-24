@@ -9,9 +9,9 @@ const ProjectsPage = () => {
   return (
     <>
       <TopBar />
-      <div className='projects-page'>
+      <div className='page'>
         <div className='side-bar'>
-          <SideBar />
+          <SideBar activePage='projects'/>
         </div>
         <div className='main-card'>
           <MainCard />
