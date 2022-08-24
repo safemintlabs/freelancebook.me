@@ -9,7 +9,7 @@
 .side-bar-component .side-bar-items {
     width: 100%;
     height: auto;
-    padding-left: 200px;
+    padding-left: 30%;
 }
 
 .side-bar-component a {
@@ -18,45 +18,38 @@
 }
 
 .icon {
-    height: 60px;
-    width: 60px;
+    height: 40px;
+    width: 40px;
     background-color: #3C5B66;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-right: 10px;
-    font-size: 24px;
+    font-size: 18px;
+    border-radius: 50px;
+}
+
+.icon-active {
+    height: 40px;
+    width: 40px;
+    background-color: green;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    font-size: 18px;
     border-radius: 50px;
 }
 
 .text {
     font-family: Inter;
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 400;
 }
 
-// sm: '320px',
-// md: '768px',
-// lg: '960px',
-// xl: '1200px',
-// '2xl': '1536px',
-
-@media screen and (max-width: 1536px) {
+@media screen and (max-width: 900px) {
     .side-bar-component .side-bar-items {
-        padding-left: 100px;
-    }
-
-    .icon {
-        height: 40px;
-        width: 40px;
-        font-size: 18px;
-        border-radius: 50px;
-    }
-    
-    .text {
-        font-family: Inter;
-        font-size: 18px;
-        font-weight: 400;
+        padding-left: 10%;
     }
 }
 

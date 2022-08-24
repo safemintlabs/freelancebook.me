@@ -1,22 +1,23 @@
-import { VStack } from "@chakra-ui/react"
-
 import './styles.less'
 
 const MainCard = () => {
   return (
     <div className='main-card-component'>
-      <VStack
+      <div
         className='actual-card'
-        spacing={3}
-        p="5"
-        backgroundColor="white"
-        boxShadow={"0px 4px 35px rgba(0, 0, 0, 0.08)"}
-        borderWidth="1px"
-        borderRadius="40px"
-        margin="20px"
       >
 
-      </VStack>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Pellentesque blandit, nunc et ullamcorper eleifend, urna
+      ante fermentum velit, vel egestas magna neque sit amet
+      turpis. In nibh mi, vehicula vitae hendrerit at, posuere
+      lobortis eros. Nullam sit amet velit lobortis, dapibus
+      magna id, varius orci. Mauris dignissim hendrerit
+      convallis. Aenean vulputate orci augue, nec scelerisque
+      tellus ultrices a. Cras ullamcorper purus sed dui fringilla,
+      
+      {/* Insert card contents here! */}
+      </div>
     </div>
   )
 }

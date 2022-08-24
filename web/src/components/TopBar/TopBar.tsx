@@ -1,12 +1,14 @@
 
 
 import './styles.less'
-import { Button, Image, Text } from '@chakra-ui/react'
+import { Button, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, extendTheme, Image, Text, useDisclosure } from '@chakra-ui/react'
 
 import '@fontsource/inter'
 import { navigate, routes } from '@redwoodjs/router'
 import { useProfile } from 'src/hooks/profiles'
 import { useEffect, useState } from 'react'
+import { FaBars, FaEye, FaTimes } from 'react-icons/fa'
+import SideBar from '../SideBar/SideBar'
 
 const TopBar = () => {
 
@@ -22,13 +24,15 @@ const TopBar = () => {
 
   useEffect(() => setIsUndefined(!profile), [profile])
 
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  
   return (
     <div className="top-bar-component">
       <div className='left-aligned'>
         <Image
           className='logo'
           borderRadius="full"
-          boxSize={["20px", "30px", "40px", "50px", "60px"]}
+          boxSize={"40px"}
           src="/images/logo.svg"
           alt="Freelancebook"
         />
@@ -44,13 +48,66 @@ const TopBar = () => {
           borderWidth='1px'
           borderColor='green.400'
           borderRadius={'10px'}
-          width='150px'
+          width='125px'
+          height= '35px'
           disabled={isUndefined}
-
+          fontSize="14px"
           onClick={() => navigate(routes.profile({username: username}))}
         >
-          PREVIEW
+          <span> PREVIEW </span>
         </Button>
+        <Button 
+          className='preview-button-icon'
+          colorScheme='green'
+          backgroundColor='transparent'
+          color={'green.400'}
+          borderWidth='1px'
+          borderColor='green.400'
+          borderRadius={'10px'}
+          width='35px'
+          height= '35px'
+          disabled={isUndefined}
+          fontSize="30px"
+          padding="8px"
+          display="none"
+          onClick={() => navigate(routes.profile({username: username}))}
+        >
+          <FaEye />
+        </Button>
+        <Button
+            className='sidebar-button'
+            colorScheme='green'
+            backgroundColor='transparent'
+            color={'green.400'}
+            fontSize="14px"
+            onClick={onOpen}
+        >
+          <FaBars />
+        </Button>
+
+        <Drawer placement={"left"} onClose={onClose} isOpen={isOpen}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerHeader
+            borderBottomWidth='1px'
+          >
+            <Button
+              className='sidebar-button'
+              colorScheme='green'
+              backgroundColor='transparent'
+              color={'green.400'}
+              fontSize="14px"
+              float='right'
+              onClick={onClose}
+            >
+              <FaTimes />
+            </Button>
+          </DrawerHeader>
+          <DrawerBody>
+            <SideBar />
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
       </div>
     </div>
   )

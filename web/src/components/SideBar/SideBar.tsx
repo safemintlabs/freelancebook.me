@@ -7,21 +7,8 @@ import '@fontsource/inter'
 import { useAuth } from '@redwoodjs/auth'
 import { useEffect } from 'react'
 
-import { extendTheme } from '@chakra-ui/react'
-
 const SideBar = () => {
-
-  // Initialization of breakpoints for responsive design
-  const breakpoints = {
-    sm: '320px',
-    md: '768px',
-    lg: '960px',
-    xl: '1200px',
-    '2xl': '1536px',
-  }
   
-  const theme = extendTheme({ breakpoints })
-
   const { logOut, reauthenticate } = useAuth()
 
   // Executed upon clicking of logout button
@@ -41,8 +28,8 @@ const SideBar = () => {
     <div className="side-bar-component">
       <div className='side-bar-items'>
 
-        <Box margin={'20px'}>
-          <a onClick={() => navigate(routes.setup())}>
+        <Box margin={'30px'}>
+          <a onClick={() => navigate(routes.profile())}>
             <span className="icon">
               <FaBookReader
                 color="#f7f9fb"
@@ -52,7 +39,7 @@ const SideBar = () => {
           </a>
         </Box>
 
-        <Box margin={'20px'}>
+        <Box margin={'30px'}>
           <a onClick={() => navigate(routes.schedule())}>
             <span className="icon">
               <FaRegCalendarAlt
@@ -63,9 +50,9 @@ const SideBar = () => {
           </a>
         </Box>
 
-        <Box margin={'20px'}>
+        <Box margin={'30px'}>
           <a onClick={() => navigate(routes.projects())}>
-            <span className="icon">
+            <span className="icon-active">
               <FaFolder
                 color="#f7f9fb"
               />
@@ -74,7 +61,7 @@ const SideBar = () => {
           </a>
         </Box>
 
-        <Box margin={'20px'}>
+        <Box margin={'30px'}>
           <a onClick={() => navigate(routes.testimonials())}>
             <span className="icon">
               <FaRegStar
@@ -85,7 +72,7 @@ const SideBar = () => {
           </a>
         </Box>
 
-        <Box margin={'20px'}>
+        <Box margin={'30px'}>
           <a onClick={signout}>
             <span className="icon">
               <FaLock
