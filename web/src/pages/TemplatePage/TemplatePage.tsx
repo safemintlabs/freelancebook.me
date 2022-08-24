@@ -5,13 +5,14 @@ import TopBar from 'src/components/TopBar/TopBar'
 
 import './styles.less'
 
+// Please replace 'projects' with the actual name of the page where the components were used
 const TemplatePage = () => {
   return (
     <>
-      <TopBar />
+      <TopBar activePage='projects'/>
       <div className='page'>
         <div className='side-bar'>
-          <SideBar />
+          <SideBar activePage='projects'/>
         </div>
         <div className='main-card'>
           <MainCard />
