@@ -1,13 +1,15 @@
 import { navigate, routes } from '@redwoodjs/router'
 
-import { Box, Stack, Text } from "@chakra-ui/react"
+import { Box, Text } from "@chakra-ui/react"
 import { FaBookReader, FaFolder, FaLock, FaRegCalendarAlt, FaRegStar } from 'react-icons/fa'
 import './styles.less'
 import '@fontsource/inter'
 import { useAuth } from '@redwoodjs/auth'
 import { useEffect } from 'react'
 
-const SideBar = () => {
+// Accepts a string denoting what page this sidebar is being used (set to NULL by default)
+// Accepted arguments can be 'profile', 'schedule', 'projects', or 'testimonials'
+const SideBar = ({activePage=null}) => {
   
   const { logOut, reauthenticate } = useAuth()
 
@@ -23,6 +25,20 @@ const SideBar = () => {
     }, 100)
   }, [])
 
+  // Class name of each side bar menu depends whether it corresponds to the current page or not
+  var pages = {
+    'profile': 'inactive',
+    'schedule': 'inactive',
+    'projects': 'inactive',
+    'testimonials': 'inactive',
+  }
+
+  // Set the classname of the current active page to 'active'
+  if (activePage) {
+    pages[activePage] = 'active'
+  }
+
+  // The active page shall have a contrasting menu color as a result
 
   return (
     <div className="side-bar-component">
@@ -30,7 +46,7 @@ const SideBar = () => {
 
         <Box margin={'30px'}>
           <a onClick={() => navigate(routes.profile())}>
-            <span className="icon">
+            <span className={pages.profile}>
               <FaBookReader
                 color="#f7f9fb"
               />
@@ -41,7 +57,7 @@ const SideBar = () => {
 
         <Box margin={'30px'}>
           <a onClick={() => navigate(routes.schedule())}>
-            <span className="icon">
+            <span className={pages.schedule}>
               <FaRegCalendarAlt
                 color="#f7f9fb"
               />
@@ -52,7 +68,7 @@ const SideBar = () => {
 
         <Box margin={'30px'}>
           <a onClick={() => navigate(routes.projects())}>
-            <span className="icon-active">
+            <span className={pages.projects}>
               <FaFolder
                 color="#f7f9fb"
               />
@@ -63,7 +79,7 @@ const SideBar = () => {
 
         <Box margin={'30px'}>
           <a onClick={() => navigate(routes.testimonials())}>
-            <span className="icon">
+            <span className={pages.testimonials}>
               <FaRegStar
                 color="#f7f9fb"
               />
@@ -74,7 +90,7 @@ const SideBar = () => {
 
         <Box margin={'30px'}>
           <a onClick={signout}>
-            <span className="icon">
+            <span className='inactive'>
               <FaLock
                 color="#f7f9fb"
               />
