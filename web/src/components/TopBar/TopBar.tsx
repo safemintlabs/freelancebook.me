@@ -49,11 +49,10 @@ const TopBar = ({activePage=""}) => {
           color={'green.400'}
           borderWidth='1px'
           borderColor='green.400'
-          borderRadius={'10px'}
+          borderRadius={'7px'}
           width='125px'
-          height= '35px'
+          height= '28px'
           disabled={isUndefined}
-          fontSize="14px"
           onClick={() => navigate(routes.profile({username: username}))}
         >
           <span> PREVIEW </span>
@@ -67,9 +66,9 @@ const TopBar = ({activePage=""}) => {
           borderColor='green.400'
           borderRadius={'10px'}
           width='35px'
-          height= '35px'
+          height= '28px'
           disabled={isUndefined}
-          fontSize="30px"
+          fontSize="14px"
           padding="8px"
           display="none"
           onClick={() => navigate(routes.profile({username: username}))}
@@ -81,7 +80,7 @@ const TopBar = ({activePage=""}) => {
             colorScheme='green'
             backgroundColor='transparent'
             color={'green.400'}
-            fontSize="14px"
+            fontSize="16px"
             onClick={onOpen}
         >
           <FaBars />
