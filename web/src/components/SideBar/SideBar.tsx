@@ -9,7 +9,7 @@ import { useEffect } from 'react'
 
 // Accepts a string denoting what page this sidebar is being used (set to NULL by default)
 // Accepted arguments can be 'profile', 'schedule', 'projects', or 'testimonials'
-const SideBar = ({activePage=null}) => {
+const SideBar = ({activePage=""}) => {
   
   const { logOut, reauthenticate } = useAuth()
 

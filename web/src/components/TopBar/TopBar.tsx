@@ -10,7 +10,9 @@ import { useEffect, useState } from 'react'
 import { FaBars, FaEye, FaTimes } from 'react-icons/fa'
 import SideBar from '../SideBar/SideBar'
 
-const TopBar = () => {
+// Accepts a string denoting what page this topbar is being used (set to NULL by default)
+// Accepted arguments can be 'profile', 'schedule', 'projects', or 'testimonials'
+const TopBar = ({activePage=""}) => {
 
   const { data } = useProfile()
   const [ profile, setProfile ] = useState(data)
@@ -104,7 +106,7 @@ const TopBar = () => {
             </Button>
           </DrawerHeader>
           <DrawerBody>
-            <SideBar />
+            <SideBar activePage={activePage} />
           </DrawerBody>
         </DrawerContent>
       </Drawer>

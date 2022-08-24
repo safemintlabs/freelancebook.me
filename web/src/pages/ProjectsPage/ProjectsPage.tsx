@@ -8,7 +8,7 @@ import './styles.less'
 const ProjectsPage = () => {
   return (
     <>
-      <TopBar />
+      <TopBar activePage='projects'/>
       <div className='page'>
         <div className='side-bar'>
           <SideBar activePage='projects'/>
