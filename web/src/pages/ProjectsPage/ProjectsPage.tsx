@@ -1,5 +1,5 @@
 
-import MainCard from 'src/components/MainCard/MainCard'
+import ProjectsCard from 'src/components/ProjectsCard/ProjectsCard'
 import SideBar from 'src/components/SideBar/SideBar'
 import TopBar from 'src/components/TopBar/TopBar'
 
@@ -14,7 +14,7 @@ const ProjectsPage = () => {
           <SideBar activePage='projects'/>
         </div>
         <div className='main-card'>
-          <MainCard />
+          <ProjectsCard />
         </div>
       </div>
     </>
