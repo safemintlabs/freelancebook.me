@@ -27,8 +27,9 @@ const Routes = () => {
           <Route path="/schedule" page={SchedulePage} name="schedule" />
           <Route path="/schedule/{action}" page={SchedulesetupPage} name="scheduleEdit" />
           <Route path="/testimonials" page={TestimonialsPage} name="testimonials" />
-          <Route path="/projects" page={ProjectsPage} name="projects" />
         </Set>
+        <Route path="/template-page" page={TemplatePage} name="templatePage" />
+        <Route path="/projects" page={ProjectsPage} name="projects" />
         <Route path="/welcome" page={WelcomePage} name="welcome" />
       </Private>
       <Set wrap={PublicLayout}>
