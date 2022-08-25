@@ -1,0 +1,47 @@
+@import '~antd/dist/antd.less';
+
+.welcome-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  height: auto;
+  width: 100%;
+  flex-direction: column;
+  background-color: #f7f9fb;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.welcome-message .welcome-text {
+  text-align: center;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 44px;
+  line-height: normal;
+  color: #000000;
+}
+
+@media screen and (max-width: 900px) {
+  .welcome-message .welcome-text {
+    font-size: 36px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .welcome-message .welcome-text {
+    font-size: 30px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .welcome-message .welcome-text {
+    font-size: 24px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .welcome-message .welcome-text {
+    width: 240px;
+  }
+}

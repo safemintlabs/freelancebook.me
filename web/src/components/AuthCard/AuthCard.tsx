@@ -77,9 +77,6 @@ const AuthCard = ({ signInWithGoogle, onFinish, loading }) => {
         </InputGroup>
       </FormControl>
       <Flex justifyContent="space-between">
-        <Button variant="link" onClick={handleChangeText}>
-          {isLogin ? 'Create new account?' : 'Already have an account?'}
-        </Button>
         {isLogin && (
           <Button variant="link" onClick={handleForgotPassword}>
             I forgot my password
@@ -97,6 +94,16 @@ const AuthCard = ({ signInWithGoogle, onFinish, loading }) => {
           disabled={loading}
         >
           {isLogin ? 'Login your account' : 'Create your account'}
+        </Button>
+      </Center>
+      <Center>
+        <Button
+          colorScheme="green"
+          width={'100%'}
+          variant="ghost"
+          onClick={handleChangeText}
+        >
+          {isLogin ? 'Create new account?' : 'Already have an account?'}
         </Button>
       </Center>
       <Center>
