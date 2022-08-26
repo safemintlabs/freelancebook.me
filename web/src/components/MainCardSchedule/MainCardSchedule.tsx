@@ -147,17 +147,6 @@ const MainCardSchedule = () => {
       {/*Sir Jason's Code*/}
         <>
           <MetaTags title="Schedulesetup" description="Schedulesetup page" />
-          <Affix offsetTop={64}>
-            <div className="list-header">
-              <span>Your schedule for today</span>
-              <Button
-                disabled={!notSaved || hasConflicts(cloneDeep(data), false)}
-                onClick={handleSave}
-              >
-                <SaveOutlined />
-              </Button>
-            </div>
-          </Affix>
           {!isSaving && !isLoading ? (
             <List
               style={{ flex: '1 1 0%', marginLeft: 16 }}
@@ -280,6 +269,18 @@ const MainCardSchedule = () => {
           ) : (
             <Skeleton style={{ marginTop: 20 }} />
           )}
+          <Button
+            disabled={!notSaved || hasConflicts(cloneDeep(data), false)}
+            onClick={handleSave}
+            colorScheme='green'
+            className='save-button'
+            size='xs'
+            fontWeight='normal'
+            width='125px'
+            height='31px'
+          >
+            SAVE
+          </Button>
         </>
       </div>
     </div>
