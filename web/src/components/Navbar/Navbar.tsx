@@ -9,12 +9,85 @@ import {
   Image,
   useDisclosure,
   Text,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerHeader,
+  DrawerBody,
+  useMediaQuery,
 } from '@chakra-ui/react'
+import { FaTimes } from 'react-icons/fa'
 
-import { navigate, routes } from '@redwoodjs/router'
+import { navigate, routes, useLocation } from '@redwoodjs/router'
 
-export default function Navbar() {
-  const { isOpen, onToggle } = useDisclosure()
+import { useProfile } from 'src/hooks/profiles'
+
+import SideBar from '../SideBar/SideBar'
+
+export default function Navbar({ username = '' }) {
+  const [isLarge] = useMediaQuery('(min-width: 991px)')
+
+  const { id } = useProfile()
+  const { pathname } = useLocation()
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  console.log({ id, isLarge })
+
+  const getNavButton = () => {
+    switch (pathname) {
+      case '/':
+        return id ? (
+          <Button
+            display={{ base: 'none', md: 'inline-flex' }}
+            fontSize={'sm'}
+            fontWeight={600}
+            color={'white'}
+            bg={'green.400'}
+            _hover={{
+              bg: 'green.500',
+            }}
+            onClick={() => {
+              navigate(routes.profile())
+            }}
+          >
+            My Account
+          </Button>
+        ) : (
+          <Button
+            display={{ base: 'none', md: 'inline-flex' }}
+            fontSize={'sm'}
+            fontWeight={600}
+            color={'white'}
+            bg={'green.400'}
+            _hover={{
+              bg: 'green.500',
+            }}
+            onClick={() => {
+              navigate(routes.auth())
+            }}
+          >
+            Sign Up
+          </Button>
+        )
+      case '/profile':
+        return (
+          <Button
+            className="preview-button"
+            colorScheme="green"
+            fontFamily={'Inter'}
+            backgroundColor="transparent"
+            color={'green.400'}
+            borderWidth="1px"
+            borderColor="green.400"
+            borderRadius={'7px'}
+            width="125px"
+            height="28px"
+            onClick={() => navigate(routes.profile({ username }))}
+          >
+            <span> PREVIEW </span>
+          </Button>
+        )
+    }
+  }
 
   return (
     <Box>
@@ -28,14 +101,11 @@ export default function Navbar() {
         borderStyle={'solid'}
         borderColor={useColorModeValue('gray.200', 'gray.900')}
         align={'center'}
+        direction="row"
       >
-        <Flex
-          flex={{ base: 1, md: 'auto' }}
-          ml={{ base: -2 }}
-          display={{ base: 'flex', md: 'none' }}
-        >
+        <Flex display={{ base: 'flex', lg: 'none' }}>
           <IconButton
-            onClick={onToggle}
+            onClick={onOpen}
             icon={
               isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
             }
@@ -56,28 +126,41 @@ export default function Navbar() {
         </Flex>
 
         <Stack
-          flex={{ base: 1, md: 0 }}
+          flex={{ base: 0 }}
           justify={'flex-end'}
           direction={'row'}
           spacing={6}
         >
-          <Button
-            display={{ base: 'none', md: 'inline-flex' }}
-            fontSize={'sm'}
-            fontWeight={600}
-            color={'white'}
-            bg={'green.400'}
-            _hover={{
-              bg: 'green.500',
-            }}
-            onClick={() => {
-              navigate(routes.auth())
-            }}
-          >
-            Sign Up
-          </Button>
+          {getNavButton()}
         </Stack>
       </Flex>
+      <Box display={{ base: 'none', sm: 'flex' }}>
+        <Drawer
+          placement={'left'}
+          onClose={onClose}
+          isOpen={isOpen && !isLarge}
+        >
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerHeader borderBottomWidth="1px">
+              <Button
+                className="sidebar-button"
+                colorScheme="green"
+                backgroundColor="transparent"
+                color={'green.400'}
+                fontSize="14px"
+                float="right"
+                onClick={onClose}
+              >
+                <FaTimes />
+              </Button>
+            </DrawerHeader>
+            <DrawerBody>
+              <SideBar />
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
+      </Box>
     </Box>
   )
 }
