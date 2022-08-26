@@ -133,26 +133,23 @@ const MainCardSchedule = () => {
           </Box>
           <Spacer />
           <Box>
-            <Button className='view-schedule-button' colorScheme='green' variant='ghost' size='xs' fontWeight='normal'>VIEW SCHEDULE</Button>
+            <Button
+            className='view-schedule-button'
+            colorScheme='green'
+            variant='ghost'
+            size='xs'
+            fontWeight='normal'
+            onClick={() => {navigate(routes.schedule())}}>
+              VIEW SCHEDULE
+            </Button>
           </Box>
        </Flex>
-
+      {/*Sir Jason's Code*/}
         <>
           <MetaTags title="Schedulesetup" description="Schedulesetup page" />
-
           <Affix offsetTop={64}>
             <div className="list-header">
-              <Button
-                className="edit-schedule"
-                onClick={() => {
-                  navigate(routes.schedule())
-                }}
-                style={{ marginRight: 15 }}
-              >
-                <LeftOutlined />
-              </Button>
               <span>Your schedule for today</span>
-
               <Button
                 disabled={!notSaved || hasConflicts(cloneDeep(data), false)}
                 onClick={handleSave}
