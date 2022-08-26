@@ -2,20 +2,16 @@ import './styles.less'
 
 import '@fontsource/inter'
 
-import { Box, Button, Flex, Spacer, Divider } from '@chakra-ui/react'
+import { Box, Button, Flex, Spacer, Checkbox } from '@chakra-ui/react'
 
 import React, { useEffect, useState } from 'react'
 
 import {
   DeleteOutlined,
-  LeftOutlined,
   PlusOutlined,
-  SaveOutlined,
 } from '@ant-design/icons'
 import {
   Skeleton,
-  Affix,
-  Checkbox,
   List,
   notification,
   Space,
@@ -163,7 +159,7 @@ const MainCardSchedule = () => {
                           {index === 0 && (
                             <div style={{ width: '50px' }}>
                               <Checkbox
-                                checked={item.active}
+                                isChecked={item.active}
                                 onChange={(e) => {
                                   console.log(e.target.checked)
                                   if (e.target.checked) {
@@ -190,6 +186,10 @@ const MainCardSchedule = () => {
                                     setData(newData)
                                   }
                                 }}
+                                colorScheme='green'
+                                size='sm'
+                                className='checkbox-day'
+                                borderColor='green.400'
                               >
                                 {item.day}
                               </Checkbox>
@@ -197,7 +197,13 @@ const MainCardSchedule = () => {
                           )}
                           <TimePicker.RangePicker
                             disabled={!item.active}
-                            style={{ marginLeft: index > 0 ? 58 : 0 }}
+                            style={
+                              {borderColor: "#38A169",
+                              borderRadius: "8px",
+                              marginLeft: index > 0 ? 118 : 60,
+                              width: "150px",
+                              height: "32px",
+                            }}
                             format="HH:mm"
                             minuteStep={15}
                             onChange={(time) => {
