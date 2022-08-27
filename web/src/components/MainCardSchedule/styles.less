@@ -1,4 +1,4 @@
-@primary-color: #38A169;
+@primary-color: #1890ff; // primary color for all components
 
 .main-card-component {
     height: 100%;
@@ -56,7 +56,7 @@
     font-family: Inter;
     font-style: normal;
     font-weight: 400;
-    font-size: 20px;
+    font-size: 15px;
     line-height: 30px;
     text-align: center;
     color: #FFFFFF;
@@ -66,13 +66,48 @@
     font-family: Inter;
     font-style: normal;
     font-weight: 400;
-    font-size: 20px;
+    font-size: 15px;
     line-height: 23px;
 }
 
 .ant-btn-primary {
     background: #38A169;
+    border-color: #38A169;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 10px;
+    text-align: center;
+    color: #FFFFFF;
 }
+
+.ant-btn-primary:hover {
+    background: #2F855A;
+    border-color: #2F855A;
+}
+
+.ant-btn-primary:active {
+    background: #276749;
+    border-color: #276749;
+}
+
+.ant-picker-time-panel-column > li.ant-picker-time-panel-cell-selected .ant-picker-time-panel-cell-inner {
+    background: #9AE6B4;
+}
+
+.ant-picker-time-panel-column > li.ant-picker-time-panel-cell .ant-picker-time-panel-cell-inner:hover {
+    background: #C6F6D5
+}
+
+.add-new-interval-button {
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 23px;
+}
+
+
 
 @media screen and (max-width: 900px) {
     .actual-card-schedule {

@@ -2,12 +2,13 @@ import './styles.less'
 
 import '@fontsource/inter'
 
-import { Box, Button, Flex, Spacer, Checkbox } from '@chakra-ui/react'
+import { Box, Button, Flex, Spacer, Checkbox, Switch } from '@chakra-ui/react'
+import { BsTrash } from "react-icons/bs";
+import { AddIcon } from '@chakra-ui/icons'
 
 import React, { useEffect, useState } from 'react'
 
 import {
-  DeleteOutlined,
   PlusOutlined,
 } from '@ant-design/icons'
 import {
@@ -16,7 +17,6 @@ import {
   notification,
   Space,
   TimePicker,
-  Switch,
 } from 'antd'
 import { cloneDeep, isEqual } from 'lodash'
 import moment from 'moment'
@@ -226,20 +226,6 @@ const MainCardSchedule = () => {
                               makeMoment(slot.time_end),
                             ]}
                           />
-                          <Switch
-                            checked={slot.active}
-                            onChange={(checked) => {
-                              const newData = cloneDeep(data)
-                              const i = newData.findIndex((o) => o.id === slot.id)
-                              if (i > -1) {
-                                newData[i].active = checked
-                                if (hasConflicts(newData)) {
-                                  return false
-                                }
-                                setData(newData)
-                              }
-                            }}
-                          />
                           {index > 0 && (
                             <Button
                               disabled={!item.active}
@@ -255,15 +241,24 @@ const MainCardSchedule = () => {
                                   return newData
                                 })
                               }}
+                              variant='ghost'
+                              colorScheme='green'
+                              color='black'
+                              size='md'
                             >
-                              <DeleteOutlined />
+                              <BsTrash />
                             </Button>
                           )}
                           <Button
+                            className='add-new-interval-button'
                             onClick={handleAdd(slot.day)}
                             disabled={!item.active}
+                            colorScheme='green'
+                            variant='ghost'
+                            size='12px'
+                            leftIcon={<AddIcon/>}
                           >
-                            <PlusOutlined />
+                            Add New Interval
                           </Button>
                         </Space>
                       </List.Item>
