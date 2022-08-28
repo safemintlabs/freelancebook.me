@@ -1,7 +1,10 @@
 import { useRef, useState } from 'react'
 
-import { Avatar as ChakraAvatar } from '@chakra-ui/react'
-import { Button, Skeleton } from 'antd'
+import {
+  Avatar as ChakraAvatar,
+  Button,
+  SkeletonCircle,
+} from '@chakra-ui/react'
 import { useQuery } from 'react-query'
 
 import { useAuth } from '@redwoodjs/auth'
@@ -9,10 +12,14 @@ import { useAuth } from '@redwoodjs/auth'
 import './styles.less'
 
 const Avatar = ({
+  id,
   url,
   size,
   onUpload,
+  name,
 }: {
+  id?: string
+  name?: string
   url: string
   size: string | number
   onUpload?: (url: string) => void
@@ -37,8 +44,9 @@ const Avatar = ({
     }
   }
 
-  const { data: avatarUrl } = useQuery(['avatar', url], () =>
-    downloadImage(url)
+  const { data: avatarUrl } = useQuery(
+    ['avatar', url],
+    () => url && downloadImage(url)
   )
 
   async function uploadAvatar(event) {
@@ -51,7 +59,7 @@ const Avatar = ({
 
       const file = event.target.files[0]
       const fileExt = file.name.split('.').pop()
-      const fileName = `${Math.random()}.${fileExt}`
+      const fileName = `${id}-${Math.random()}.${fileExt}`
       const filePath = `${fileName}`
 
       console.log({ filePath, fileName, file })
@@ -74,14 +82,15 @@ const Avatar = ({
   return (
     <div className="avatar">
       {avatarUrl ? (
-        <ChakraAvatar size="xl" name="Segun Adebayo" src={avatarUrl} />
+        <ChakraAvatar size="xl" name={name} src={avatarUrl} />
       ) : (
-        <Skeleton.Image />
+        <SkeletonCircle height={'96px'} width={'96px'} />
       )}
       {onUpload && (
         <div style={{ width: size }} className="upload-toolbar">
           <Button
-            className="button primary block"
+            style={{ padding: '2px 4px' }}
+            colorScheme="green"
             onClick={() => {
               uploadRef.current.click()
             }}

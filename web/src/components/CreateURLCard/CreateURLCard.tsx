@@ -57,6 +57,8 @@ const CreateUrlCard = () => {
         w={'539px'}
         h={'auto'}
         margin="20px"
+        as="form"
+        onSubmit={onContinue}
       >
         <Box h="auto">
           <h2> Create your Freelancebook URL </h2>

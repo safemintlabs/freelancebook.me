@@ -28,8 +28,16 @@ import './styles.less'
 const SetupPage = () => {
   const { profile: data, save, isSaving, percentage = 0 } = useProfile()
   const [profile, setProfile] = useState(data)
-  const { email, avatar_url, first_name, last_name, about, service, website } =
-    profile || {}
+  const {
+    id,
+    email,
+    avatar_url,
+    first_name,
+    last_name,
+    about,
+    service,
+    website,
+  } = profile || {}
   const handleSave = () => {
     save({ ...profile, isActive: percentage === 100 })
   }
@@ -41,7 +49,13 @@ const SetupPage = () => {
   return (
     <>
       <MetaTags title="Profile" description="Setup your profile" />
-      <Flex flexDirection="column" width="100%" alignItems="center">
+      <Flex
+        as="form"
+        flexDirection="column"
+        width="100%"
+        alignItems="center"
+        onSubmit={handleSave}
+      >
         <Stack
           spacing={4}
           p="5"
@@ -108,7 +122,15 @@ const SetupPage = () => {
                 />
               </GridItem>
               <GridItem w="100%" colSpan={[4, 2, 1]}>
-                <Avatar url={avatar_url} size="large" />
+                <Avatar
+                  id={id}
+                  name={`${first_name} ${last_name}`}
+                  url={avatar_url}
+                  size="large"
+                  onUpload={(url) => {
+                    setProfile((prev) => ({ ...prev, avatar_url: url }))
+                  }}
+                />
               </GridItem>
               <GridItem w="100%" colSpan={4}>
                 <Heading
@@ -196,6 +218,7 @@ const SetupPage = () => {
                   width="30%"
                   disabled={isSaving}
                   onClick={handleSave}
+                  type="submit"
                 >
                   Save
                 </Button>
