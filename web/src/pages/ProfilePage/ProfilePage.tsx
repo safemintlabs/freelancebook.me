@@ -26,7 +26,7 @@ import { useProfile } from 'src/hooks/profiles'
 import './styles.less'
 
 const ProfilePage = ({ username: u }: { username?: string }) => {
-  const { data, isLoading, isMe } = useProfile(u)
+  const { profile: data } = useProfile(u)
   const [profile, setProfile] = useState(data)
   const { avatar_url, first_name, last_name, about, service, username } =
     profile || {}

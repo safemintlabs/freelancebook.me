@@ -11,7 +11,7 @@ import { useProfile } from 'src/hooks/profiles'
 import './styles.less'
 
 const AuthLayout: React.FC = ({ children }) => {
-  const { data: profile } = useProfile()
+  const { profile } = useProfile()
   return (
     <Flex
       direction="column"
@@ -26,16 +26,14 @@ const AuthLayout: React.FC = ({ children }) => {
         <Navbar />
       </Affix>
       <Flex direction="row" className="main" backgroundColor="#E5E5E5">
-        {profile?.isActive && (
-          <Box
-            display={{ base: 'none', lg: 'flex' }}
-            position={{ lg: 'fixed' }}
-            left={0}
-            top={200}
-          >
-            <SideBar />
-          </Box>
-        )}
+        <Box
+          display={{ base: 'none', lg: 'flex' }}
+          position={{ lg: 'fixed' }}
+          left={0}
+          top={200}
+        >
+          <SideBar />
+        </Box>
 
         <Flex className="content" marginLeft={{ lg: 250 }} width="100%">
           {children}

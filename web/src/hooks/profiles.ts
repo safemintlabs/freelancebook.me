@@ -1,5 +1,8 @@
+import { useState } from 'react'
+
 import { notification } from 'antd'
 import { useMutation, useQuery } from 'react-query'
+import { useFilter, useRealtime } from 'react-supabase'
 
 import { supabase } from 'src/supabaseClient'
 
@@ -19,7 +22,10 @@ export interface IUser {
 }
 
 enum ErrorCodes {
-  'err42501' = 'User already exists',
+  'err1' = 'Please provide a username.',
+  'err2' = 'Space and special characters are not allowed.',
+  'err3' = 'Your username should be at least 3 characters, with a maximum of 20 characters.',
+  'err23505' = 'User already exists',
 }
 
 const getProfiles = async (): Promise<IUser[]> => {
@@ -30,7 +36,7 @@ const getProfiles = async (): Promise<IUser[]> => {
   throw error
 }
 
-const getProfileById = async (id): Promise<IUser> => {
+export const getProfileById = async (id): Promise<IUser> => {
   const { data, error, status } = await supabase
     .from('profiles')
     .select(`*`)
@@ -41,7 +47,24 @@ const getProfileById = async (id): Promise<IUser> => {
   }
   throw error
 }
-const getProfileByUsername = async (username): Promise<IUser> => {
+
+// A function cheking if a username already exists.
+// Returns IUser object if it exists. Returns null, otherwise.
+// This function does not throw error on 0 database fetch results
+export const checkIfUsernameExists = async (
+  username: string
+): Promise<boolean> => {
+  const { data } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('username', username)
+    .neq('id', supabase.auth.user().id)
+
+  // if data is empty, then the username does not exist
+  return data.length !== 0
+}
+
+export const getProfileByUsername = async (username): Promise<IUser> => {
   const { data, error, status } = await supabase
     .from('profiles')
     .select(`*`)
@@ -65,7 +88,21 @@ export const useProfiles = () => {
   return { data, isLoading }
 }
 
-export const updateProfile = async (profile: Partial<IUser>) => {
+export const updateProfile = async (
+  profile: Partial<IUser>
+): Promise<boolean> => {
+  const { username } = profile
+  if (username.length === 0) {
+    throw { code: 1 }
+  }
+  const alphanumeric = /^[a-z0-9]+$/i
+  if (!alphanumeric.test(username)) {
+    throw { code: 2 }
+  }
+  if (username.length < 3 || username.length > 20) {
+    throw { code: 3 }
+  }
+
   const user = supabase.auth.user()
 
   const updates = {
@@ -86,11 +123,47 @@ export const updateProfile = async (profile: Partial<IUser>) => {
 }
 
 export const useProfile = (username?: string) => {
+  const [error, setError] = useState(null)
   const { id } = supabase.auth.user() || {}
-  const { data, isLoading, refetch } = useQuery(
-    ['profiles', username],
-    () =>
-      username ? getProfileByUsername(username) : id && getProfileById(id),
+  const filter = useFilter(
+    (query) => {
+      if (username) {
+        query.eq('username', username)
+      } else {
+        query.eq('id', id)
+      }
+      return query
+    },
+    [username, id]
+  )
+  const [data, refetch] = useRealtime<IUser>(
+    'profiles',
+    {
+      select: {
+        columns: '*',
+        filter,
+      },
+    },
+    (data, payload) => {
+      console.log({ data, payload })
+      return true
+    }
+  )
+  const { isLoading: isSaving, mutateAsync: save } = useMutation(
+    updateProfile,
+    {
+      onSuccess: () => refetch(),
+      onError: (err: any) => {
+        setError(ErrorCodes['err' + err.code])
+        notification.error({
+          message: 'Something went wrong',
+          description: ErrorCodes['err' + err.code],
+        })
+      },
+    }
+  )
+  const { isLoading: isChecking, mutateAsync: checkUsername } = useMutation(
+    checkIfUsernameExists,
     {
       onError: (err: any) => {
         notification.error({
@@ -100,15 +173,6 @@ export const useProfile = (username?: string) => {
       },
     }
   )
-  const { isLoading: isSaving, mutate: save } = useMutation(updateProfile, {
-    onSuccess: () => refetch(),
-    onError: (err: any) => {
-      notification.error({
-        message: 'Something went wrong',
-        description: ErrorCodes['err' + err.code],
-      })
-    },
-  })
   const keys =
     (data &&
       Object.keys(data).filter(
@@ -124,23 +188,21 @@ export const useProfile = (username?: string) => {
       100
     ).toFixed(0)
   )
-  const isMe = data?.id === id
+  const profile = data?.data?.[0]
+  const isMe = profile?.id === id
 
-  return { data, isLoading, isSaving, save, percentage, isMe, id: data?.id }
-}
-
-// A function cheking if a username already exists.
-// Returns IUser object if it exists. Returns null, otherwise.
-// This function does not throw error on 0 database fetch results
-export const checkIfUsernameExists = async (username: string) => {
-  const { data } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('username', username)
-  if (data.length != 0) {
-    return data[0]
+  console.log({ data, profile })
+  return {
+    isChecking,
+    checkUsername,
+    profile,
+    isSaving,
+    save,
+    percentage,
+    isMe,
+    id: profile?.id,
+    error,
   }
-  return null
 }
 
 // A function checking if the IUser object is the auth user

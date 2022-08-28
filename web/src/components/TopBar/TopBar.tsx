@@ -26,7 +26,7 @@ import SideBar from '../SideBar/SideBar'
 // Accepts a string denoting what page this topbar is being used (set to NULL by default)
 // Accepted arguments can be 'profile', 'schedule', 'projects', or 'testimonials'
 const TopBar = ({ activePage = '' }) => {
-  const { data } = useProfile()
+  const { profile: data } = useProfile()
   const [profile, setProfile] = useState(data)
   const { username } = profile || {}
 

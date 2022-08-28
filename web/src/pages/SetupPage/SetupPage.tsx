@@ -26,19 +26,10 @@ import { useProfile } from 'src/hooks/profiles'
 import './styles.less'
 
 const SetupPage = () => {
-  const { data, save, isSaving, percentage = 0 } = useProfile()
+  const { profile: data, save, isSaving, percentage = 0 } = useProfile()
   const [profile, setProfile] = useState(data)
-  const {
-    email,
-    username,
-    avatar_url,
-    first_name,
-    last_name,
-    about,
-    service,
-    website,
-    isActive,
-  } = profile || {}
+  const { email, avatar_url, first_name, last_name, about, service, website } =
+    profile || {}
   const handleSave = () => {
     save({ ...profile, isActive: percentage === 100 })
   }
@@ -80,34 +71,40 @@ const SetupPage = () => {
               <GridItem w="100%" colSpan={[4, 2, 1]}>
                 <FormLabel htmlFor="name">First Name</FormLabel>
                 <Input
-                  id="firstname"
-                  type="name"
+                  name="first_name"
+                  type="text"
                   width="100%"
                   borderColor={'green.400'}
                   focusBorderColor="green.600"
                   required
+                  value={first_name}
+                  onChange={handleChange}
                 />
               </GridItem>
               <GridItem w="100%" colSpan={[4, 2, 1]}>
                 <FormLabel htmlFor="lastname">Last Name</FormLabel>
                 <Input
-                  id="lastname "
-                  type="name"
+                  name="last_name"
+                  type="text"
                   width="100%"
                   borderColor={'green.400'}
                   focusBorderColor="green.600"
                   required
+                  value={last_name}
+                  onChange={handleChange}
                 />
               </GridItem>
               <GridItem w="100%" colSpan={[4, 2, 1]}>
                 <FormLabel htmlFor="email">Email</FormLabel>
                 <Input
-                  id="email"
+                  name="email"
                   type="email"
                   width="100%"
                   borderColor={'green.400'}
                   focusBorderColor="green.600"
                   required
+                  value={email}
+                  onChange={handleChange}
                 />
               </GridItem>
               <GridItem w="100%" colSpan={[4, 2, 1]}>
@@ -121,11 +118,13 @@ const SetupPage = () => {
                   Website
                 </Heading>
                 <Input
-                  id="website"
-                  type="name"
+                  name="website"
+                  type="text"
                   borderColor={'green.400'}
                   focusBorderColor="green.600"
                   required
+                  value={website}
+                  onChange={handleChange}
                 />
               </GridItem>
               <GridItem w="100%" colSpan={4}>
@@ -136,24 +135,27 @@ const SetupPage = () => {
                   Write your offer statement
                 </Heading>
                 <Textarea
-                  id="offerStatement"
+                  name="about"
                   borderColor={'green.400'}
                   focusBorderColor="green.600"
+                  value={about}
+                  onChange={handleChange}
                 />
-                <Box
-                  id="maxCharLength"
-                  className="invalid"
-                  h="auto"
-                  w="100%"
-                  display="flex"
-                  lineHeight={'100%'}
-                  p="10px"
-                  alignItems={'center'}
-                  color="#ED1010"
-                >
-                  <FaTimesCircle />
-                  Ooops, exceeded maximum character length of 220.
-                </Box>
+                {about?.length > 220 && (
+                  <Box
+                    className="invalid"
+                    h="auto"
+                    w="100%"
+                    display="flex"
+                    lineHeight={'100%'}
+                    p="10px"
+                    alignItems={'center'}
+                    color="#ED1010"
+                  >
+                    <FaTimesCircle />
+                    Ooops, exceeded maximum character length of 220.
+                  </Box>
+                )}
               </GridItem>
               <GridItem w="100%" rowSpan={1} colSpan={4}>
                 <Heading
@@ -163,29 +165,38 @@ const SetupPage = () => {
                   What are your service offered?
                 </Heading>
                 <Textarea
-                  id="service"
+                  name="service"
                   placeholder="Define your service offer here..."
                   borderColor={'green.400'}
                   focusBorderColor="green.600"
+                  value={service}
+                  onChange={handleChange}
                 />
-                <Box
-                  id="maxLengthServices"
-                  className="invalid"
-                  h="auto"
-                  w="100%"
-                  display="flex"
-                  lineHeight={'100%'}
-                  p="10px"
-                  alignItems={'center'}
-                  color="#ED1010"
-                >
-                  <FaTimesCircle />
-                  Ooops, exceeded maximum character length of services.
-                </Box>
+                {service?.length > 220 && (
+                  <Box
+                    className="invalid"
+                    h="auto"
+                    w="100%"
+                    display="flex"
+                    lineHeight={'100%'}
+                    p="10px"
+                    alignItems={'center'}
+                    color="#ED1010"
+                  >
+                    <FaTimesCircle />
+                    Ooops, exceeded maximum character length of services.
+                  </Box>
+                )}
               </GridItem>
               <GridItem w="100%" rowSpan={1} colSpan={4}>
                 <Button width="30%">Cancel</Button>
-                <Button float="right" colorScheme="green" width="30%">
+                <Button
+                  float="right"
+                  colorScheme="green"
+                  width="30%"
+                  disabled={isSaving}
+                  onClick={handleSave}
+                >
                   Save
                 </Button>
               </GridItem>

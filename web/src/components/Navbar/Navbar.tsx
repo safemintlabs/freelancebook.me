@@ -18,7 +18,7 @@ import {
 } from '@chakra-ui/react'
 import { FaTimes } from 'react-icons/fa'
 
-import { navigate, routes, useLocation } from '@redwoodjs/router'
+import { navigate, Redirect, routes, useLocation } from '@redwoodjs/router'
 
 import { useProfile } from 'src/hooks/profiles'
 
@@ -27,10 +27,10 @@ import SideBar from '../SideBar/SideBar'
 export default function Navbar({ username = '' }) {
   const [isLarge] = useMediaQuery('(min-width: 991px)')
 
-  const { id } = useProfile()
+  const { id, profile } = useProfile()
   const { pathname } = useLocation()
   const { isOpen, onOpen, onClose } = useDisclosure()
-  console.log({ id, isLarge })
+  console.log({ profile })
 
   const getNavButton = () => {
     switch (pathname) {
@@ -89,17 +89,22 @@ export default function Navbar({ username = '' }) {
     }
   }
 
+  const bg = useColorModeValue('white', 'gray.800')
+  const color = useColorModeValue('gray.600', 'white')
+  const borderColor = useColorModeValue('gray.200', 'gray.900')
+
+  if (profile && !profile.username) return <Redirect to={routes.welcome()} />
   return (
     <Box>
       <Flex
-        bg={useColorModeValue('white', 'gray.800')}
-        color={useColorModeValue('gray.600', 'white')}
+        bg={bg}
+        color={color}
         minH={'60px'}
         py={{ base: 2 }}
         px={{ base: 4 }}
         borderBottom={1}
         borderStyle={'solid'}
-        borderColor={useColorModeValue('gray.200', 'gray.900')}
+        borderColor={borderColor}
         align={'center'}
         direction="row"
       >

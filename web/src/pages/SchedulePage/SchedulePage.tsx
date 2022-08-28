@@ -19,7 +19,7 @@ import { DAYS, useSchedule } from 'src/hooks/schedule'
 import { Appointment, AppointmentStatus } from '../../../../types/appointments'
 
 const SchedulePage = ({ username, action }) => {
-  const { isMe, id, data: profile } = useProfile(username)
+  const { isMe, id, profile } = useProfile(username)
   const { id: userId } = useProfile()
   const { schedules, isLoading } = useSchedule(id)
   const {
