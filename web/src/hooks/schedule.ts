@@ -72,7 +72,10 @@ export const saveSchedule = async ({
 
 export const useSchedule = (userId: string) => {
   const filter = useFilter(
-    (query) => query.eq('freelancer_id', userId),
+    (query) => {
+      userId && query.eq('freelancer_id', userId)
+      return query
+    },
     [userId]
   )
   const [result, reexecute] = useRealtime(`timeslots`, {

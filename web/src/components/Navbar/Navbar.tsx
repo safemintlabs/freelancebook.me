@@ -81,7 +81,7 @@ export default function Navbar({ username = '' }) {
             borderRadius={'7px'}
             width="125px"
             height="28px"
-            onClick={() => navigate(routes.profile({ username }))}
+            onClick={() => navigate(routes.publicProfile({ username }))}
           >
             <span> PREVIEW </span>
           </Button>

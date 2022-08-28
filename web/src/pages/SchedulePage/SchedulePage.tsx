@@ -102,7 +102,7 @@ const SchedulePage = ({ username, action }) => {
             height="1"
           />
           <Flex>
-            <Flex flex="1 1 0%">
+            <Flex flex="1 1 0%" direction="column">
               <h1>View your schedule</h1>
               {isLoading ? (
                 <Skeleton />
@@ -123,7 +123,13 @@ const SchedulePage = ({ username, action }) => {
             </Flex>
             <Flex>
               <Divider orientation="vertical" style={{ height: '100%' }} />
-              {isLoading ? <Skeleton /> : <ScheduleList />}
+              {isLoading ? (
+                <Skeleton />
+              ) : (
+                <div>
+                  <ScheduleList />
+                </div>
+              )}
             </Flex>
             <Button
               className="edit-schedule"

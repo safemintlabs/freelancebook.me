@@ -4,6 +4,8 @@ import { Box, Flex } from '@chakra-ui/react'
 import { Affix } from 'antd'
 
 // import AppFooter from 'src/components/AppFooter/AppFooter'
+import { useParams } from '@redwoodjs/router'
+
 import Navbar from 'src/components/Navbar/Navbar'
 import SideBar from 'src/components/SideBar/SideBar'
 import { useProfile } from 'src/hooks/profiles'
@@ -11,6 +13,7 @@ import { useProfile } from 'src/hooks/profiles'
 import './styles.less'
 
 const AuthLayout: React.FC = ({ children }) => {
+  const params = useParams()
   const { profile } = useProfile()
   return (
     <Flex
@@ -23,7 +26,7 @@ const AuthLayout: React.FC = ({ children }) => {
       }}
     >
       <Affix offsetTop={0}>
-        <Navbar />
+        <Navbar username={params.username || profile?.username} />
       </Affix>
       <Flex direction="row" className="main" backgroundColor="#E5E5E5">
         <Box
