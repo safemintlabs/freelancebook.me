@@ -202,6 +202,7 @@ export const useProfile = (username?: string) => {
     isMe,
     id: profile?.id,
     error,
+    isLoading: !profile,
   }
 }
 

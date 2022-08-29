@@ -18,7 +18,7 @@ const PublicLayout = ({ children }: PublicLayoutProps) => {
                 padding: 24,
                 margin: 0,
                 minHeight: 280,
-                background: '#FFF',
+                background: 'rgb(247, 249, 251)',
               }}
             >
               {children}
