@@ -15,7 +15,6 @@ const PublicLayout = ({ children }: PublicLayoutProps) => {
             <Content
               className="site-layout-background"
               style={{
-                padding: 24,
                 margin: 0,
                 minHeight: 280,
                 background: 'rgb(247, 249, 251)',

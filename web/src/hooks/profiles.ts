@@ -7,6 +7,7 @@ import { useFilter, useRealtime } from 'react-supabase'
 import { supabase } from 'src/supabaseClient'
 
 export interface IUser {
+  services: Array<string>
   email: string
   avatar_url: string
   created_at: Date

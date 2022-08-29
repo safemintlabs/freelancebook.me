@@ -11,9 +11,13 @@ import {
   FormLabel,
   GridItem,
   Heading,
+  HStack,
   Input,
   SimpleGrid,
   Stack,
+  Tag,
+  TagCloseButton,
+  TagLabel,
   Textarea,
 } from '@chakra-ui/react'
 import { FaTimesCircle } from 'react-icons/fa'
@@ -24,6 +28,9 @@ import Avatar from 'src/components/Avatar'
 import { useProfile } from 'src/hooks/profiles'
 
 import './styles.less'
+import { AddIcon } from '@chakra-ui/icons'
+
+import Services from 'src/components/Services/Services'
 
 const SetupPage = () => {
   const { profile: data, save, isSaving, percentage = 0 } = useProfile()
@@ -185,7 +192,36 @@ const SetupPage = () => {
                   marginBottom={6}
                 >
                   What are your service offered?
+                  <Services
+                    services={profile?.services}
+                    onChange={handleChange}
+                  />
                 </Heading>
+                {profile?.services?.length && (
+                  <HStack spacing={4} mb={'20px'}>
+                    {profile?.services?.map((service, index) => (
+                      <Tag
+                        size="sm"
+                        key={`${service}`}
+                        borderRadius="full"
+                        variant="solid"
+                        colorScheme="green"
+                      >
+                        <TagLabel>{service}</TagLabel>
+                        <TagCloseButton
+                          onClick={() => {
+                            setProfile((prev) => ({
+                              ...prev,
+                              services: prev.services.filter(
+                                (_, i) => i !== index
+                              ),
+                            }))
+                          }}
+                        />
+                      </Tag>
+                    ))}
+                  </HStack>
+                )}
                 <Textarea
                   name="service"
                   placeholder="Define your service offer here..."
