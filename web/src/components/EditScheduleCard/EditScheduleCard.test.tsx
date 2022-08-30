@@ -1,14 +1,14 @@
 import { render } from '@redwoodjs/testing/web'
 
-import MainCardSchedule from './MainCardSchedule'
+import EditScheduleCard from './EditScheduleCard'
 
 //   Improve this test with help from the Redwood Testing Doc:
 //    https://redwoodjs.com/docs/testing#testing-components
 
-describe('MainCardSchedule', () => {
+describe('EditScheduleCard', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<MainCardSchedule />)
+      render(<EditScheduleCard />)
     }).not.toThrow()
   })
 })

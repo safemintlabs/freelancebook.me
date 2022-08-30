@@ -2,7 +2,7 @@ import './styles.less'
 
 import '@fontsource/inter'
 
-import { Box, Button, Flex, Spacer, Checkbox } from '@chakra-ui/react'
+import { Box, Button, Flex, Spacer, Checkbox, Center, HStack } from '@chakra-ui/react'
 import { BsTrash } from "react-icons/bs";
 import { AddIcon } from '@chakra-ui/icons'
 
@@ -14,7 +14,9 @@ import {
   notification,
   Space,
   TimePicker,
-  Switch
+  Switch,
+  DatePicker,
+  DatePickerProps,
 } from 'antd'
 import { cloneDeep, isEqual } from 'lodash'
 import moment from 'moment'
@@ -28,7 +30,7 @@ import { useSchedule, TimeSlot, Day, DAYS } from 'src/hooks/schedule'
 import './styles.less'
 import { makeMoment } from './helpers'
 
-const MainCardSchedule = () => {
+const EditScheduleCard = () => {
   const { id } = useProfile()
   const { schedules, save, isLoading, isSaving } = useSchedule(id)
   const [data, setData] = useState<TimeSlot[]>([])
@@ -118,6 +120,11 @@ const MainCardSchedule = () => {
     }
   }, [schedules, isLoading, isSaving])
   console.log({ data })
+
+  const onChange: DatePickerProps['onChange'] = (date, dateString) => {
+    console.log(date, dateString);
+  };
+
   return (
     <div className='main-card-component'>
       <div className='actual-card-schedule'>
@@ -255,7 +262,7 @@ const MainCardSchedule = () => {
                                 })
                               }}
                               variant='ghost'
-                              colorScheme='green'
+                              colorScheme='red'
                               color='black'
                               size='md'
                             >
@@ -283,7 +290,26 @@ const MainCardSchedule = () => {
           ) : (
             <Skeleton style={{ marginTop: 20 }} />
           )}
-          <Button
+
+        </>
+        {!isSaving && !isLoading ? (
+          <>
+            <h3 className='set-date-range-header'>Set date range on when you can accept meetings</h3>
+            <HStack spacing='60px' marginBottom='26px'>
+              <Box>
+                <p className='date-picker-header'>Date From</p>
+                <DatePicker style={{borderColor: "#38A169", borderRadius: "8px"}} onChange={onChange} />
+              </Box>
+              <Box>
+                <p className='date-picker-header'>Date To</p>
+                <DatePicker style={{borderColor: "#38A169", borderRadius: "8px"}} onChange={onChange} />
+              </Box>
+            </HStack>
+          </>
+        ) : (
+          <Skeleton style={{ marginTop: 20 }} />
+        )}
+        <Button
             disabled={!notSaved || hasConflicts(cloneDeep(data), false)}
             onClick={handleSave}
             colorScheme='green'
@@ -295,10 +321,9 @@ const MainCardSchedule = () => {
           >
             SAVE
           </Button>
-        </>
       </div>
     </div>
   )
 }
 
-export default MainCardSchedule
+export default EditScheduleCard

@@ -98,7 +98,7 @@ const ViewScheduleCard = ({ username, action }) => {
               onClick={() => {
                 navigate(
                   isMe
-                    ? routes.templatePageSchedule()
+                    ? routes.templatePageScheduleEdit()
                     : routes.publicAppointment({ action: 'new', username })
                 )
               }}

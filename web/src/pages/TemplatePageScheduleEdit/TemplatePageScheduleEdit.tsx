@@ -1,12 +1,12 @@
 
-import MainCardSchedule from 'src/components/MainCardSchedule/MainCardSchedule'
+import EditScheduleCard from 'src/components/EditScheduleCard/EditScheduleCard'
 import SideBar from 'src/components/SideBar/SideBar'
 import TopBar from 'src/components/TopBar/TopBar'
 
 import './styles.less'
 
 // Please replace 'projects' with the actual name of the page where the components were used
-const TemplatePageSchedule = () => {
+const TemplatePageScheduleEdit = () => {
   return (
     <>
       <TopBar activePage='schedule'/>
@@ -15,11 +15,11 @@ const TemplatePageSchedule = () => {
           <SideBar activePage='schedule'/>
         </div>
         <div className='main-card-schedule'>
-          <MainCardSchedule />
+          <EditScheduleCard />
         </div>
       </div>
     </>
   )
 }
 
-export default TemplatePageSchedule
+export default TemplatePageScheduleEdit
