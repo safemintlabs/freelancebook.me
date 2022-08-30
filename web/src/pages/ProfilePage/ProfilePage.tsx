@@ -21,12 +21,10 @@ import { navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 
 import Avatar from 'src/components/Avatar'
+import Navbar from 'src/components/Navbar/Navbar'
 import { useProfile } from 'src/hooks/profiles'
 
 import './styles.less'
-import { Affix } from 'antd'
-
-import Navbar from 'src/components/Navbar/Navbar'
 
 const ProfilePage = ({ username: u }: { username?: string }) => {
   const { profile: data, isLoading } = useProfile(u)
@@ -42,9 +40,7 @@ const ProfilePage = ({ username: u }: { username?: string }) => {
         title={`User Profile | ${first_name} ${last_name}`}
         description={`User Profile of ${first_name} ${last_name} in Freelancebook.me`}
       />
-      <Affix offsetTop={0}>
-        <Navbar username={u || profile?.username} />
-      </Affix>
+      <Navbar username={u || profile?.username} isAffix={false} />
       <Container maxW={'70%'} paddingTop={'20px'}>
         <Flex padding="30px" boxShadow="md" bg={'#FFF'} mb={'20px'}>
           <Box borderRadius={'full'}>
@@ -54,22 +50,30 @@ const ProfilePage = ({ username: u }: { username?: string }) => {
               <Avatar url={avatar_url} size="40px" />
             )}
           </Box>
-          <Stack marginLeft={'20px'} direction={{ xl: 'row', base: 'column' }}>
-            {isLoading ? (
-              <Skeleton height="20px" />
-            ) : (
-              <Heading>{`${first_name} ${last_name}`}</Heading>
-            )}
-            <Text>{service}</Text>
-            <Button
-              minW={200}
-              onClick={() => {
-                navigate(routes.publicSchedule({ username }))
-              }}
-              colorScheme={'green'}
-            >
-              Book a Call Now
-            </Button>
+          <Stack
+            flex="1 1 0%"
+            marginLeft={'20px'}
+            direction={{ xl: 'row', base: 'column' }}
+          >
+            <Flex direction="column" width={{ xl: '100%' }}>
+              {isLoading ? (
+                <Skeleton height="20px" />
+              ) : (
+                <Heading>{`${first_name} ${last_name}`}</Heading>
+              )}
+              <Text>{service}</Text>
+            </Flex>
+            <Box>
+              <Button
+                minW={200}
+                onClick={() => {
+                  navigate(routes.publicSchedule({ username }))
+                }}
+                colorScheme={'green'}
+              >
+                Book a Call Now
+              </Button>
+            </Box>
           </Stack>
         </Flex>
         <Flex padding="30px" boxShadow="md" bg={'#FFF'} mb={'20px'}>
