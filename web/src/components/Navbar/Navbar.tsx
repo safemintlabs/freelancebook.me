@@ -128,7 +128,9 @@ export default function Navbar({ isAffix, username = '' }) {
               alt="Freelancebook"
             />
           </Box>
-          <Text fontSize="xl">Freelancebook.me</Text>
+          <Text as="span" fontSize="xl">
+            Freelancebook.me
+          </Text>
         </Flex>
 
         <Stack
