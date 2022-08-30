@@ -31,7 +31,8 @@ const CreateUrlCard = () => {
   }
 
   // Called upon clicking submit button
-  const onContinue = async () => {
+  const onContinue = async (e) => {
+    e.preventDefault()
     // Save and Redirect to Profile if ALL username requirements are satisfied
     const result = await save({ ...profile, isActive: percentage === 100 })
     if (result === true) navigate(routes.profile())
@@ -40,7 +41,7 @@ const CreateUrlCard = () => {
   // Enable submission using ENTER key
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
-      onContinue()
+      onContinue(event)
     }
   }
 
