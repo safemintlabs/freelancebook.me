@@ -49,7 +49,7 @@ const SideBar = ({ activePage = '' }) => {
 
   return (
     <Box>
-      <Box marginLeft={{ sm: 10, lg: 10, xl: 243 }}>
+      <Box marginLeft={{ sm: 10, lg: 10, xl: 150 }} mt="100px">
         <Box margin={{ base: '10px', lg: '30px' }}>
           <Button variant="link" onClick={() => navigate(routes.profile())}>
             <span className={pages.profile}>

@@ -1,6 +1,6 @@
-import './styles.less'
 import { useEffect, useState } from 'react'
 
+import '@fontsource/inter'
 import {
   Button,
   Drawer,
@@ -8,13 +8,10 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
-  extendTheme,
   Image,
   Text,
   useDisclosure,
 } from '@chakra-ui/react'
-
-import '@fontsource/inter'
 import { FaBars, FaEye, FaTimes } from 'react-icons/fa'
 
 import { navigate, routes } from '@redwoodjs/router'
@@ -22,6 +19,7 @@ import { navigate, routes } from '@redwoodjs/router'
 import { useProfile } from 'src/hooks/profiles'
 
 import SideBar from '../SideBar/SideBar'
+import './styles.less'
 
 // Accepts a string denoting what page this topbar is being used (set to NULL by default)
 // Accepted arguments can be 'profile', 'schedule', 'projects', or 'testimonials'

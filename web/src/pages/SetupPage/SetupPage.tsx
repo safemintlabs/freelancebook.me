@@ -25,12 +25,10 @@ import { FaTimesCircle } from 'react-icons/fa'
 import { MetaTags } from '@redwoodjs/web'
 
 import Avatar from 'src/components/Avatar'
+import Services from 'src/components/Services/Services'
 import { useProfile } from 'src/hooks/profiles'
 
 import './styles.less'
-import { AddIcon } from '@chakra-ui/icons'
-
-import Services from 'src/components/Services/Services'
 
 const SetupPage = () => {
   const { profile: data, save, isSaving, percentage = 0 } = useProfile()

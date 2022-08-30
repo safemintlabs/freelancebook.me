@@ -18,18 +18,15 @@ const Routes = () => {
       <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
       <Route path="/auth" page={AuthPage} name="auth" />
       <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
-      <Route path="/test-setup" page={TestSetupPage} name="testSetup" />
-      <Route path="/testimonials" page={TestimonialsPage} name="testimonials" />
 
       <Private unauthenticated="auth">
         <Set wrap={AuthLayout}>
-          <Route path="/setup" page={SetupPage} name="setup" />
           <Route path="/profile" page={SetupPage} name="profile" />
           <Route path="/schedule" page={SchedulePage} name="schedule" />
           <Route path="/schedule/{action}" page={SchedulesetupPage} name="scheduleEdit" />
           <Route path="/testimonials" page={TestimonialsPage} name="testimonials" />
+          <Route path="/projects" page={ProjectsPage} name="projects" />
         </Set>
-        <Route path="/projects" page={ProjectsPage} name="projects" />
         <Route path="/welcome" page={WelcomePage} name="welcome" />
       </Private>
       <Set wrap={PublicLayout}>

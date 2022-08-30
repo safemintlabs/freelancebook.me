@@ -9,7 +9,6 @@ import {
 import { Button, Divider, Flex, Heading, Stack } from '@chakra-ui/react'
 import {
   Skeleton,
-  Affix,
   Checkbox,
   List,
   notification,

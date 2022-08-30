@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { Box, Flex } from '@chakra-ui/react'
 import { Affix } from 'antd'
@@ -15,30 +15,31 @@ import './styles.less'
 const AuthLayout: React.FC = ({ children }) => {
   const params = useParams()
   const { profile } = useProfile()
+  const [isAffix, setAffixed] = useState(false)
+  const handleAffix = (affixed: boolean) => setAffixed(affixed)
   return (
     <Flex
       direction="column"
       style={{
         margin: 0,
         minHeight: 280,
-        marginTop: 20,
         background: '#E5E5E5',
       }}
     >
-      <Affix offsetTop={0}>
-        <Navbar username={params.username || profile?.username} />
+      <Affix offsetTop={0} onChange={handleAffix}>
+        <Navbar
+          username={params.username || profile?.username}
+          isAffix={isAffix}
+        />
       </Affix>
       <Flex direction="row" className="main" backgroundColor="#E5E5E5">
-        <Box
-          display={{ base: 'none', lg: 'flex' }}
-          position={{ lg: 'fixed' }}
-          left={0}
-          top={200}
-        >
-          <SideBar />
+        <Box display={{ base: 'none', lg: 'flex' }}>
+          <Affix offsetTop={0}>
+            <SideBar />
+          </Affix>
         </Box>
 
-        <Flex className="content" marginLeft={{ lg: 250 }} width="100%">
+        <Flex className="content" width="100%">
           {children}
         </Flex>
       </Flex>

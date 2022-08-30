@@ -24,7 +24,7 @@ import { useProfile } from 'src/hooks/profiles'
 
 import SideBar from '../SideBar/SideBar'
 
-export default function Navbar({ username = '' }) {
+export default function Navbar({ isAffix, username = '' }) {
   const [isLarge] = useMediaQuery('(min-width: 991px)')
 
   const { id, profile } = useProfile()
@@ -99,7 +99,7 @@ export default function Navbar({ username = '' }) {
       <Flex
         bg={bg}
         color={color}
-        minH={'60px'}
+        minH={isAffix ? '60px' : '85px'}
         py={{ base: 2 }}
         px={{ base: 4 }}
         borderBottom={1}
@@ -107,6 +107,7 @@ export default function Navbar({ username = '' }) {
         borderColor={borderColor}
         align={'center'}
         direction="row"
+        transition={'all 0.2s ease-in-out'}
       >
         <Flex display={{ base: 'flex', lg: 'none' }}>
           <IconButton

@@ -7,15 +7,13 @@ import './styles.less'
 
 const WelcomePage = () => {
   return (
-    <>
-      <div className="welcome-page">
-        <div className="welcome-message">
-          <h2 className="welcome-text">Welcome to Freelancebook!</h2>
-        </div>
-
-        <CreateUrlCard />
+    <div className="welcome-page">
+      <div className="welcome-message">
+        <h2 className="welcome-text">Welcome to Freelancebook!</h2>
       </div>
-    </>
+
+      <CreateUrlCard />
+    </div>
   )
 }
 
