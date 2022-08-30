@@ -12,6 +12,7 @@ import { Private, Router, Route, Set } from '@redwoodjs/router'
 import AuthLayout from 'src/layouts/AuthLayout/AuthLayout'
 import PublicLayout from 'src/layouts/PublicLayout/PublicLayout'
 import TemplatePageSchedule from './pages/TemplatePageSchedule/TemplatePageSchedule'
+import TemplatePageScheduleView from './pages/TemplatePageScheduleView/TemplatePageScheduleView'
 
 const Routes = () => {
   return (
@@ -31,6 +32,7 @@ const Routes = () => {
         </Set>
         <Route path="/template-page" page={TemplatePage} name="templatePage" />
         <Route path="/template-page-schedule" page={TemplatePageSchedule} name="templatePageSchedule" />
+        <Route path="/template-page-schedule-view" page={TemplatePageScheduleView} name="templatePageScheduleView" />
         <Route path="/projects" page={ProjectsPage} name="projects" />
         <Route path="/welcome" page={WelcomePage} name="welcome" />
       </Private>

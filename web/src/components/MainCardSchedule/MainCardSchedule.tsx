@@ -2,21 +2,19 @@ import './styles.less'
 
 import '@fontsource/inter'
 
-import { Box, Button, Flex, Spacer, Checkbox, Switch } from '@chakra-ui/react'
+import { Box, Button, Flex, Spacer, Checkbox } from '@chakra-ui/react'
 import { BsTrash } from "react-icons/bs";
 import { AddIcon } from '@chakra-ui/icons'
 
 import React, { useEffect, useState } from 'react'
 
 import {
-  PlusOutlined,
-} from '@ant-design/icons'
-import {
   Skeleton,
   List,
   notification,
   Space,
   TimePicker,
+  Switch
 } from 'antd'
 import { cloneDeep, isEqual } from 'lodash'
 import moment from 'moment'
@@ -135,7 +133,7 @@ const MainCardSchedule = () => {
             variant='ghost'
             size='xs'
             fontWeight='normal'
-            onClick={() => {navigate(routes.schedule())}}>
+            onClick={() => {navigate(routes.templatePageScheduleView())}}>
               VIEW SCHEDULE
             </Button>
           </Box>
@@ -200,7 +198,7 @@ const MainCardSchedule = () => {
                             style={
                               {borderColor: "#38A169",
                               borderRadius: "8px",
-                              marginLeft: index > 0 ? 118 : 60,
+                              marginLeft: index > 0 ? 108 : 50,
                               width: "150px",
                               height: "32px",
                             }}
@@ -225,6 +223,21 @@ const MainCardSchedule = () => {
                               makeMoment(slot.time_start),
                               makeMoment(slot.time_end),
                             ]}
+                          />
+                          <Switch
+                            size='small'
+                            checked={slot.active}
+                            onChange={(checked) => {
+                              const newData = cloneDeep(data)
+                              const i = newData.findIndex((o) => o.id === slot.id)
+                              if (i > -1) {
+                                newData[i].active = checked
+                                if (hasConflicts(newData)) {
+                                  return false
+                                }
+                                setData(newData)
+                              }
+                            }}
                           />
                           {index > 0 && (
                             <Button
