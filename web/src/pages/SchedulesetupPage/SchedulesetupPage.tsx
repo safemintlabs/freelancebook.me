@@ -197,7 +197,7 @@ const SchedulesetupPage = () => {
                       )}
                       <TimePicker.RangePicker
                         disabled={!item.active}
-                        style={{ marginLeft: index > 0 ? 58 : 0 }}
+                        style={{ marginLeft: index > 0 ? 103 : 45, }}
                         format="HH:mm"
                         minuteStep={15}
                         onChange={(time) => {
