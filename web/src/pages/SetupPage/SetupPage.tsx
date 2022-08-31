@@ -1,29 +1,47 @@
+//note that this is only user interface, no functionality or backend added.
+
 import { useEffect, useState } from 'react'
 
-import { Button, Input, Col, Form, Row, Spin, Alert, Progress } from 'antd'
+import {
+  Box,
+  Button,
+  Divider,
+  Flex,
+  FormControl,
+  FormLabel,
+  GridItem,
+  Heading,
+  HStack,
+  Input,
+  SimpleGrid,
+  Stack,
+  Tag,
+  TagCloseButton,
+  TagLabel,
+  Textarea,
+} from '@chakra-ui/react'
+import { FaTimesCircle } from 'react-icons/fa'
 
-import { navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 
 import Avatar from 'src/components/Avatar'
+import Services from 'src/components/Services/Services'
 import { useProfile } from 'src/hooks/profiles'
 
 import './styles.less'
-const { TextArea } = Input
 
 const SetupPage = () => {
-  const { data, save, isSaving, percentage = 0 } = useProfile()
+  const { profile: data, save, isSaving, percentage = 0 } = useProfile()
   const [profile, setProfile] = useState(data)
   const {
+    id,
     email,
-    username,
     avatar_url,
     first_name,
     last_name,
     about,
     service,
     website,
-    isActive,
   } = profile || {}
   const handleSave = () => {
     save({ ...profile, isActive: percentage === 100 })
@@ -35,157 +53,214 @@ const SetupPage = () => {
   useEffect(() => setProfile(data), [data])
   return (
     <>
-      <MetaTags title="Setup" description="Setup page" />
-      <Form className="setup-form" layout="vertical">
-        <Row>
-          <Col>
-            <Row gutter={[16, 16]}>
-              <Col flex="1 1 0%">
-                <Alert
-                  style={{ margin: '15px 0', width: '100%' }}
-                  message={
-                    isActive ? 'Update Your Profile' : 'Complete your profile'
-                  }
-                  description={
-                    <div>
-                      {isSaving ? (
-                        <>
-                          Please wait while we save your profile.
-                          <Spin />
-                        </>
-                      ) : (
-                        <></>
-                      )}
-                      {!isActive && (
-                        <Progress
-                          percent={percentage as number}
-                          status="active"
-                        />
-                      )}
-                    </div>
-                  }
-                  type="success"
+      <MetaTags title="Profile" description="Setup your profile" />
+      <Flex
+        as="form"
+        flexDirection="column"
+        width="100%"
+        alignItems="center"
+        onSubmit={handleSave}
+      >
+        <Stack
+          spacing={4}
+          p="5"
+          backgroundColor="white"
+          boxShadow="md"
+          borderWidth="1px"
+          borderRadius="2xl"
+          w={[380, 400, 700]}
+        >
+          <Heading fontSize={{ base: '20px', md: '25px', lg: '30px' }}>
+            Profile
+          </Heading>
+          <Divider
+            orientation="horizontal"
+            backgroundColor={'green.400'}
+            border={'none'}
+            height="1"
+          />
+          <FormControl isRequired>
+            <Heading
+              fontSize={{ base: '12px', md: '15px', lg: '20px' }}
+              marginBottom={6}
+            >
+              Tell something about yourself
+            </Heading>
+            <SimpleGrid gap={4}>
+              <GridItem w="100%" colSpan={[4, 2, 1]}>
+                <FormLabel htmlFor="name">First Name</FormLabel>
+                <Input
+                  name="first_name"
+                  type="text"
+                  width="100%"
+                  borderColor={'green.400'}
+                  focusBorderColor="green.600"
+                  required
+                  value={first_name}
+                  onChange={handleChange}
                 />
-              </Col>
-            </Row>
-            <Row gutter={[16, 16]}>
-              <Col span={6}>
+              </GridItem>
+              <GridItem w="100%" colSpan={[4, 2, 1]}>
+                <FormLabel htmlFor="lastname">Last Name</FormLabel>
+                <Input
+                  name="last_name"
+                  type="text"
+                  width="100%"
+                  borderColor={'green.400'}
+                  focusBorderColor="green.600"
+                  required
+                  value={last_name}
+                  onChange={handleChange}
+                />
+              </GridItem>
+              <GridItem w="100%" colSpan={[4, 2, 1]}>
+                <FormLabel htmlFor="email">Email</FormLabel>
+                <Input
+                  name="email"
+                  type="email"
+                  width="100%"
+                  borderColor={'green.400'}
+                  focusBorderColor="green.600"
+                  required
+                  value={email}
+                  onChange={handleChange}
+                />
+              </GridItem>
+              <GridItem w="100%" colSpan={[4, 2, 1]}>
                 <Avatar
+                  id={id}
+                  name={`${first_name} ${last_name}`}
                   url={avatar_url}
-                  size={100}
+                  size="large"
                   onUpload={(url) => {
-                    save({ ...profile, avatar_url: url })
+                    setProfile((prev) => ({ ...prev, avatar_url: url }))
                   }}
                 />
-              </Col>
-              <Col flex="1 1 0%">
-                <Form.Item label="Email:">
-                  <Input
-                    name="email"
-                    placeholder="Email"
-                    allowClear
-                    onChange={handleChange}
-                    // style={{ marginBottom: 8 }}
-                    value={email}
-                  />
-                </Form.Item>
-                <Form.Item label="Username:">
-                  <Input
-                    name="username"
-                    placeholder="Username"
-                    allowClear
-                    onChange={handleChange}
-                    value={username}
-                  />
-                </Form.Item>
-                <Row gutter={[16, 16]}>
-                  <Col span="12">
-                    <Form.Item label="First Name:">
-                      <Input
-                        name="first_name"
-                        placeholder="First Name"
-                        allowClear
-                        onChange={handleChange}
-                        value={first_name}
-                      />
-                    </Form.Item>
-                  </Col>
-                  <Col span={12}>
-                    <Form.Item label="Last Name:">
-                      <Input
-                        name="last_name"
-                        placeholder="Last Name"
-                        allowClear
-                        onChange={handleChange}
-                        value={last_name}
-                      />
-                    </Form.Item>
-                  </Col>
-                </Row>
-                <Form.Item label="Website:">
-                  <Input
-                    name="website"
-                    placeholder="Website"
-                    allowClear
-                    onChange={handleChange}
-                    value={website}
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={[16, 16]}>
-              <Col flex="1 1 0%">
-                <Form.Item label="Service:">
-                  <TextArea
-                    name="service"
-                    placeholder="Define your service offer here"
-                    allowClear
-                    onChange={handleChange}
-                    value={service}
-                    autoSize={{ minRows: 2 }}
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={[16, 16]}>
-              <Col flex="1 1 0%">
-                <Form.Item label="About:">
-                  <TextArea
-                    name="about"
-                    placeholder="About you"
-                    allowClear
-                    onChange={handleChange}
-                    value={about}
-                    autoSize={{ minRows: 2 }}
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={[16, 16]}>
-              <Col
-                flex="1 1 0%"
-                style={{
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  display: 'flex',
-                }}
-              >
-                {isActive && (
-                  <Button
-                    onClick={() => navigate(routes.profile())}
-                    style={{ marginRight: 15 }}
+              </GridItem>
+              <GridItem w="100%" colSpan={4}>
+                <Heading
+                  fontSize={{ base: '12px', md: '15px', lg: '20px' }}
+                  marginBottom={6}
+                >
+                  Website
+                </Heading>
+                <Input
+                  name="website"
+                  type="text"
+                  borderColor={'green.400'}
+                  focusBorderColor="green.600"
+                  required
+                  value={website}
+                  onChange={handleChange}
+                />
+              </GridItem>
+              <GridItem w="100%" colSpan={4}>
+                <Heading
+                  fontSize={{ base: '12px', md: '15px', lg: '20px' }}
+                  marginBottom={6}
+                >
+                  Write your offer statement
+                </Heading>
+                <Textarea
+                  name="about"
+                  borderColor={'green.400'}
+                  focusBorderColor="green.600"
+                  value={about}
+                  onChange={handleChange}
+                />
+                {about?.length > 220 && (
+                  <Box
+                    className="invalid"
+                    h="auto"
+                    w="100%"
+                    display="flex"
+                    lineHeight={'100%'}
+                    p="10px"
+                    alignItems={'center'}
+                    color="#ED1010"
                   >
-                    Cancel
-                  </Button>
+                    <FaTimesCircle />
+                    Ooops, exceeded maximum character length of 220.
+                  </Box>
                 )}
-                <Button disabled={isSaving} onClick={handleSave}>
+              </GridItem>
+              <GridItem w="100%" rowSpan={1} colSpan={4}>
+                <Heading
+                  fontSize={{ base: '12px', md: '15px', lg: '20px' }}
+                  marginBottom={6}
+                >
+                  What are your service offered?
+                  <Services
+                    services={profile?.services}
+                    onChange={handleChange}
+                  />
+                </Heading>
+                {profile?.services?.length && (
+                  <HStack spacing={4} mb={'20px'}>
+                    {profile?.services?.map((service, index) => (
+                      <Tag
+                        size="sm"
+                        key={`${service}`}
+                        borderRadius="full"
+                        variant="solid"
+                        colorScheme="green"
+                      >
+                        <TagLabel>{service}</TagLabel>
+                        <TagCloseButton
+                          onClick={() => {
+                            setProfile((prev) => ({
+                              ...prev,
+                              services: prev.services.filter(
+                                (_, i) => i !== index
+                              ),
+                            }))
+                          }}
+                        />
+                      </Tag>
+                    ))}
+                  </HStack>
+                )}
+                <Textarea
+                  name="service"
+                  placeholder="Define your service offer here..."
+                  borderColor={'green.400'}
+                  focusBorderColor="green.600"
+                  value={service}
+                  onChange={handleChange}
+                />
+                {service?.length > 220 && (
+                  <Box
+                    className="invalid"
+                    h="auto"
+                    w="100%"
+                    display="flex"
+                    lineHeight={'100%'}
+                    p="10px"
+                    alignItems={'center'}
+                    color="#ED1010"
+                  >
+                    <FaTimesCircle />
+                    Ooops, exceeded maximum character length of services.
+                  </Box>
+                )}
+              </GridItem>
+              <GridItem w="100%" rowSpan={1} colSpan={4}>
+                <Button width="30%">Cancel</Button>
+                <Button
+                  float="right"
+                  colorScheme="green"
+                  width="30%"
+                  disabled={isSaving}
+                  onClick={handleSave}
+                  type="submit"
+                >
                   Save
                 </Button>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-      </Form>
+              </GridItem>
+            </SimpleGrid>
+          </FormControl>
+        </Stack>
+      </Flex>
     </>
   )
 }

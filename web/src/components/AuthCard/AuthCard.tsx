@@ -32,6 +32,9 @@ const AuthCard = ({ signInWithGoogle, onFinish, loading }) => {
   const handleChangeText = () => {
     setIsLogin(!isLogin)
   }
+  const handleSubmit = () => {
+    onFinish(email, password, isLogin)
+  }
 
   return (
     <Stack
@@ -42,6 +45,8 @@ const AuthCard = ({ signInWithGoogle, onFinish, loading }) => {
       borderWidth="1px"
       borderRadius="lg"
       width={'500px'}
+      as="form"
+      onSubmit={handleSubmit}
     >
       <Center>
         <Heading fontSize="3xl">
@@ -88,10 +93,9 @@ const AuthCard = ({ signInWithGoogle, onFinish, loading }) => {
         <Button
           colorScheme="green"
           width={'100%'}
-          onClick={() => {
-            onFinish(email, password, isLogin)
-          }}
+          onClick={handleSubmit}
           disabled={loading}
+          type="submit"
         >
           {isLogin ? 'Login your account' : 'Create your account'}
         </Button>

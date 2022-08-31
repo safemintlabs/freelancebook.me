@@ -1,7 +1,8 @@
 import React from 'react'
 
 import { PlusOutlined, SettingOutlined } from '@ant-design/icons'
-import { Button, Col, Divider, Row, Skeleton } from 'antd'
+import { Button, Divider, Flex, Heading, Stack } from '@chakra-ui/react'
+import { Skeleton } from 'antd'
 import { Badge, Calendar } from 'antd'
 import type { Moment } from 'moment'
 import moment from 'moment'
@@ -18,7 +19,7 @@ import { DAYS, useSchedule } from 'src/hooks/schedule'
 import { Appointment, AppointmentStatus } from '../../../../types/appointments'
 
 const SchedulePage = ({ username, action }) => {
-  const { isMe, id, data: profile } = useProfile(username)
+  const { isMe, id, profile } = useProfile(username)
   const { id: userId } = useProfile()
   const { schedules, isLoading } = useSchedule(id)
   const {
@@ -81,66 +82,91 @@ const SchedulePage = ({ username, action }) => {
   return (
     <>
       <MetaTags title="Schedule" description="Schedule page" />
-
-      <Row gutter={[16, 16]}>
-        <Col flex="1 1 0%">
-          <h1>View your schedule</h1>
-          {isLoading ? (
-            <Skeleton />
-          ) : (
-            <Calendar
+      <Flex flexDirection="column" width="100%" alignItems="center">
+        <Stack
+          spacing={4}
+          p="5"
+          backgroundColor="white"
+          boxShadow="md"
+          borderWidth="1px"
+          borderRadius="2xl"
+          w={[380, 400, 700]}
+        >
+          <Heading fontSize={{ base: '20px', md: '25px', lg: '30px' }}>
+            Schedule
+          </Heading>
+          <Divider
+            orientation="horizontal"
+            backgroundColor={'green.400'}
+            border={'none'}
+            height="1"
+          />
+          <Flex>
+            <Flex flex="1 1 0%" direction="column">
+              <h1>View your schedule</h1>
+              {isLoading ? (
+                <Skeleton />
+              ) : (
+                <Calendar
+                  value={date}
+                  onSelect={handleChangeDate}
+                  // onChange={handleChangeDate}
+                  dateCellRender={dateCellRender}
+                  monthCellRender={monthCellRender}
+                  disabledDate={(date) =>
+                    !schedules?.filter((o) => {
+                      return DAYS.indexOf(o.day) === date?.day()
+                    }).length
+                  }
+                />
+              )}
+            </Flex>
+            <Flex>
+              <Divider orientation="vertical" style={{ height: '100%' }} />
+              {isLoading ? (
+                <Skeleton />
+              ) : (
+                <div>
+                  <ScheduleList />
+                </div>
+              )}
+            </Flex>
+            <Button
+              className="edit-schedule"
+              onClick={() => {
+                navigate(
+                  isMe
+                    ? routes.scheduleEdit({ action: 'edit' })
+                    : routes.publicAppointment({ action: 'new', username })
+                )
+              }}
+            >
+              {isMe ? <SettingOutlined /> : <PlusOutlined />}
+              {isMe
+                ? 'Edit Schedule'
+                : `Book for ${
+                    date?.isSame(moment(), 'date')
+                      ? 'Today'
+                      : date?.clone().format('MMM DD, YYYY')
+                  }`}
+            </Button>
+          </Flex>
+          {action === 'new' && (
+            <AppointmentForm
+              appointments={appointments}
+              schedules={schedules}
+              name={`${profile?.first_name} ${profile?.last_name}`}
+              onBack={() => {
+                navigate(routes.publicSchedule({ username }))
+              }}
               value={date}
-              onSelect={handleChangeDate}
-              // onChange={handleChangeDate}
-              dateCellRender={dateCellRender}
-              monthCellRender={monthCellRender}
-              disabledDate={(date) =>
-                !schedules?.filter((o) => {
-                  return DAYS.indexOf(o.day) === date?.day()
-                }).length
-              }
+              onChange={handleChangeDate}
+              onSubmit={handleSubmit}
+              isSaving={isSaving}
             />
           )}
-        </Col>
-        <Col span={8} style={{ display: 'flex', flexDirection: 'row' }}>
-          <Divider type="vertical" style={{ height: '100%' }} />
-          {isLoading ? <Skeleton /> : <ScheduleList />}
-        </Col>
-        <Button
-          type="primary"
-          className="edit-schedule"
-          onClick={() => {
-            navigate(
-              isMe
-                ? routes.scheduleEdit({ action: 'edit' })
-                : routes.publicAppointment({ action: 'new', username })
-            )
-          }}
-        >
-          {isMe ? <SettingOutlined /> : <PlusOutlined />}
-          {isMe
-            ? 'Edit Schedule'
-            : `Book for ${
-                date?.isSame(moment(), 'date')
-                  ? 'Today'
-                  : date?.clone().format('MMM DD, YYYY')
-              }`}
-        </Button>
-      </Row>
-      {action === 'new' && (
-        <AppointmentForm
-          appointments={appointments}
-          schedules={schedules}
-          name={`${profile?.first_name} ${profile?.last_name}`}
-          onBack={() => {
-            navigate(routes.publicSchedule({ username }))
-          }}
-          value={date}
-          onChange={handleChangeDate}
-          onSubmit={handleSubmit}
-          isSaving={isSaving}
-        />
-      )}
+        </Stack>
+      </Flex>
     </>
   )
 }

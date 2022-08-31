@@ -18,27 +18,23 @@ const Routes = () => {
       <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
       <Route path="/auth" page={AuthPage} name="auth" />
       <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
-      <Route path="/test-setup" page={TestSetupPage} name="testSetup" />
-      <Route path="/testimonials" page={TestimonialsPage} name="testimonials" />
 
       <Private unauthenticated="auth">
         <Set wrap={AuthLayout}>
-          <Route path="/setup" page={SetupPage} name="setup" />
-          <Route path="/profile" page={ProfilePage} name="profile" />
+          <Route path="/profile" page={SetupPage} name="profile" />
           <Route path="/schedule" page={SchedulePage} name="schedule" />
           <Route path="/schedule/{action}" page={SchedulesetupPage} name="scheduleEdit" />
           <Route path="/testimonials" page={TestimonialsPage} name="testimonials" />
+          <Route path="/projects" page={ProjectsPage} name="projects" />
         </Set>
-        <Route path="/template-page" page={TemplatePage} name="templatePage" />
-        <Route path="/projects" page={ProjectsPage} name="projects" />
         <Route path="/welcome" page={WelcomePage} name="welcome" />
       </Private>
       <Set wrap={PublicLayout}>
-        <Route path="/{username}" page={ProfilePage} name="publicProfile" />
-        <Route path="/{username}/schedule" page={SchedulePage} name="publicSchedule" />
-        <Route path="/{username}/schedule/{action}" page={SchedulePage} name="publicAppointment" />
-        <Route path="/{username}/testimonials" page={TestimonialsPage} name="publicTestimonials" />
-        <Route path="/{username}/projects" page={ProjectsPage} name="publicProjects" />
+        <Route path="/r/{username}" page={ProfilePage} name="publicProfile" />
+        <Route path="/r/{username}/schedule" page={SchedulePage} name="publicSchedule" />
+        <Route path="/r/{username}/schedule/{action}" page={SchedulePage} name="publicAppointment" />
+        <Route path="/r/{username}/testimonials" page={TestimonialsPage} name="publicTestimonials" />
+        <Route path="/r/{username}/projects" page={ProjectsPage} name="publicProjects" />
         <Route path="/" page={HomePage} name="home" />
       </Set>
       <Route notfound page={NotFoundPage} />

@@ -1,104 +1,72 @@
 import React from 'react'
 
-import {
-  Box,
-  Text,
-  Flex,
-  Icon,
-  useColorModeValue,
-  Link,
-  FlexProps,
-  Image,
-} from '@chakra-ui/react'
-import { IconType } from 'react-icons'
-import {
-  FiUser,
-  FiCalendar,
-  FiBriefcase,
-  FiMessageCircle,
-} from 'react-icons/fi'
+import { Button, IconButton } from '@chakra-ui/react'
 
-interface LinkItemProps {
-  name: string
-  icon: IconType
+import { navigate, routes } from '@redwoodjs/router'
+
+import IconProfile from './icons/IconProfile'
+import IconProjects from './icons/IconProjects'
+import IconSchedule from './icons/IconSchedule'
+import IconTestimonials from './icons/IconTestimonials'
+
+import './styles.less'
+
+type MenuItem = {
+  key: string
+  icon: any
+  label: string
 }
 
-interface NavItemProps extends FlexProps {
-  icon: IconType
-  children: string
+function getItem(
+  label: React.ReactNode,
+  key: React.Key,
+  icon?: React.ReactNode,
+  children?: MenuItem[],
+  type?: 'group'
+): MenuItem {
+  return {
+    key,
+    icon,
+    children,
+    label,
+    type,
+  } as MenuItem
 }
 
-const LinkItems: Array<LinkItemProps> = [
-  { name: 'Profile', icon: FiUser },
-  { name: 'Schedule', icon: FiCalendar },
-  { name: 'Projects', icon: FiBriefcase },
-  { name: 'Testimonials', icon: FiMessageCircle },
+const items: MenuItem[] = [
+  getItem('Profile', 'profile', <IconProfile />),
+  getItem('Schedule', 'schedule', <IconSchedule />),
+  getItem('Projects', 'projects', <IconProjects />),
+  getItem('Testimonials', 'testimonials', <IconTestimonials />),
+  getItem('Logout', 'logout', <IconTestimonials />),
 ]
 
 const AppMenu: React.FC = () => {
-  return (
-    <Box
-      transition="3s ease"
-      bg={useColorModeValue('white', 'gray.900')}
-      borderRight="1px"
-      borderRightColor={useColorModeValue('gray.200', 'gray.700')}
-      w={{ base: 'full', md: 60 }}
-      pos="fixed"
-      h="full"
-    >
-      <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Image
-          borderRadius="full"
-          boxSize="30px"
-          src="/images/logo.svg"
-          alt="Freelancebook"
-        />
-        <Text fontSize="2xl" fontWeight="bold">
-          reelancebook
-        </Text>
-      </Flex>
-      {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
-          {link.name}
-        </NavItem>
-      ))}
-    </Box>
-  )
-}
+  const onClick = (key) => (e) => {
+    navigate(routes[key as any]())
+  }
 
-const NavItem = ({ icon, children }: NavItemProps) => {
-  const linkUrl = children.toLowerCase()
   return (
-    <Link
-      href={`/${linkUrl}`}
-      style={{ textDecoration: 'none' }}
-      _focus={{ boxShadow: 'none' }}
-    >
-      <Flex
-        align="center"
-        p="4"
-        mx="4"
-        borderRadius="lg"
-        role="group"
-        cursor="pointer"
-        _hover={{
-          bg: 'green.400',
-          color: 'white',
-        }}
-      >
-        {icon && (
-          <Icon
-            mr="4"
-            fontSize="16"
-            _groupHover={{
-              color: 'white',
-            }}
-            as={icon}
+    <div className="freelancer-nav">
+      {items.map((item: MenuItem) => (
+        <Button
+          className="nav-buttons"
+          colorScheme="teal"
+          variant="link"
+          key={item.key}
+          onClick={onClick(item.key)}
+        >
+          <IconButton
+            colorScheme="teal"
+            aria-label="Profile"
+            size="lg"
+            icon={item.icon}
+            style={{ borderRadius: '50%', width: 48, marginRight: 20 }}
           />
-        )}
-        {children}
-      </Flex>
-    </Link>
+          <span>{item.label}</span>
+        </Button>
+      ))}
+    </div>
   )
 }
 

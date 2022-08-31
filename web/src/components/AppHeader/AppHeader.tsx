@@ -25,7 +25,7 @@ const AppHeader = ({
   username?: string
 }) => {
   const { pathname } = useLocation()
-  const { data: profile, isLoading, isMe } = useProfile(username)
+  const { profile, isLoading, isMe } = useProfile(username)
   const { isAuthenticated, logOut, reauthenticate } = useAuth()
   const signout = async () => {
     const { error } = await logOut()

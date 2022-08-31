@@ -6,10 +6,9 @@ import {
   PlusOutlined,
   SaveOutlined,
 } from '@ant-design/icons'
+import { Button, Divider, Flex, Heading, Stack } from '@chakra-ui/react'
 import {
   Skeleton,
-  Affix,
-  Button,
   Checkbox,
   List,
   notification,
@@ -122,155 +121,173 @@ const SchedulesetupPage = () => {
   return (
     <>
       <MetaTags title="Schedulesetup" description="Schedulesetup page" />
-
-      <Affix offsetTop={64}>
-        <div className="list-header">
-          <Button
-            type="primary"
-            shape="circle"
-            className="edit-schedule"
-            onClick={() => {
-              navigate(routes.schedule())
-            }}
-            style={{ marginRight: 15 }}
+      <Flex flexDirection="column" width="100%" alignItems="center">
+        <Stack
+          spacing={4}
+          p="5"
+          backgroundColor="white"
+          boxShadow="md"
+          borderWidth="1px"
+          borderRadius="2xl"
+          w={[380, 400, 700]}
+        >
+          <Heading
+            fontSize={{ base: '20px', md: '25px', lg: '30px' }}
+            display="flex"
           >
-            <LeftOutlined />
-          </Button>
-          <span>Your schedule for today</span>
-
-          <Button
-            shape="circle"
-            disabled={!notSaved || hasConflicts(cloneDeep(data), false)}
-            onClick={handleSave}
-          >
-            <SaveOutlined />
-          </Button>
-        </div>
-      </Affix>
-      {!isSaving && !isLoading ? (
-        <List
-          style={{ flex: '1 1 0%', marginLeft: 16 }}
-          itemLayout="horizontal"
-          dataSource={dataSource}
-          renderItem={(item) => (
-            <List.Item>
-              <List
-                dataSource={item.items}
-                key={item.day}
-                renderItem={(slot, index) => (
-                  <List.Item>
-                    <Space direction="horizontal">
-                      {index === 0 && (
-                        <div style={{ width: '50px' }}>
-                          <Checkbox
-                            checked={item.active}
-                            onChange={(e) => {
-                              console.log(e.target.checked)
-                              if (e.target.checked) {
-                                setData((prev) => {
-                                  const newData = cloneDeep(prev)
-                                  newData.push({
-                                    day: item.day,
-                                    active: true,
-                                    time_start: '1:00',
-                                    time_end: '2:00',
-                                    freelancer_id: id,
-                                    id: `${
-                                      (Date.now() + Math.random() * 1000) * -1
-                                    }`,
-                                    isNew: true,
-                                  })
-                                  return newData
-                                })
-                              } else {
-                                const newData = cloneDeep(data).filter(
-                                  (o) => o.day !== item.day
-                                )
-                                console.log({ newData })
-                                setData(newData)
-                              }
-                            }}
-                          >
-                            {item.day}
-                          </Checkbox>
-                        </div>
-                      )}
-                      <TimePicker.RangePicker
-                        disabled={!item.active}
-                        style={{ marginLeft: index > 0 ? 58 : 0 }}
-                        format="HH:mm"
-                        minuteStep={15}
-                        onChange={(time) => {
-                          // check conflict
-                          const newData = cloneDeep(data)
-                          const i = newData.findIndex((o) => o.id === slot.id)
-                          if (i > -1) {
-                            newData[i].time_start =
-                              time?.[0]?.format('HH:mm') || '1:00'
-                            newData[i].time_end =
-                              time?.[1]?.format('HH:mm') || '2:00'
-                            if (hasConflicts(newData)) {
-                              return false
-                            }
-                            setData(newData)
-                          }
-                        }}
-                        value={[
-                          makeMoment(slot.time_start),
-                          makeMoment(slot.time_end),
-                        ]}
-                      />
-                      <Switch
-                        checked={slot.active}
-                        onChange={(checked) => {
-                          const newData = cloneDeep(data)
-                          const i = newData.findIndex((o) => o.id === slot.id)
-                          if (i > -1) {
-                            newData[i].active = checked
-                            if (hasConflicts(newData)) {
-                              return false
-                            }
-                            setData(newData)
-                          }
-                        }}
-                      />
-                      {index > 0 && (
-                        <Button
-                          disabled={!item.active}
-                          shape="circle"
-                          onClick={() => {
-                            setData((prev) => {
-                              const newData = cloneDeep(prev)
+            <Button
+              className="edit-schedule"
+              onClick={() => {
+                navigate(routes.schedule())
+              }}
+              style={{ marginRight: 15 }}
+              leftIcon={<LeftOutlined />}
+            >
+              Back
+            </Button>
+            <span style={{ flex: '1 1 0%' }}>Edit your schedule</span>
+            <Button
+              disabled={!notSaved || hasConflicts(cloneDeep(data), false)}
+              onClick={handleSave}
+            >
+              <SaveOutlined />
+            </Button>
+          </Heading>
+          <Divider
+            orientation="horizontal"
+            backgroundColor={'green.400'}
+            border={'none'}
+            height="1"
+          />
+          {!isSaving && !isLoading ? (
+            <List
+              style={{ flex: '1 1 0%', marginLeft: 16 }}
+              itemLayout="horizontal"
+              dataSource={dataSource}
+              renderItem={(item) => (
+                <List.Item>
+                  <List
+                    dataSource={item.items}
+                    key={item.day}
+                    renderItem={(slot, index) => (
+                      <List.Item>
+                        <Space direction="horizontal">
+                          {index === 0 && (
+                            <div style={{ width: '50px' }}>
+                              <Checkbox
+                                checked={item.active}
+                                onChange={(e) => {
+                                  console.log(e.target.checked)
+                                  if (e.target.checked) {
+                                    setData((prev) => {
+                                      const newData = cloneDeep(prev)
+                                      newData.push({
+                                        day: item.day,
+                                        active: true,
+                                        time_start: '1:00',
+                                        time_end: '2:00',
+                                        freelancer_id: id,
+                                        id: `${
+                                          (Date.now() + Math.random() * 1000) *
+                                          -1
+                                        }`,
+                                        isNew: true,
+                                      })
+                                      return newData
+                                    })
+                                  } else {
+                                    const newData = cloneDeep(data).filter(
+                                      (o) => o.day !== item.day
+                                    )
+                                    console.log({ newData })
+                                    setData(newData)
+                                  }
+                                }}
+                              >
+                                {item.day}
+                              </Checkbox>
+                            </div>
+                          )}
+                          <TimePicker.RangePicker
+                            disabled={!item.active}
+                            style={{ marginLeft: index > 0 ? 58 : 0 }}
+                            format="HH:mm"
+                            minuteStep={15}
+                            onChange={(time) => {
+                              // check conflict
+                              const newData = cloneDeep(data)
                               const i = newData.findIndex(
                                 (o) => o.id === slot.id
                               )
                               if (i > -1) {
-                                newData.splice(i, 1)
+                                newData[i].time_start =
+                                  time?.[0]?.format('HH:mm') || '1:00'
+                                newData[i].time_end =
+                                  time?.[1]?.format('HH:mm') || '2:00'
+                                if (hasConflicts(newData)) {
+                                  return false
+                                }
+                                setData(newData)
                               }
-                              return newData
-                            })
-                          }}
-                        >
-                          <DeleteOutlined />
-                        </Button>
-                      )}
-                      <Button
-                        shape="circle"
-                        onClick={handleAdd(slot.day)}
-                        disabled={!item.active}
-                      >
-                        <PlusOutlined />
-                      </Button>
-                    </Space>
-                  </List.Item>
-                )}
-              />
-            </List.Item>
+                            }}
+                            value={[
+                              makeMoment(slot.time_start),
+                              makeMoment(slot.time_end),
+                            ]}
+                          />
+                          <Switch
+                            checked={slot.active}
+                            onChange={(checked) => {
+                              const newData = cloneDeep(data)
+                              const i = newData.findIndex(
+                                (o) => o.id === slot.id
+                              )
+                              if (i > -1) {
+                                newData[i].active = checked
+                                if (hasConflicts(newData)) {
+                                  return false
+                                }
+                                setData(newData)
+                              }
+                            }}
+                          />
+                          {index > 0 && (
+                            <Button
+                              disabled={!item.active}
+                              onClick={() => {
+                                setData((prev) => {
+                                  const newData = cloneDeep(prev)
+                                  const i = newData.findIndex(
+                                    (o) => o.id === slot.id
+                                  )
+                                  if (i > -1) {
+                                    newData.splice(i, 1)
+                                  }
+                                  return newData
+                                })
+                              }}
+                            >
+                              <DeleteOutlined />
+                            </Button>
+                          )}
+                          <Button
+                            onClick={handleAdd(slot.day)}
+                            disabled={!item.active}
+                          >
+                            <PlusOutlined />
+                          </Button>
+                        </Space>
+                      </List.Item>
+                    )}
+                  />
+                </List.Item>
+              )}
+            />
+          ) : (
+            <Skeleton style={{ marginTop: 20 }} />
           )}
-        />
-      ) : (
-        <Skeleton style={{ marginTop: 20 }} />
-      )}
+        </Stack>
+      </Flex>
     </>
   )
 }
