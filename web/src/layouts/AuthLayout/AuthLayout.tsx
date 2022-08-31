@@ -22,8 +22,8 @@ const AuthLayout: React.FC = ({ children }) => {
       direction="column"
       style={{
         margin: 0,
-        minHeight: 280,
         background: '#E5E5E5',
+        minHeight: '100vh',
       }}
     >
       <Affix offsetTop={0} onChange={handleAffix}>
